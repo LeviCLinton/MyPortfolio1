@@ -647,7 +647,7 @@ function Contact() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">Email</p>
-                <p className="text-xs text-slate-400">hello@lcn254.dev</p>
+                <p className="text-xs text-slate-400">contact@lcn254.site</p>
               </div>
             </div>
 
