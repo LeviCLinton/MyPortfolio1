@@ -8,5 +8,5 @@ import react from "@vitejs/plugin-react";
 // or to a custom domain, leave base as "/".
 export default defineConfig({
   plugins: [react()],
-  base: "/MyPortfolio1/",
+  base: "/",
 });
