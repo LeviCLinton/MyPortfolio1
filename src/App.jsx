@@ -201,6 +201,10 @@ function Nav() {
           <img
             src={`${import.meta.env.BASE_URL}lcn254-logo.jpeg`}
             alt="lcn254 logo"
+            width="36"
+            height="36"
+            fetchpriority="high"
+            decoding="async"
             className="h-9 w-9 rounded-lg object-cover"
           />
           <span className="font-semibold tracking-tight text-white">
@@ -641,7 +645,10 @@ function Contact() {
               <ArrowRight className="ml-auto h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-[#3FC1CB]" />
             </a>
 
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/40 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl">
+            <a
+              href="mailto:contact@lcn254.site"
+              className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/40 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl transition-colors hover:border-cyan-400/40"
+            >
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-500/10 text-cyan-300">
                 <Mail className="h-5 w-5" />
               </div>
@@ -649,7 +656,8 @@ function Contact() {
                 <p className="text-sm font-semibold text-white">Email</p>
                 <p className="text-xs text-slate-400">contact@lcn254.site</p>
               </div>
-            </div>
+              <ArrowRight className="ml-auto h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-cyan-300" />
+            </a>
 
             <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/40 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-indigo-300">
