@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lcn254.site/sitemap.xml
