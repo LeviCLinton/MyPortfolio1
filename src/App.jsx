@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -84,6 +84,19 @@ const GLOW = {
 // Brand gradient — lifted directly from the logo's teal-to-pink paint splash.
 // Used for the primary CTA, headline accent, active tab, and floating widget.
 const BRAND_GRADIENT = "from-[#1AA3B0] to-[#F0409A]";
+
+// Maps a gallery template to the matching <option> value in the contact
+// form's "Business type" select, so "Deploy This" can pre-fill it.
+const TEMPLATE_TO_BUSINESS_TYPE = {
+  restaurants: "restaurant",
+  clinics: "clinic",
+  spas: "spa",
+  hotels: "hotel",
+  airbnb: "rental",
+  logistics: "logistics",
+  catering: "catering",
+  ecommerce: "ecommerce",
+};
 
 const TEMPLATES = [
   {
@@ -312,7 +325,7 @@ function Hero() {
 // ---------------------------------------------------------------------------
 // GALLERY
 // ---------------------------------------------------------------------------
-function TemplateCard({ template, index }) {
+function TemplateCard({ template, index, onDeploy }) {
   const Icon = template.icon;
   const c = GLOW[template.color];
 
@@ -384,6 +397,7 @@ function TemplateCard({ template, index }) {
             </button>
             <button
               type="button"
+              onClick={() => onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id])}
               className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r px-4 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-black/30 transition-transform hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${c.gradient}`}
             >
               <Rocket className="h-4 w-4" />
@@ -396,7 +410,7 @@ function TemplateCard({ template, index }) {
   );
 }
 
-function Gallery() {
+function Gallery({ onDeploy }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   const visible =
@@ -463,7 +477,7 @@ function Gallery() {
         <motion.div layout className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((t, i) => (
-              <TemplateCard key={t.id} template={t} index={i} />
+              <TemplateCard key={t.id} template={t} index={i} onDeploy={onDeploy} />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -481,9 +495,17 @@ function Gallery() {
 // ---------------------------------------------------------------------------
 // CONTACT
 // ---------------------------------------------------------------------------
-function Contact() {
+function Contact({ prefilledBusiness }) {
   const [form, setForm] = useState({ name: "", email: "", business: "", message: "" });
   const [sent, setSent] = useState(false);
+
+  // "Deploy This" on a gallery card sets prefilledBusiness in the parent —
+  // reflect that into the form whenever it changes.
+  useEffect(() => {
+    if (prefilledBusiness) {
+      setForm((prev) => ({ ...prev, business: prefilledBusiness }));
+    }
+  }, [prefilledBusiness]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -563,7 +585,14 @@ function Contact() {
                 </div>
 
                 <label className="flex flex-col gap-2 text-sm text-slate-300">
-                  Business type
+                  <span className="flex items-center gap-2">
+                    Business type
+                    {prefilledBusiness && (
+                      <span className="text-xs font-normal text-[#3FC1CB]">
+                        pre-filled from your selection
+                      </span>
+                    )}
+                  </span>
                   <select
                     name="business"
                     value={form.business}
@@ -734,12 +763,21 @@ function Footer() {
 // PAGE
 // ---------------------------------------------------------------------------
 export default function LCN254Portfolio() {
+  const [selectedBusiness, setSelectedBusiness] = useState("");
+
+  // Called by a card's "Deploy This" button: pre-fills the contact form's
+  // business-type field, then scrolls the visitor straight to it.
+  const handleDeploy = (businessType) => {
+    setSelectedBusiness(businessType);
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-white antialiased">
       <Nav />
       <Hero />
-      <Gallery />
-      <Contact />
+      <Gallery onDeploy={handleDeploy} />
+      <Contact prefilledBusiness={selectedBusiness} />
       <Footer />
     </div>
   );
