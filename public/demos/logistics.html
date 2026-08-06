@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vector Freight — Same-Day Delivery & Logistics, Nairobi</title>
+<meta name="description" content="Check coverage, get an instant quote, and track your package in real time. Vector Freight." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161e; --ink:#e7ecf2; --ink-dim:#7d8896;
+    --orange:#ff6b35; --cyan:#3fd0ff; --line:#1e2733;
+    --display:'Space Grotesk',sans-serif; --body:'Archivo',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--orange);color:#0a0e14}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+  .hazard{height:5px;background:repeating-linear-gradient(-45deg,var(--orange),var(--orange) 10px,#1a1108 10px,#1a1108 20px)}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(10,14,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,5vw,60px)}
+  .logo{font-family:var(--display);font-weight:700;font-size:1.25rem;display:flex;align-items:center;gap:9px}
+  .logo .chip{width:9px;height:18px;background:var(--orange)}
+  .navlinks{display:none;gap:28px;font-size:.88rem;list-style:none;font-family:var(--mono)}
+  @media(min-width:800px){.navlinks{display:flex}}
+  .navlinks a{text-decoration:none;color:var(--ink-dim)}
+  .navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.82rem;font-weight:500;padding:11px 20px;text-decoration:none;transition:.2s;border-radius:4px}
+  .btn-primary{background:var(--orange);color:#0a0e14;font-weight:700}
+  .btn-primary:hover{background:#ff8158}
+  .btn-outline{border:1px solid var(--line);color:var(--ink)}
+  .btn-outline:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  /* HERO */
+  .hero{padding:clamp(50px,8vw,90px) 0}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:44px}
+  @media(min-width:960px){.hero-grid{grid-template-columns:1.1fr .9fr;align-items:center}}
+  .status-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.78rem;color:var(--cyan);background:rgba(63,208,255,.08);border:1px solid rgba(63,208,255,.25);padding:6px 12px;border-radius:100px;margin-bottom:22px}
+  .status-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,5.6vw,3.8rem);line-height:1.05;margin-bottom:18px}
+  .hero p{color:var(--ink-dim);max-width:48ch;margin-bottom:30px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* TRACKING CARD */
+  .track-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .track-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.78rem;color:var(--ink-dim)}
+  .track-body{padding:22px 20px}
+  .track-id{font-family:var(--mono);font-size:1.1rem;color:var(--ink);margin-bottom:18px}
+  .progress-track{position:relative;height:4px;background:var(--line);border-radius:4px;margin:26px 0}
+  .progress-fill{position:absolute;left:0;top:0;bottom:0;width:62%;background:linear-gradient(90deg,var(--orange),var(--cyan));border-radius:4px}
+  .progress-node{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--orange);transform:translate(-50%,-50%)}
+  .track-stages{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--ink-dim);margin-top:8px}
+  .track-stages .active{color:var(--orange)}
+  .track-eta{display:flex;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:.82rem}
+  .track-eta b{color:var(--cyan)}
+
+  /* COVERAGE / QUOTE */
+  .quote{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .section-head{max-width:600px;margin-bottom:44px}
+  .kicker{font-family:var(--mono);font-size:.76rem;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:12px}
+  .section-head h2{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,4vw,2.6rem)}
+  .quote-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  @media(min-width:820px){.quote-grid{grid-template-columns:1fr 1fr 1fr}}
+  .quote-card{background:var(--panel);padding:28px}
+  .quote-card label{display:block;font-family:var(--mono);font-size:.72rem;color:var(--ink-dim);margin-bottom:9px;text-transform:uppercase;letter-spacing:.06em}
+  .quote-card input,.quote-card select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:11px 13px;font-family:var(--body);border-radius:4px;margin-bottom:18px}
+  .quote-result{padding:28px;background:var(--panel);display:flex;flex-direction:column;justify-content:center}
+  .quote-result .label{font-family:var(--mono);font-size:.72rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .quote-result .amount{font-family:var(--display);font-size:2.2rem;font-weight:700;color:var(--orange);margin-bottom:18px}
+
+  /* SERVICE AREA */
+  .coverage{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .coverage-grid{display:grid;grid-template-columns:1fr;gap:40px}
+  @media(min-width:900px){.coverage-grid{grid-template-columns:1fr 1fr;align-items:center}}
+  .map-mock{aspect-ratio:4/3;background:var(--panel);border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden}
+  .map-mock svg{width:100%;height:100%}
+  .zone{fill:rgba(255,107,53,.12);stroke:var(--orange);stroke-width:1;stroke-dasharray:4 3}
+  .coverage-text h2{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,4vw,2.4rem);margin-bottom:16px}
+  .coverage-text p{color:var(--ink-dim);max-width:44ch;margin-bottom:20px}
+  .zone-list{display:flex;flex-wrap:wrap;gap:8px}
+  .zone-tag{font-family:var(--mono);font-size:.78rem;border:1px solid var(--line);padding:6px 12px;border-radius:4px;color:var(--ink-dim)}
+  .zone-tag.in{border-color:var(--orange);color:var(--orange)}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 32px}
+  .foot-grid{display:grid;grid-template-columns:1fr;gap:24px}
+  @media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
+  footer h3{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:14px}
+  footer p{font-size:.9rem;color:var(--ink-dim)}
+  .fine{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:var(--ink-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:var(--mono)}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="hazard"></div>
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo"><span class="chip"></span>VECTOR</a>
+    <ul class="navlinks">
+      <li><a href="#quote">Get a Quote</a></li>
+      <li><a href="#coverage">Coverage</a></li>
+      <li><a href="#top">Track</a></li>
+    </ul>
+    <a href="#quote" class="btn btn-primary">Get a Quote</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="status-pill"><span class="dot"></span>142 deliveries in transit right now</span>
+        <h1>Same-day delivery, tracked to the minute.</h1>
+        <p>Check your area, get an instant quote, and watch your package move in real time — no waiting on a call center for an update.</p>
+        <div class="hero-ctas">
+          <a href="#quote" class="btn btn-primary">Get Instant Quote</a>
+          <a href="#coverage" class="btn btn-outline">Check Coverage</a>
+        </div>
+      </div>
+      <div class="track-card">
+        <div class="track-head"><span>TRACKING</span><span>#VF-88213</span></div>
+        <div class="track-body">
+          <div class="track-id">Nairobi CBD → Kilimani</div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+            <div class="progress-node" style="left:0%"></div>
+            <div class="progress-node" style="left:33%"></div>
+            <div class="progress-node" style="left:62%;border-color:var(--cyan)"></div>
+            <div class="progress-node" style="left:100%;border-color:var(--line)"></div>
+          </div>
+          <div class="track-stages">
+            <span>Picked Up</span><span>In Transit</span><span class="active">Out for Delivery</span><span>Delivered</span>
+          </div>
+          <div class="track-eta"><span>ETA</span><b>18 minutes</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote wrap" id="quote">
+    <div class="section-head">
+      <span class="kicker">Instant Quote</span>
+      <h2>Know the cost before you book.</h2>
+    </div>
+    <div class="quote-grid">
+      <div class="quote-card">
+        <label for="l-from">Pickup Location</label>
+        <input id="l-from" type="text" placeholder="e.g. Westlands">
+        <label for="l-to">Drop-off Location</label>
+        <input id="l-to" type="text" placeholder="e.g. Karen">
+      </div>
+      <div class="quote-card">
+        <label for="l-size">Package Size</label>
+        <select id="l-size">
+          <option>Small (under 5kg)</option>
+          <option>Medium (5–20kg)</option>
+          <option>Large (20kg+)</option>
+        </select>
+        <label for="l-speed">Delivery Speed</label>
+        <select id="l-speed">
+          <option>Same-day</option>
+          <option>Express (2hr)</option>
+        </select>
+      </div>
+      <div class="quote-result">
+        <span class="label">Estimated Cost</span>
+        <span class="amount">KSh 450</span>
+        <a href="#" class="btn btn-primary">Book This Delivery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="coverage wrap" id="coverage">
+    <div class="coverage-grid">
+      <div class="map-mock">
+        <svg viewBox="0 0 300 220">
+          <rect width="300" height="220" fill="#0d131b"/>
+          <path d="M40 40 L120 30 L180 60 L220 40 L260 90 L240 160 L180 190 L100 180 L50 140 Z" class="zone"/>
+          <circle cx="150" cy="110" r="4" fill="#ff6b35"/>
+        </svg>
+      </div>
+      <div class="coverage-text">
+        <h2>We cover greater Nairobi</h2>
+        <p>Same-day delivery across these zones. Outside the zone? We still quote it — just takes a little longer.</p>
+        <div class="zone-list">
+          <span class="zone-tag in">CBD</span>
+          <span class="zone-tag in">Westlands</span>
+          <span class="zone-tag in">Kilimani</span>
+          <span class="zone-tag in">Karen</span>
+          <span class="zone-tag in">Lavington</span>
+          <span class="zone-tag">Ruiru</span>
+          <span class="zone-tag">Kitengela</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-grid">
+    <div>
+      <h3>Vector Freight</h3>
+      <p style="max-width:34ch">Dispatch based in Industrial Area, Nairobi. Operating 6am – 10pm daily.</p>
+    </div>
+    <div>
+      <h3>Track a Package</h3>
+      <p>Enter your tracking number at the top of this page for live status.</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p>+254 700 000 000<br>dispatch@vectorfreight.co.ke</p>
+    </div>
+  </div>
+  <div class="fine">
+    <span>© 2026 VECTOR FREIGHT LTD</span>
+    <span>Template by lcn254</span>
+  </div>
+</footer>
+
+</body>
+</html>

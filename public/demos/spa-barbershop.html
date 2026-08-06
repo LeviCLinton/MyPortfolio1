@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Gentry Room — Grooming & Spa, Nairobi</title>
+<meta name="description" content="Cuts, shaves, and spa treatments by appointment. The Gentry Room." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16261f; --bg-2:#1d2f27; --ink:#ede6d6; --ink-dim:#a7b3ac;
+    --brass:#c9a227; --line:#2c3f36;
+    --display:'Cormorant Garamond',serif; --body:'Jost',sans-serif; --mono:'Space Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--brass);color:#16261f}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(22,38,31,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,60px)}
+  .logo{font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:.02em}
+  .navlinks{display:none;gap:34px;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;list-style:none}
+  @media(min-width:800px){.navlinks{display:flex}}
+  .navlinks a{text-decoration:none;color:var(--ink-dim)}
+  .navlinks a:hover{color:var(--brass)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;padding:12px 22px;text-decoration:none;transition:.2s;border:1px solid var(--brass)}
+  .btn-primary{background:var(--brass);color:#16261f}
+  .btn-primary:hover{background:#dab53a}
+  .btn-ghost{color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--brass)}
+
+  /* HERO */
+  .hero{padding:clamp(70px,10vw,120px) 0 clamp(60px,8vw,90px);text-align:center;position:relative}
+  .seal{width:96px;height:96px;margin:0 auto 28px;position:relative}
+  .seal svg{width:100%;height:100%}
+  .hero .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:18px}
+  .hero h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,7vw,5rem);line-height:1.05;margin-bottom:22px}
+  .hero p{max-width:46ch;margin:0 auto 34px;color:var(--ink-dim);font-size:1.05rem}
+  .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .rule{width:60px;height:1px;background:var(--brass);margin:56px auto 0}
+
+  /* PRICE BOARD */
+  .board{padding:clamp(60px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .board-head{text-align:center;margin-bottom:50px}
+  .board-head .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:12px}
+  .board-head h2{font-family:var(--display);font-weight:500;font-size:clamp(2rem,4.5vw,2.8rem)}
+  .board-cols{display:grid;grid-template-columns:1fr;gap:48px;max-width:900px;margin:0 auto}
+  @media(min-width:760px){.board-cols{grid-template-columns:1fr 1fr}}
+  .board-col h3{font-family:var(--display);font-size:1.4rem;font-weight:600;color:var(--brass);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--brass)}
+  .board-item{display:flex;align-items:baseline;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
+  .board-item .name{font-family:var(--display);font-size:1.15rem}
+  .board-item .sub{font-family:var(--body);font-size:.78rem;color:var(--ink-dim);display:block;margin-top:2px}
+  .board-item .price{font-family:var(--mono);color:var(--ink)}
+
+  /* STAFF */
+  .staff{padding:clamp(60px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px;margin-top:44px}
+  .staff-card{text-align:center}
+  .staff-photo{width:100%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,#2c3f36,#141f1a);border:1px solid var(--line);margin-bottom:18px;position:relative;overflow:hidden}
+  .staff-photo svg{position:absolute;inset:0;margin:auto;width:40%;opacity:.5}
+  .staff-card h3{font-family:var(--display);font-size:1.25rem;font-weight:600}
+  .staff-card span{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--brass)}
+
+  /* BOOK CTA */
+  .book{padding:clamp(60px,8vw,100px) 0;border-top:1px solid var(--line);text-align:center}
+  .book h2{font-family:var(--display);font-weight:500;font-size:clamp(2.2rem,5vw,3.2rem);margin-bottom:18px}
+  .book p{color:var(--ink-dim);max-width:44ch;margin:0 auto 32px}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 32px;text-align:center}
+  footer h3{font-family:var(--display);font-size:1.3rem;margin-bottom:10px}
+  footer p{color:var(--ink-dim);font-size:.9rem}
+  .fine{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.72rem;color:var(--ink-dim);display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo">The Gentry Room</a>
+    <ul class="navlinks">
+      <li><a href="#rates">Rates</a></li>
+      <li><a href="#staff">Barbers</a></li>
+      <li><a href="#book">Book</a></li>
+    </ul>
+    <a href="#book" class="btn btn-primary">Book a Slot</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#c9a227" stroke-width="1.2"/><circle cx="50" cy="50" r="38" fill="none" stroke="#c9a227" stroke-width="1"/><text x="50" y="46" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="13" fill="#c9a227">EST.</text><text x="50" y="62" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="13" fill="#c9a227">2019</text></svg>
+    </div>
+    <span class="eyebrow">Behind the Chair · Since 2019</span>
+    <h1>Cut clean.<br>Sit long.</h1>
+    <p>Fades, hot towel shaves, and a spa menu that doesn't rush. Book your chair, pick your barber, and settle in.</p>
+    <div class="hero-ctas">
+      <a href="#book" class="btn btn-primary">Book a Slot</a>
+      <a href="#rates" class="btn btn-ghost">See Rates</a>
+    </div>
+    <div class="rule"></div>
+  </section>
+
+  <section class="board wrap" id="rates">
+    <div class="board-head">
+      <span class="eyebrow">Services & Rates</span>
+      <h2>The Menu</h2>
+    </div>
+    <div class="board-cols">
+      <div class="board-col">
+        <h3>Cuts & Shaves</h3>
+        <div class="board-item"><div><span class="name">Signature Fade</span><span class="sub">Cut, line-up, wash</span></div><span class="price">KSh 900</span></div>
+        <div class="board-item"><div><span class="name">Hot Towel Shave</span><span class="sub">Straight razor, oils</span></div><span class="price">KSh 750</span></div>
+        <div class="board-item"><div><span class="name">Beard Sculpt</span><span class="sub">Trim, shape, balm</span></div><span class="price">KSh 500</span></div>
+        <div class="board-item"><div><span class="name">Kids Cut</span><span class="sub">Under 12</span></div><span class="price">KSh 600</span></div>
+      </div>
+      <div class="board-col">
+        <h3>Spa Treatments</h3>
+        <div class="board-item"><div><span class="name">Gentleman's Facial</span><span class="sub">Deep clean, steam</span></div><span class="price">KSh 1,800</span></div>
+        <div class="board-item"><div><span class="name">Scalp Massage</span><span class="sub">30 minutes</span></div><span class="price">KSh 1,200</span></div>
+        <div class="board-item"><div><span class="name">Manicure</span><span class="sub">Classic, unpolished</span></div><span class="price">KSh 1,000</span></div>
+        <div class="board-item"><div><span class="name">The Full Sit</span><span class="sub">Cut + shave + facial</span></div><span class="price">KSh 3,200</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="staff wrap" id="staff">
+    <div class="board-head">
+      <span class="eyebrow">Meet the Chairs</span>
+      <h2>Your Barber</h2>
+    </div>
+    <div class="staff-grid">
+      <div class="staff-card">
+        <div class="staff-photo"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Kevo Odhiambo</h3>
+        <span>Fades & Line-ups</span>
+      </div>
+      <div class="staff-card">
+        <div class="staff-photo"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Musa Bett</h3>
+        <span>Straight Razor Shaves</span>
+      </div>
+      <div class="staff-card">
+        <div class="staff-photo"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Aisha Wafula</h3>
+        <span>Spa & Skin</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="book wrap" id="book">
+    <h2>Your chair is waiting.</h2>
+    <p>Pick a barber, a service, and a time — takes less than a minute.</p>
+    <a href="#" class="btn btn-primary">Book Your Slot</a>
+  </section>
+</main>
+
+<footer class="wrap">
+  <h3>The Gentry Room</h3>
+  <p>9 Brass Lane, Westlands, Nairobi · Tue–Sun, 9am–8pm</p>
+  <div class="fine">
+    <span>© 2026 The Gentry Room</span>
+    <span>+254 700 000 000</span>
+    <span>Template by lcn254</span>
+  </div>
+</footer>
+
+</body>
+</html>

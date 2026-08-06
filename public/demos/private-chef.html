@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Tasting Table — Private Chef & Events, Nairobi</title>
+<meta name="description" content="A private chef for dinners, celebrations, and events. Custom menus, built around you." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0d0d; --panel:#161514; --ink:#f3ede3; --ink-dim:#9a9084;
+    --burgundy:#6e1423; --gold:#a67c3d; --line:#2a2724;
+    --display:'Italiana',serif; --body:'Lora',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--burgundy);color:#fff}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(13,13,13,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,5vw,60px)}
+  .logo{font-family:var(--display);font-size:1.3rem;letter-spacing:.08em;text-transform:uppercase}
+  .navlinks{display:none;gap:32px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;list-style:none}
+  @media(min-width:800px){.navlinks{display:flex}}
+  .navlinks a{text-decoration:none;color:var(--ink-dim)}
+  .navlinks a:hover{color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:13px 26px;text-decoration:none;transition:.2s;border:1px solid var(--gold)}
+  .btn-primary{background:var(--gold);color:#0d0d0d}
+  .btn-primary:hover{background:#c0955a}
+  .btn-ghost{color:var(--ink)}
+
+  /* HERO */
+  .hero{padding:clamp(70px,11vw,130px) 0 clamp(60px,8vw,90px);text-align:center;position:relative}
+  .seal{width:80px;height:80px;margin:0 auto 26px;opacity:.9}
+  .kicker{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:22px}
+  .hero h1{font-family:var(--display);font-size:clamp(2.6rem,7vw,4.6rem);letter-spacing:.01em;line-height:1.08;max-width:900px;margin:0 auto 26px}
+  .hero p{max-width:50ch;margin:0 auto 36px;color:var(--ink-dim);font-size:1.08rem;font-style:italic}
+  .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* MENU */
+  .menu{padding:clamp(60px,9vw,100px) 0;border-top:1px solid var(--line)}
+  .menu-head{text-align:center;max-width:600px;margin:0 auto 56px}
+  .menu-head span.kicker{margin-bottom:14px}
+  .menu-head h2{font-family:var(--display);font-size:clamp(2rem,4.5vw,2.8rem);letter-spacing:.02em}
+  .courses{max-width:680px;margin:0 auto}
+  .course{display:grid;grid-template-columns:60px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line)}
+  .course:last-child{border-bottom:none}
+  .course .num{font-family:var(--display);font-size:1.5rem;color:var(--gold);text-align:right}
+  .course h3{font-family:var(--display);font-size:1.4rem;letter-spacing:.02em;margin-bottom:8px}
+  .course p{color:var(--ink-dim);font-size:.94rem;font-style:italic}
+
+  /* ABOUT */
+  .about{padding:clamp(60px,9vw,100px) 0;border-top:1px solid var(--line)}
+  .about-grid{display:grid;grid-template-columns:1fr;gap:44px}
+  @media(min-width:900px){.about-grid{grid-template-columns:.85fr 1.15fr;align-items:center}}
+  .chef-frame{aspect-ratio:3/4;position:relative;background:
+    radial-gradient(ellipse at 30% 20%, #3a1319, transparent 60%),
+    linear-gradient(160deg,#1c1a17,#0d0d0d);
+    border:1px solid var(--gold)}
+  .chef-frame::before{content:"";position:absolute;inset:12px;border:1px solid rgba(166,124,61,.4)}
+  .about-text h2{font-family:var(--display);font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:.02em;margin-bottom:18px}
+  .about-text p{color:var(--ink-dim);max-width:56ch;margin-bottom:14px}
+  .about-text .sig{font-family:var(--display);font-size:1.3rem;color:var(--gold);margin-top:20px;letter-spacing:.05em}
+
+  /* EVENTS FORM */
+  .events{padding:clamp(60px,9vw,100px) 0;border-top:1px solid var(--line)}
+  .events-grid{display:grid;grid-template-columns:1fr;gap:44px}
+  @media(min-width:900px){.events-grid{grid-template-columns:.9fr 1.1fr}}
+  .events-text h2{font-family:var(--display);font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:.02em;margin-bottom:16px}
+  .events-text p{color:var(--ink-dim);max-width:40ch}
+  form{background:var(--panel);border:1px solid var(--line);padding:36px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media(max-width:520px){.form-row{grid-template-columns:1fr}}
+  label{display:block;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:9px}
+  input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:12px 14px;font-family:var(--body);font-size:.95rem}
+  input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+  textarea{resize:vertical;min-height:90px}
+  .full{grid-column:1/-1}
+  form button{margin-top:6px;width:100%;justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 32px;text-align:center}
+  footer .logo{display:inline-block;margin-bottom:14px}
+  footer p{color:var(--ink-dim);font-size:.92rem}
+  .fine{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:var(--ink-dim);display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo">The Tasting Table</a>
+    <ul class="navlinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">The Chef</a></li>
+      <li><a href="#events">Book an Event</a></li>
+    </ul>
+    <a href="#events" class="btn btn-primary">Inquire</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <svg class="seal" viewBox="0 0 80 80" aria-hidden="true">
+      <circle cx="40" cy="40" r="37" fill="none" stroke="#a67c3d" stroke-width="1"/>
+      <circle cx="40" cy="40" r="30" fill="none" stroke="#a67c3d" stroke-width=".6"/>
+      <text x="40" y="37" text-anchor="middle" font-family="Italiana" font-size="10" fill="#a67c3d" letter-spacing="1">EST.</text>
+      <text x="40" y="50" text-anchor="middle" font-family="Italiana" font-size="10" fill="#a67c3d" letter-spacing="1">2019</text>
+    </svg>
+    <span class="kicker">Private Chef · Nairobi & Coastal Kenya</span>
+    <h1>Dinner, cooked in your own kitchen.</h1>
+    <p>A tasting menu built around what you love, served at your table, for as few as two or as many as forty.</p>
+    <div class="hero-ctas">
+      <a href="#events" class="btn btn-primary">Inquire About Your Event</a>
+      <a href="#menu" class="btn btn-ghost">See a Sample Menu</a>
+    </div>
+  </section>
+
+  <section class="menu wrap" id="menu">
+    <div class="menu-head">
+      <span class="kicker">A Sample Evening</span>
+      <h2>Five Courses, One Story</h2>
+    </div>
+    <div class="courses">
+      <div class="course"><span class="num">I.</span><div><h3>Amuse-Bouche</h3><p>Charred corn custard, brown butter, chili oil</p></div></div>
+      <div class="course"><span class="num">II.</span><div><h3>First</h3><p>Hand-cut tartare, preserved lemon, capers</p></div></div>
+      <div class="course"><span class="num">III.</span><div><h3>Second</h3><p>Slow-roast squash, burnt honey, sage</p></div></div>
+      <div class="course"><span class="num">IV.</span><div><h3>Main</h3><p>Dry-aged short rib, bone jus, charred leek</p></div></div>
+      <div class="course"><span class="num">V.</span><div><h3>Dessert</h3><p>Brown butter tart, cultured cream</p></div></div>
+    </div>
+  </section>
+
+  <section class="about wrap" id="about">
+    <div class="about-grid">
+      <div class="chef-frame"></div>
+      <div class="about-text">
+        <h2>Chef Amara Njoroge</h2>
+        <p>Trained in Lyon, ten years in restaurant kitchens across three countries, and now cooking exclusively for private tables. Every menu starts with a conversation — what you're celebrating, what you can't eat, and what you've been craving.</p>
+        <p>Bookings open six weeks out for weekends, sooner for weekdays.</p>
+        <div class="sig">— A. Njoroge</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="events wrap" id="events">
+    <div class="events-grid">
+      <div class="events-text">
+        <h2>Book an event</h2>
+        <p>Tell us the occasion and headcount — we'll follow up with a custom menu and quote within two days.</p>
+      </div>
+      <form>
+        <div class="form-row">
+          <div><label for="c-name">Name</label><input id="c-name" type="text" required></div>
+          <div><label for="c-date">Preferred Date</label><input id="c-date" type="date" required></div>
+        </div>
+        <div class="form-row">
+          <div><label for="c-guests">Guest Count</label><select id="c-guests"><option>2–4</option><option>5–8</option><option>9–15</option><option>16+</option></select></div>
+          <div><label for="c-occasion">Occasion</label><input id="c-occasion" type="text" placeholder="Birthday, anniversary, corporate…"></div>
+        </div>
+        <div class="form-row">
+          <div class="full"><label for="c-diet">Dietary Preferences</label><textarea id="c-diet" placeholder="Allergies, restrictions, anything to avoid"></textarea></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="logo">The Tasting Table</div>
+  <p>Nairobi & Coastal Kenya, by appointment</p>
+  <p>+254 700 000 000 · book@tastingtable.co.ke</p>
+  <div class="fine">
+    <span>© 2026 The Tasting Table</span>
+    <span>Template by lcn254</span>
+  </div>
+</footer>
+
+</body>
+</html>

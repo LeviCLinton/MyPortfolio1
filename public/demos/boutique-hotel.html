@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Marlow — Boutique Stays, Nairobi</title>
+<meta name="description" content="Nine rooms, one address. Hotel Marlow, a boutique stay in Karen, Nairobi." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#edeae2; --panel:#f7f5f0; --ink:#2b2622; --ink-dim:#726a5f;
+    --copper:#b98b76; --pine:#33473e; --line:#dcd6c8;
+    --display:'Marcellus',serif; --body:'Karla',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  ::selection{background:var(--pine);color:#fff}
+  :focus-visible{outline:2px solid var(--pine);outline-offset:3px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(237,234,226,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,5vw,64px)}
+  .logo{font-family:var(--display);font-size:1.4rem;letter-spacing:.03em}
+  .navlinks{display:none;gap:32px;font-size:.85rem;letter-spacing:.04em;list-style:none;text-transform:uppercase}
+  @media(min-width:820px){.navlinks{display:flex}}
+  .navlinks a{text-decoration:none;color:var(--ink-dim)}
+  .navlinks a:hover{color:var(--pine)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;padding:13px 24px;text-decoration:none;transition:.2s}
+  .btn-primary{background:var(--pine);color:#fff}
+  .btn-primary:hover{background:#243731}
+  .btn-outline{border:1px solid var(--ink);color:var(--ink)}
+
+  /* HERO */
+  .hero{padding:clamp(50px,8vw,90px) 0 clamp(60px,7vw,90px)}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:40px}
+  @media(min-width:920px){.hero-grid{grid-template-columns:1fr 1.1fr;align-items:end}}
+  .hero .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);display:block;margin-bottom:16px}
+  .hero h1{font-family:var(--display);font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.08;margin-bottom:22px}
+  .hero p{max-width:42ch;color:var(--ink-dim);margin-bottom:30px}
+  .frame{position:relative;border:1px solid var(--copper);padding:10px}
+  .frame-inner{aspect-ratio:4/3;background:linear-gradient(155deg,#3d5148,#22302a 60%,#1a2521);position:relative;overflow:hidden}
+  .frame-inner svg{position:absolute;inset:0;margin:auto}
+  .frame-tag{position:absolute;bottom:-14px;left:24px;background:var(--bg);border:1px solid var(--copper);padding:6px 16px;font-family:var(--display);font-size:.9rem;letter-spacing:.1em}
+
+  /* ROOMS */
+  .rooms{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .section-head{max-width:600px;margin-bottom:44px}
+  .section-head .eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);display:block;margin-bottom:12px}
+  .section-head h2{font-family:var(--display);font-size:clamp(2rem,4.4vw,2.8rem)}
+  .room-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px}
+  .room-card{position:relative}
+  .room-img{aspect-ratio:5/4;position:relative;overflow:hidden;border:1px solid var(--line)}
+  .room-img .bg{position:absolute;inset:0}
+  .room-img .plaque{position:absolute;top:16px;right:16px;background:var(--pine);color:#f2ede0;font-family:var(--display);font-size:.82rem;letter-spacing:.08em;padding:6px 12px;border:1px solid var(--copper)}
+  .room-card h3{font-family:var(--display);font-size:1.35rem;margin:18px 0 6px}
+  .room-card .desc{font-size:.9rem;color:var(--ink-dim);margin-bottom:10px}
+  .room-card .price{font-size:.88rem;color:var(--pine);font-weight:600}
+
+  /* TOUR STRIP */
+  .tour{padding:clamp(50px,7vw,80px) 0;border-top:1px solid var(--line);text-align:center}
+  .tour h2{font-family:var(--display);font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:16px}
+  .tour p{color:var(--ink-dim);max-width:46ch;margin:0 auto 30px}
+
+  /* BOOK */
+  .book{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
+  .book-grid{display:grid;grid-template-columns:1fr;gap:40px}
+  @media(min-width:900px){.book-grid{grid-template-columns:.9fr 1.1fr}}
+  .book h2{font-family:var(--display);font-size:clamp(2rem,4.4vw,2.6rem);margin-bottom:14px}
+  .book p{color:var(--ink-dim);max-width:40ch}
+  .avail{background:var(--panel);border:1px solid var(--line);padding:32px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media(max-width:520px){.form-row{grid-template-columns:1fr}}
+  label{display:block;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:8px}
+  input,select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:12px 14px;font-family:var(--body);font-size:.95rem}
+  input:focus,select:focus{border-color:var(--copper)}
+  .avail button{margin-top:6px;width:100%;justify-content:center;border:none;cursor:pointer}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 32px}
+  .foot-grid{display:grid;grid-template-columns:1fr;gap:24px}
+  @media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
+  footer h3{font-family:var(--display);font-size:1.1rem;margin-bottom:12px}
+  footer p, footer a{font-size:.9rem;color:var(--ink-dim);text-decoration:none}
+  .fine{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.8rem;color:var(--ink-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo">Hotel Marlow</a>
+    <ul class="navlinks">
+      <li><a href="#rooms">Rooms</a></li>
+      <li><a href="#tour">The Property</a></li>
+      <li><a href="#book">Availability</a></li>
+    </ul>
+    <a href="#book" class="btn btn-primary">Check Availability</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Nine Rooms · Karen, Nairobi</span>
+        <h1>A house, not a hotel.</h1>
+        <p>Marlow keeps to nine rooms so every stay feels looked-after. Garden views, quiet mornings, and a front desk that remembers your name by day two.</p>
+        <a href="#book" class="btn btn-primary">Check Availability</a>
+      </div>
+      <div class="frame">
+        <div class="frame-inner">
+          <svg width="60%" viewBox="0 0 100 100" opacity=".35"><rect x="20" y="30" width="60" height="45" fill="none" stroke="#b98b76" stroke-width="1"/><path d="M20 30 L50 12 L80 30" fill="none" stroke="#b98b76" stroke-width="1"/></svg>
+        </div>
+        <span class="frame-tag">No. 04 — Garden Suite</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="rooms wrap" id="rooms">
+    <div class="section-head">
+      <span class="eyebrow">The Rooms</span>
+      <h2>Every room, numbered and known.</h2>
+    </div>
+    <div class="room-grid">
+      <div class="room-card">
+        <div class="room-img">
+          <div class="bg" style="position:absolute;inset:0;background:linear-gradient(160deg,#e2dccb,#c7bfa6)"></div>
+          <span class="plaque">No. 02</span>
+        </div>
+        <h3>Courtyard Room</h3>
+        <p class="desc">King bed, private courtyard, ground floor.</p>
+        <p class="price">From KSh 12,000 / night</p>
+      </div>
+      <div class="room-card">
+        <div class="room-img">
+          <div class="bg" style="position:absolute;inset:0;background:linear-gradient(160deg,#d8cdb6,#a99a7c)"></div>
+          <span class="plaque">No. 04</span>
+        </div>
+        <h3>Garden Suite</h3>
+        <p class="desc">Separate sitting room, garden-facing balcony.</p>
+        <p class="price">From KSh 18,500 / night</p>
+      </div>
+      <div class="room-card">
+        <div class="room-img">
+          <div class="bg" style="position:absolute;inset:0;background:linear-gradient(160deg,#ccbfa0,#93826a)"></div>
+          <span class="plaque">No. 07</span>
+        </div>
+        <h3>The Loft</h3>
+        <p class="desc">Top floor, vaulted ceiling, clawfoot tub.</p>
+        <p class="price">From KSh 22,000 / night</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tour wrap" id="tour">
+    <span class="eyebrow">The Property</span>
+    <h2>Take the virtual tour</h2>
+    <p>A short walk through the grounds, the rooms, and the breakfast room — filmed exactly as it looks on arrival.</p>
+    <a href="#" class="btn btn-outline">Watch the Room Tour</a>
+  </section>
+
+  <section class="book wrap" id="book">
+    <div class="book-grid">
+      <div>
+        <h2>Check availability</h2>
+        <p>Real-time rates, direct with the property — no booking fee.</p>
+      </div>
+      <div class="avail">
+        <div class="form-row">
+          <div><label for="ci">Check-in</label><input id="ci" type="date"></div>
+          <div><label for="co">Check-out</label><input id="co" type="date"></div>
+        </div>
+        <div class="form-row">
+          <div><label for="guests">Guests</label><select id="guests"><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4+ guests</option></select></div>
+          <div><label for="room">Room type</label><select id="room"><option>Any available</option><option>Courtyard Room</option><option>Garden Suite</option><option>The Loft</option></select></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Check Availability</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-grid">
+    <div>
+      <h3>Hotel Marlow</h3>
+      <p style="max-width:34ch">14 Marlow Close, Karen, Nairobi.</p>
+    </div>
+    <div>
+      <h3>Direct Booking</h3>
+      <p>reservations@hotelmarlow.co.ke</p>
+      <p>+254 700 000 000</p>
+    </div>
+    <div>
+      <h3>Front Desk</h3>
+      <p>Available 24 hours</p>
+    </div>
+  </div>
+  <div class="fine">
+    <span>© 2026 Hotel Marlow</span>
+    <span>Template by lcn254</span>
+  </div>
+</footer>
+
+</body>
+</html>
