@@ -396,16 +396,17 @@ function TemplateCard({ template, index, onDeploy }) {
               </li>
             ))}
           </ul>
-
           <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-5">
-          href={`${import.meta.env.BASE_URL}${TEMPLATE_TO_DEMO_PATH[template.id]}`}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
->
-  <PlayCircle className="h-4 w-4" />
-  Live Demo
-</a>
+            
+              href={`${import.meta.env.BASE_URL}${TEMPLATE_TO_DEMO_PATH[template.id]}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+            >
+              <PlayCircle className="h-4 w-4" />
+              Live Demo
+            </a>
+        
             <button
               type="button"
               onClick={() => onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id])}
