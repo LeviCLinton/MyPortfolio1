@@ -397,7 +397,7 @@ function TemplateCard({ template, index, onDeploy }) {
             ))}
           </ul>
           <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-5">
-            
+            <a
               href={`${import.meta.env.BASE_URL}${TEMPLATE_TO_DEMO_PATH[template.id]}`}
               target="_blank"
               rel="noopener noreferrer"
