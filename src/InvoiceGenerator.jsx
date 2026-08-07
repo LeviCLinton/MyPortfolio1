@@ -335,6 +335,15 @@ export default function InvoiceGenerator() {
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 mt-3">
               <SectionHeading>Line Items</SectionHeading>
               <div className="space-y-3 mb-4">
+                {/* Column headers */}
+                <div className="grid grid-cols-12 gap-2 px-1">
+                  <span className="col-span-4 text-xs font-semibold uppercase tracking-widest text-slate-500">Description</span>
+                  <span className="col-span-2 text-xs font-semibold uppercase tracking-widest text-slate-500">Qty</span>
+                  <span className="col-span-2 text-xs font-semibold uppercase tracking-widest text-slate-500">Unit Price</span>
+                  <span className="col-span-2 text-xs font-semibold uppercase tracking-widest text-slate-500">Disc %</span>
+                  <span className="col-span-1 text-xs font-semibold uppercase tracking-widest text-slate-500 text-right">Amount</span>
+                  <span className="col-span-1"></span>
+                </div>
                 {items.map((item, idx) => (
                   <div key={idx} className="grid grid-cols-12 gap-2 items-center">
                     <input className={inputCls + " col-span-4"} placeholder="Description" value={item.description} onChange={e => updateItem(idx, "description", e.target.value)} />
