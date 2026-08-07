@@ -55,7 +55,7 @@ function calcTotals(items, taxRate, globalDiscount, deposit) {
 // After deploying the worker, paste its URL here.
 // e.g. "https://lcn254-api-proxy.YOUR-SUBDOMAIN.workers.dev"
 // ─────────────────────────────────────────────
-const WORKER_URL = "https://lcn254-api-proxy.YOUR-SUBDOMAIN.workers.dev";
+const WORKER_URL = "https://lcn254-api-proxy.levnyan2018.workers.dev";
 
 // ─────────────────────────────────────────────
 // AI generation — calls the secure worker proxy, NOT Anthropic directly.
