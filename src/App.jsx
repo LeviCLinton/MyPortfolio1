@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import {
   Sparkles,
   UtensilsCrossed,
@@ -200,6 +201,47 @@ const TEMPLATES = [
 ];
 
 // ---------------------------------------------------------------------------
+// INVOICE AD BANNER — shown between hero and gallery on the main page
+// ---------------------------------------------------------------------------
+function InvoiceAdBanner() {
+  return (
+    <div className="relative overflow-hidden border-y border-white/5 px-6 py-8 lg:px-12">
+      <div className="pointer-events-none absolute inset-0" style={{
+        background: "linear-gradient(135deg, rgba(26,163,176,0.08) 0%, rgba(240,64,154,0.08) 100%)"
+      }} />
+      <div className="relative mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+            style={{ background: "rgba(26,163,176,0.15)" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3FC1CB" strokeWidth="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+            </svg>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-sm font-bold text-white">✦ AI Invoice Generator</span>
+              <span className="rounded-full px-2 py-0.5 text-xs font-bold"
+                style={{ background: "rgba(240,64,154,0.2)", color: "#F778B6" }}>NEW</span>
+            </div>
+            <p className="text-xs text-slate-400 max-w-md">
+              Generate professional invoices, quotes, receipts & 8 more financial documents with AI. Download as PDF for just $1.
+            </p>
+          </div>
+        </div>
+        <a
+          href="#invoice"
+          className="shrink-0 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-slate-950 transition-transform hover:scale-[1.03]"
+          style={{ background: "linear-gradient(135deg, #1AA3B0, #F0409A)" }}
+        >
+          Try it now →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Shared background glow — reused behind hero, gallery, and contact so the
 // three sections read as one continuous canvas rather than stacked blocks.
 // ---------------------------------------------------------------------------
@@ -238,6 +280,9 @@ function Nav() {
         <nav className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
           <a href="#gallery" className="transition-colors hover:text-white">
             Templates
+          </a>
+          <a href="#invoice" className="transition-colors hover:text-white font-medium" style={{ color: "#3FC1CB" }}>
+            ✦ Invoice Generator
           </a>
           <a href="#contact" className="transition-colors hover:text-white">
             Contact
@@ -752,19 +797,31 @@ function Contact({ prefilledBusiness }) {
 // ---------------------------------------------------------------------------
 function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-slate-950 px-6 py-8 lg:px-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row">
-        <p>© {new Date().getFullYear()} lcn254. All rights reserved.</p>
-        <div className="flex items-center gap-6">
-          <a href="#gallery" className="transition-colors hover:text-white">
-            Templates
-          </a>
-          <a href="#contact" className="transition-colors hover:text-white">
-            Contact
-          </a>
-          <a href="#" className="transition-colors hover:text-white">
-            Privacy Policy
-          </a>
+    <footer className="border-t border-white/5 bg-slate-950 px-6 py-10 lg:px-12">
+      <div className="mx-auto max-w-6xl">
+        {/* Invoice ad strip */}
+        <div className="mb-8 rounded-2xl border border-white/5 p-5"
+          style={{ background: "linear-gradient(135deg, rgba(26,163,176,0.08), rgba(240,64,154,0.08))" }}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-bold text-white mb-1">✦ Need a professional invoice or quote?</p>
+              <p className="text-xs text-slate-400">Generate AI-powered financial documents in seconds. Invoices, receipts, POs & more — $1 per PDF.</p>
+            </div>
+            <a href="#invoice" className="shrink-0 text-sm font-bold px-5 py-2.5 rounded-xl text-slate-950 transition-transform hover:scale-[1.02]"
+              style={{ background: "linear-gradient(135deg, #1AA3B0, #F0409A)" }}>
+              Generate a Document →
+            </a>
+          </div>
+        </div>
+        {/* Bottom row */}
+        <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
+          <p>© {new Date().getFullYear()} lcn254. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <a href="#gallery" className="transition-colors hover:text-white">Templates</a>
+            <a href="#invoice" className="transition-colors hover:text-white" style={{ color: "#3FC1CB" }}>Invoice Generator</a>
+            <a href="#contact" className="transition-colors hover:text-white">Contact</a>
+            <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -776,9 +833,19 @@ function Footer() {
 // ---------------------------------------------------------------------------
 export default function LCN254Portfolio() {
   const [selectedBusiness, setSelectedBusiness] = useState("");
+  const [route, setRoute] = useState(
+    typeof window !== "undefined" ? window.location.hash : ""
+  );
 
-  // Called by a card's "Deploy This" button: pre-fills the contact form's
-  // business-type field, then scrolls the visitor straight to it.
+  useEffect(() => {
+    const onHash = () => setRoute(window.location.hash);
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  // Invoice generator page
+  if (route === "#invoice") return <InvoiceGenerator />;
+
   const handleDeploy = (businessType) => {
     setSelectedBusiness(businessType);
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
@@ -788,6 +855,7 @@ export default function LCN254Portfolio() {
     <div className="min-h-screen bg-slate-950 font-sans text-white antialiased">
       <Nav />
       <Hero />
+      <InvoiceAdBanner />
       <Gallery onDeploy={handleDeploy} />
       <Contact prefilledBusiness={selectedBusiness} />
       <Footer />
