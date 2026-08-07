@@ -1,0 +1,15 @@
+name = "lcn254-api-proxy"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Uncomment to enable KV-based rate limiting (create the namespace in the
+# Cloudflare dashboard first, then paste the id here):
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "YOUR_KV_NAMESPACE_ID"
+
+[vars]
+# Public variables (non-sensitive) go here.
+# ALLOWED_ORIGIN is set here; ANTHROPIC_API_KEY and PAYMENT_SECRET
+# are added as secrets via `wrangler secret put` (never put secrets in this file).
+ALLOWED_ORIGIN = "https://lcn254.site"
