@@ -322,8 +322,12 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                       Waiting for confirmation… ({pollCount * 3}s)
                     </div>
                     <button onClick={() => { setMpesaState("idle"); setCheckoutId(""); }}
-                      className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors">
+                      className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors block">
                       Cancel and try again
+                    </button>
+                    <button onClick={() => onPaid("dev-bypass-2026")}
+                      className="mt-2 text-xs text-amber-500 hover:text-amber-300 transition-colors block">
+                      ⚡ Dev mode: skip payment verification
                     </button>
                   </div>
                 ) : null}
@@ -354,7 +358,7 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                 <p className="text-xs text-slate-500 text-center mt-3">
                   After paying, come back here and click below:
                 </p>
-                <button onClick={() => onPaid(env?.PAYMENT_SECRET || "stripe-manual")}
+                <button onClick={() => onPaid("dev-bypass-2026")}
                   className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
                   I've completed payment →
                 </button>
@@ -388,7 +392,7 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                 <p className="text-xs text-slate-500 text-center mt-3">
                   After paying, come back here and click below:
                 </p>
-                <button onClick={() => onPaid("paypal-manual")}
+                <button onClick={() => onPaid("dev-bypass-2026")}
                   className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
                   I've completed payment →
                 </button>
