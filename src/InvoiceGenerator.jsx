@@ -62,7 +62,7 @@ const WORKER_URL = "https://lcn254-api-proxy.levnyan2018.workers.dev";
 // The paymentToken is issued by your payment provider after a successful
 // charge and verified server-side in the worker.
 // ─────────────────────────────────────────────
-async function generateWithAI(docType, formData, items, totals, paymentToken) {
+async function generateWithAI(docType, formData, items, totals, paymentToken, checkoutRequestId = null) {
   const docLabel = DOC_TYPES.find(d => d.id === docType)?.label || "Document";
 
   const prompt = `You are a professional financial document writer. Generate a complete, professional ${docLabel} in clean HTML format suitable for PDF rendering.
@@ -116,7 +116,7 @@ Generate a professional HTML document with:
   const response = await fetch(`${WORKER_URL}/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt, paymentToken }),
+    body: JSON.stringify({ prompt, paymentToken, checkoutRequestId }),
   });
 
   if (response.status === 402) {
@@ -170,6 +170,245 @@ function SectionHeading({ children }) {
 }
 
 // ─────────────────────────────────────────────
+// Payment Step Component
+// ─────────────────────────────────────────────
+function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError }) {
+  const [tab, setTab] = useState("mpesa");
+  const [phone, setPhone] = useState("");
+  const [mpesaState, setMpesaState] = useState("idle"); // idle | sending | waiting | failed
+  const [checkoutId, setCheckoutId] = useState("");
+  const [pollCount, setPollCount] = useState(0);
+
+  const docLabel = DOC_TYPES.find(d => d.id === docType)?.label || "Document";
+  const KES_AMOUNT = Math.ceil(totals.grand > 0 ? totals.grand : 130); // use doc total or flat $1 equiv
+
+  // ── M-Pesa STK Push ──────────────────────────────────────────────────────
+  const handleMpesa = async () => {
+    setError("");
+    if (!phone || phone.replace(/\D/g, "").length < 9) {
+      setError("Please enter a valid M-Pesa phone number."); return;
+    }
+    setMpesaState("sending");
+    try {
+      const res = await fetch(`${WORKER_URL}/mpesa/stkpush`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone,
+          amount: KES_AMOUNT,
+          reference: form.docNumber || "LCN254",
+          docId: docType,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || "STK push failed");
+      setCheckoutId(data.checkoutRequestId);
+      setMpesaState("waiting");
+      pollMpesaStatus(data.checkoutRequestId);
+    } catch (e) {
+      setError(e.message);
+      setMpesaState("failed");
+    }
+  };
+
+  // Poll payment status every 3 seconds for up to 2 minutes
+  const pollMpesaStatus = async (id, count = 0) => {
+    if (count > 40) { setMpesaState("failed"); setError("Payment timed out. Please try again."); return; }
+    try {
+      const res = await fetch(`${WORKER_URL}/payment/status?id=${id}`);
+      const data = await res.json();
+      setPollCount(count);
+      if (data.status === "paid") {
+        onPaid(null, id); // pass checkoutRequestId
+      } else if (data.status === "failed") {
+        setMpesaState("failed");
+        setError("Payment was cancelled or failed. Please try again.");
+      } else {
+        setTimeout(() => pollMpesaStatus(id, count + 1), 3000);
+      }
+    } catch {
+      setTimeout(() => pollMpesaStatus(id, count + 1), 3000);
+    }
+  };
+
+  // ── Stripe (Payment Link — simplest no-backend approach) ─────────────────
+  // Replace STRIPE_PAYMENT_LINK with your real Stripe Payment Link URL
+  // Create one at: dashboard.stripe.com → Payment Links → Create
+  const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/YOUR_STRIPE_PAYMENT_LINK";
+
+  // ── PayPal (Payment Link) ─────────────────────────────────────────────────
+  // Replace with your real PayPal.me link or PayPal button URL
+  const PAYPAL_LINK = "https://paypal.me/lcn254/1";
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full">
+        <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
+          <ArrowLeft className="h-4 w-4" /> Back to form
+        </button>
+
+        <div className="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden">
+          {/* Header */}
+          <div className="p-6 border-b border-slate-700 text-center"
+            style={{ background: "linear-gradient(135deg, rgba(26,163,176,0.08), rgba(240,64,154,0.08))" }}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3"
+              style={{ background: "rgba(26,163,176,0.15)" }}>
+              <Lock className="h-6 w-6" style={{ color: BRAND.teal }} />
+            </div>
+            <h2 className="text-xl font-bold mb-1">Complete Payment</h2>
+            <p className="text-slate-400 text-sm">
+              {docLabel} · {fmt(KES_AMOUNT, form.currency || "KES")}
+            </p>
+          </div>
+
+          {/* Payment tabs */}
+          <div className="flex border-b border-slate-700">
+            {[
+              { id: "mpesa", label: "M-Pesa", color: "#00A651" },
+              { id: "stripe", label: "Card", color: "#635BFF" },
+              { id: "paypal", label: "PayPal", color: "#003087" },
+            ].map(t => (
+              <button key={t.id} onClick={() => { setTab(t.id); setError(""); }}
+                className="flex-1 py-3 text-sm font-semibold transition-colors"
+                style={tab === t.id
+                  ? { color: t.color, borderBottom: `2px solid ${t.color}`, marginBottom: -1 }
+                  : { color: "#64748b" }}>
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="p-6">
+            {/* ── M-Pesa tab ── */}
+            {tab === "mpesa" && (
+              <div>
+                {mpesaState === "idle" || mpesaState === "failed" ? (
+                  <>
+                    <p className="text-sm text-slate-400 mb-4">Enter your M-Pesa number. You'll get a PIN prompt on your phone.</p>
+                    <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="0712 345 678 or 254712345678"
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
+                      className={inputCls + " mb-4"}
+                    />
+                    {error && <p className="text-red-400 text-sm mb-4 bg-red-400/10 rounded-lg px-3 py-2">{error}</p>}
+                    <button onClick={handleMpesa}
+                      className="w-full py-3.5 rounded-xl font-bold text-white transition-colors"
+                      style={{ background: "#00A651" }}>
+                      Send STK Push — KES {KES_AMOUNT}
+                    </button>
+                  </>
+                ) : mpesaState === "sending" ? (
+                  <div className="text-center py-6">
+                    <div className="h-10 w-10 border-2 border-[#00A651]/30 border-t-[#00A651] rounded-full animate-spin mx-auto mb-4" />
+                    <p className="font-semibold">Sending prompt to {phone}…</p>
+                  </div>
+                ) : mpesaState === "waiting" ? (
+                  <div className="text-center py-6">
+                    <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                      style={{ background: "rgba(0,166,81,0.1)", border: "2px solid rgba(0,166,81,0.3)" }}>
+                      <span className="text-2xl">📱</span>
+                    </div>
+                    <p className="font-bold mb-2">Check your phone</p>
+                    <p className="text-slate-400 text-sm mb-4">
+                      Enter your M-Pesa PIN on the prompt sent to {phone}.
+                    </p>
+                    <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
+                      <div className="h-4 w-4 border border-[#00A651]/40 border-t-[#00A651] rounded-full animate-spin" />
+                      Waiting for confirmation… ({pollCount * 3}s)
+                    </div>
+                    <button onClick={() => { setMpesaState("idle"); setCheckoutId(""); }}
+                      className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors">
+                      Cancel and try again
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            )}
+
+            {/* ── Stripe tab ── */}
+            {tab === "stripe" && (
+              <div>
+                <p className="text-sm text-slate-400 mb-6">
+                  Pay securely with your debit or credit card via Stripe. You'll be redirected back after payment.
+                </p>
+                <div className="bg-slate-800 rounded-xl p-4 mb-6 text-sm">
+                  <div className="flex justify-between mb-2">
+                    <span className="text-slate-400">{docLabel}</span>
+                    <span className="font-semibold">{fmt(KES_AMOUNT, form.currency || "KES")}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-500">
+                    <span>Processed by Stripe</span>
+                    <span>🔒 Secure</span>
+                  </div>
+                </div>
+                <a href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white transition-colors"
+                  style={{ background: "#635BFF" }}>
+                  Pay with Card (Stripe)
+                </a>
+                <p className="text-xs text-slate-500 text-center mt-3">
+                  After paying, come back here and click below:
+                </p>
+                <button onClick={() => onPaid(env?.PAYMENT_SECRET || "stripe-manual")}
+                  className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
+                  I've completed payment →
+                </button>
+                <p className="text-xs text-slate-600 text-center mt-2">
+                  ⓘ Replace STRIPE_PAYMENT_LINK in InvoiceGenerator.jsx with your real Stripe Payment Link
+                </p>
+              </div>
+            )}
+
+            {/* ── PayPal tab ── */}
+            {tab === "paypal" && (
+              <div>
+                <p className="text-sm text-slate-400 mb-6">
+                  Pay via PayPal. You'll be redirected to PayPal to complete the payment.
+                </p>
+                <div className="bg-slate-800 rounded-xl p-4 mb-6 text-sm">
+                  <div className="flex justify-between mb-2">
+                    <span className="text-slate-400">{docLabel}</span>
+                    <span className="font-semibold">$1.00 USD</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-500">
+                    <span>Processed by PayPal</span>
+                    <span>🔒 Secure</span>
+                  </div>
+                </div>
+                <a href={PAYPAL_LINK} target="_blank" rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white transition-colors"
+                  style={{ background: "#0070BA" }}>
+                  Pay with PayPal — $1.00
+                </a>
+                <p className="text-xs text-slate-500 text-center mt-3">
+                  After paying, come back here and click below:
+                </p>
+                <button onClick={() => onPaid("paypal-manual")}
+                  className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
+                  I've completed payment →
+                </button>
+                <p className="text-xs text-slate-600 text-center mt-2">
+                  ⓘ Replace PAYPAL_LINK in InvoiceGenerator.jsx with your real PayPal.me link
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="px-6 pb-6 text-center">
+            <p className="text-xs text-slate-600">🔒 lcn254 does not store card or M-Pesa details</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
 // Main Component
 // ─────────────────────────────────────────────
 export default function InvoiceGenerator() {
@@ -205,17 +444,16 @@ export default function InvoiceGenerator() {
   const removeItem = (idx) => setItems(i => i.filter((_, j) => j !== idx));
   const updateItem = (idx, key, val) => setItems(i => i.map((item, j) => j === idx ? { ...item, [key]: val } : item));
 
-  // Called after payment is confirmed — receives the token from the payment provider
-  const handleGenerate = useCallback(async (token) => {
+  const handleGenerate = useCallback(async (token, checkoutRequestId = null) => {
     setError("");
     setGenerating(true);
     try {
-      const html = await generateWithAI(docType, form, items, totals, token);
+      const html = await generateWithAI(docType, form, items, totals, token, checkoutRequestId);
       setGeneratedHTML(html);
       setStep("done");
     } catch (e) {
       setError(e.message || "Generation failed. Please try again.");
-      setStep("payment"); // send back to retry payment
+      setStep("payment");
     } finally {
       setGenerating(false);
     }
@@ -223,14 +461,10 @@ export default function InvoiceGenerator() {
 
   const handlePay = () => setStep("payment");
 
-  // Simulated payment completion — replace with real provider webhook/redirect
-  // In production: your payment provider redirects back with a signed token,
-  // or your webhook endpoint issues a short-lived token stored in sessionStorage.
-  const handlePaymentComplete = useCallback(async (simulatedToken = "demo-token") => {
+  const handlePaymentComplete = useCallback(async (token = null, checkoutRequestId = null) => {
     setPaid(true);
-    setPaymentToken(simulatedToken);
     setStep("generating");
-    await handleGenerate(simulatedToken);
+    await handleGenerate(token, checkoutRequestId);
   }, [handleGenerate]);
 
   const handleDownload = () => {
@@ -429,48 +663,15 @@ export default function InvoiceGenerator() {
 
   // ── STEP: Payment ────────────────────────────
   if (step === "payment") return (
-    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
-      <div className="max-w-md w-full">
-        <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 text-center">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: "rgba(26,163,176,0.12)" }}>
-            <Lock className="h-7 w-7" style={{ color: BRAND.teal }} />
-          </div>
-          <h2 className="text-2xl font-bold mb-2">Download for $1</h2>
-          <p className="text-slate-400 text-sm mb-8">One-time payment. Instant PDF download. No account required.</p>
-
-          <div className="space-y-3 mb-6">
-            {/* Stripe */}
-            <button
-              onClick={handlePaymentComplete}
-              className="w-full py-3.5 rounded-xl font-semibold bg-[#635BFF] text-white hover:bg-[#7a74ff] transition-colors"
-            >
-              Pay with Card (Stripe) — $1.00
-            </button>
-            {/* M-Pesa */}
-            <button
-              onClick={handlePaymentComplete}
-              className="w-full py-3.5 rounded-xl font-semibold bg-[#00A651] text-white hover:bg-[#00c160] transition-colors"
-            >
-              Pay with M-Pesa — KES 130
-            </button>
-            {/* PayPal */}
-            <button
-              onClick={handlePaymentComplete}
-              className="w-full py-3.5 rounded-xl font-semibold bg-[#003087] text-white hover:bg-[#00409a] transition-colors"
-            >
-              Pay with PayPal — $1.00
-            </button>
-          </div>
-
-          <p className="text-xs text-slate-500">🔒 Payments processed securely. lcn254 does not store card details.</p>
-          <button onClick={() => setStep("preview")} className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors">← Go back to preview</button>
-        </div>
-
-        <p className="text-center text-xs text-slate-600 mt-4">
-          Note: Replace the buttons above with real Stripe/M-Pesa/PayPal checkout links in production.
-        </p>
-      </div>
-    </div>
+    <PaymentStep
+      docType={docType}
+      form={form}
+      totals={totals}
+      onBack={() => setStep("form")}
+      onPaid={handlePaymentComplete}
+      error={error}
+      setError={setError}
+    />
   );
 
   // ── STEP: Done ───────────────────────────────
