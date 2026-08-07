@@ -51,9 +51,18 @@ function calcTotals(items, taxRate, globalDiscount, deposit) {
 }
 
 // ─────────────────────────────────────────────
-// AI generation via Claude API
+// Worker URL — your Cloudflare Worker endpoint.
+// After deploying the worker, paste its URL here.
+// e.g. "https://lcn254-api-proxy.YOUR-SUBDOMAIN.workers.dev"
 // ─────────────────────────────────────────────
-async function generateWithAI(docType, formData, items, totals) {
+const WORKER_URL = "https://lcn254-api-proxy.YOUR-SUBDOMAIN.workers.dev";
+
+// ─────────────────────────────────────────────
+// AI generation — calls the secure worker proxy, NOT Anthropic directly.
+// The paymentToken is issued by your payment provider after a successful
+// charge and verified server-side in the worker.
+// ─────────────────────────────────────────────
+async function generateWithAI(docType, formData, items, totals, paymentToken) {
   const docLabel = DOC_TYPES.find(d => d.id === docType)?.label || "Document";
 
   const prompt = `You are a professional financial document writer. Generate a complete, professional ${docLabel} in clean HTML format suitable for PDF rendering.
@@ -104,21 +113,23 @@ Generate a professional HTML document with:
 9. Use @page CSS for proper PDF margins
 10. Return ONLY the complete HTML document starting with <!doctype html> — no markdown, no explanation`;
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch(`${WORKER_URL}/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 4000,
-      messages: [{ role: "user", content: prompt }],
-    }),
+    body: JSON.stringify({ prompt, paymentToken }),
   });
 
-  if (!response.ok) throw new Error(`API error: ${response.status}`);
+  if (response.status === 402) {
+    throw new Error("Payment required before generating the document.");
+  }
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || `Server error: ${response.status}`);
+  }
+
   const data = await response.json();
-  const text = data.content?.find(b => b.type === "text")?.text || "";
-  // Strip markdown fences if present
-  return text.replace(/^```html?\n?/i, "").replace(/\n?```$/,"").trim();
+  const text = data.result || "";
+  return text.replace(/^```html?\n?/i, "").replace(/\n?```$/, "").trim();
 }
 
 // ─────────────────────────────────────────────
@@ -185,6 +196,7 @@ export default function InvoiceGenerator() {
   const [generatedHTML, setGeneratedHTML] = useState("");
   const [error, setError] = useState("");
   const [paid, setPaid] = useState(false);
+  const [paymentToken, setPaymentToken] = useState("");
 
   const setF = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const totals = calcTotals(items, form.taxRate, form.globalDiscount, form.deposit);
@@ -193,29 +205,33 @@ export default function InvoiceGenerator() {
   const removeItem = (idx) => setItems(i => i.filter((_, j) => j !== idx));
   const updateItem = (idx, key, val) => setItems(i => i.map((item, j) => j === idx ? { ...item, [key]: val } : item));
 
-  const handleGenerate = useCallback(async () => {
+  // Called after payment is confirmed — receives the token from the payment provider
+  const handleGenerate = useCallback(async (token) => {
     setError("");
     setGenerating(true);
     try {
-      const html = await generateWithAI(docType, form, items, totals);
+      const html = await generateWithAI(docType, form, items, totals, token);
       setGeneratedHTML(html);
-      setStep("preview");
+      setStep("done");
     } catch (e) {
       setError(e.message || "Generation failed. Please try again.");
+      setStep("payment"); // send back to retry payment
     } finally {
       setGenerating(false);
     }
   }, [docType, form, items, totals]);
 
-  const handlePay = () => {
-    // Payment simulation — replace with real Stripe/M-Pesa integration
-    setStep("payment");
-  };
+  const handlePay = () => setStep("payment");
 
-  const handlePaymentComplete = () => {
+  // Simulated payment completion — replace with real provider webhook/redirect
+  // In production: your payment provider redirects back with a signed token,
+  // or your webhook endpoint issues a short-lived token stored in sessionStorage.
+  const handlePaymentComplete = useCallback(async (simulatedToken = "demo-token") => {
     setPaid(true);
-    setStep("done");
-  };
+    setPaymentToken(simulatedToken);
+    setStep("generating");
+    await handleGenerate(simulatedToken);
+  }, [handleGenerate]);
 
   const handleDownload = () => {
     const docLabel = DOC_TYPES.find(d => d.id === docType)?.label || "Document";
@@ -370,65 +386,34 @@ export default function InvoiceGenerator() {
           {error && <p className="mt-4 text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">{error}</p>}
 
           <button
-            onClick={handleGenerate}
-            disabled={generating || !form.issuerName || !form.clientName}
+            onClick={handlePay}
+            disabled={!form.issuerName || !form.clientName || items.every(i => !i.description)}
             className="w-full mt-6 flex items-center justify-center gap-3 rounded-xl py-4 text-base font-bold text-slate-950 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01]"
-            style={{ background: generating ? "#555" : `linear-gradient(135deg, ${BRAND.teal}, ${BRAND.pink})` }}
+            style={{ background: `linear-gradient(135deg, ${BRAND.teal}, ${BRAND.pink})` }}
           >
-            {generating ? (
-              <><div className="h-5 w-5 border-2 border-slate-950/40 border-t-slate-950 rounded-full animate-spin" /> Generating with AI…</>
-            ) : (
-              <><Sparkles className="h-5 w-5" /> Generate Document with AI</>
-            )}
+            <Lock className="h-5 w-5" /> Pay $1 & Generate Document
           </button>
-          <p className="text-center text-xs text-slate-500 mt-3">AI generates the document · $1 to download as PDF</p>
+          <p className="text-center text-xs text-slate-500 mt-3">AI generates your document after payment · Instant PDF download</p>
         </div>
       </div>
     );
   }
 
-  // ── STEP: Preview ────────────────────────────
-  if (step === "preview") return (
-    <div className="min-h-screen bg-slate-950 text-white py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <button onClick={() => setStep("form")} className="flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
-          <ArrowLeft className="h-4 w-4" /> Back to edit
-        </button>
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-          <div>
-            <h2 className="text-2xl font-bold">Document Preview</h2>
-            <p className="text-slate-400 text-sm">Review your document before downloading</p>
-          </div>
-          <button
-            onClick={handlePay}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-slate-950 text-sm transition-transform hover:scale-[1.02]"
-            style={{ background: `linear-gradient(135deg, ${BRAND.teal}, ${BRAND.pink})` }}
-          >
-            <Lock className="h-4 w-4" /> Pay $1 & Download PDF
-          </button>
+  // ── STEP: Generating (post-payment spinner) ──
+  if (step === "generating") return (
+    <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4">
+      <div className="text-center">
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+          style={{ background: "rgba(26,163,176,0.12)" }}>
+          <div className="h-8 w-8 border-2 border-[#1AA3B0]/30 border-t-[#1AA3B0] rounded-full animate-spin" />
         </div>
-
-        {/* Blurred preview */}
-        <div className="relative rounded-2xl overflow-hidden border border-slate-700">
-          <div
-            className="pointer-events-none select-none"
-            style={{ filter: "blur(3px)", maxHeight: 600, overflow: "hidden" }}
-            dangerouslySetInnerHTML={{ __html: generatedHTML }}
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ background: "rgba(2,6,23,0.65)", backdropFilter: "blur(2px)" }}>
-            <Lock className="h-10 w-10 mb-4" style={{ color: BRAND.teal }} />
-            <p className="text-lg font-bold mb-2">Pay $1 to unlock your PDF</p>
-            <p className="text-slate-400 text-sm mb-6 text-center max-w-xs">Your document is ready. Pay once, download instantly — no subscription.</p>
-            <button
-              onClick={handlePay}
-              className="flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-slate-950 text-sm"
-              style={{ background: `linear-gradient(135deg, ${BRAND.teal}, ${BRAND.pink})` }}
-            >
-              <Lock className="h-4 w-4" /> Pay $1 & Download PDF
-            </button>
+        <h2 className="text-xl font-bold mb-2">Generating your document…</h2>
+        <p className="text-slate-400 text-sm">Claude AI is writing your {DOC_TYPES.find(d => d.id === docType)?.label}.<br />This takes about 10–20 seconds.</p>
+        {error && (
+          <div className="mt-6 text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3 max-w-md">
+            {error}
           </div>
-        </div>
-        <p className="text-center text-xs text-slate-500 mt-4">Powered by Claude AI · Secure payment · Instant download</p>
+        )}
       </div>
     </div>
   );
