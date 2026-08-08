@@ -250,9 +250,9 @@ function InvoiceAdBanner() {
 function AmbientGlow() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[100px]" />
-      <div className="absolute right-0 top-1/3 h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-[110px]" />
-      <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-[#F0409A]/10 blur-[100px]" />
+      <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[80px] will-change-auto" />
+      <div className="absolute right-0 top-1/3 h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-[90px] will-change-auto" />
+      <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-[#F0409A]/10 blur-[80px] will-change-auto" />
     </div>
   );
 }
@@ -348,7 +348,7 @@ function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
-          lcn254 builds ready-to-deploy, industry-specific websites for restaurants,
+          LCN254 builds ready-to-deploy, industry-specific websites for restaurants,
           clinics, hotels, and local service brands — responsive, payment-ready, and
           live within days, not months.
         </p>
@@ -392,8 +392,8 @@ function TemplateCard({ template, index, onDeploy }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
-      transition={{ duration: 0.35, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -8 }}
+      transition={{ duration: 0.28, delay: index * 0.025, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -4 }}
       className="group relative"
     >
       <div
@@ -533,13 +533,13 @@ function Gallery({ onDeploy }) {
           </div>
         </div>
 
-        <motion.div layout className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((t, i) => (
               <TemplateCard key={t.id} template={t} index={i} onDeploy={onDeploy} />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {visible.length === 0 && (
           <p className="py-20 text-center text-sm text-slate-500">
@@ -817,7 +817,7 @@ function Footer() {
         </div>
         {/* Bottom row */}
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
-          <p>© {new Date().getFullYear()} lcn254. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#gallery" className="transition-colors hover:text-white">Templates</a>
             <a href="#invoice" className="transition-colors hover:text-white" style={{ color: "#3FC1CB" }}>Invoice Generator</a>
@@ -857,7 +857,7 @@ function WelcomeSplash({ onDone }) {
     >
       {/* Ambient glows */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[100px]" />
+        <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[80px] will-change-auto" />
         <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-[#F0409A]/15 blur-[100px]" />
       </div>
 
@@ -883,7 +883,7 @@ function WelcomeSplash({ onDone }) {
         >
           Welcome to{" "}
           <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">
-            lcn254
+            LCN254
           </span>
         </h1>
 
@@ -935,7 +935,7 @@ function PrivacyPolicy() {
           {[
             {
               title: "1. Who We Are",
-              body: `lcn254 ("we", "us", "our") is a web design and development agency based in Nairobi, Kenya. We build and deploy websites for local businesses. Our website is lcn254.site and you can reach us at contact@lcn254.site.`
+              body: `LCN254 ("we", "us", "our") is a web design and development agency based in Nairobi, Kenya. We build and deploy websites for local businesses. Our website is lcn254.site and you can reach us at contact@lcn254.site.`
             },
             {
               title: "2. Information We Collect",
@@ -975,7 +975,7 @@ function PrivacyPolicy() {
             },
             {
               title: "11. Contact",
-              body: `Questions about this policy? Email us at contact@lcn254.site or write to us at: lcn254, Nairobi, Kenya.`
+              body: `Questions about this policy? Email us at contact@lcn254.site or write to us at: LCN254, Nairobi, Kenya.`
             },
           ].map(({ title, body }) => (
             <div key={title}>
