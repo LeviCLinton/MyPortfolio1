@@ -122,13 +122,32 @@ Generate a professional HTML document with:
   if (response.status === 402) {
     throw new Error("Payment required before generating the document.");
   }
+
+  // Read raw text first — never assume JSON
+  const rawText = await response.text();
+
   if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
-    throw new Error(err.error || `Server error: ${response.status}`);
+    // Try to parse as JSON error, fall back to raw text
+    try {
+      const errData = JSON.parse(rawText);
+      throw new Error(errData.error || `Server error: ${response.status}`);
+    } catch {
+      throw new Error(`Server error ${response.status}: ${rawText.slice(0, 200)}`);
+    }
   }
 
-  const data = await response.json();
+  // Parse the JSON wrapper from the worker
+  let data;
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    // Worker returned raw text — shouldn't happen but handle gracefully
+    throw new Error("Unexpected response from server. Check Cloudflare worker logs.");
+  }
+
   const text = data.result || "";
+  if (!text) throw new Error("AI returned an empty document. Please try again.");
+
   return text.replace(/^```html?\n?/i, "").replace(/\n?```$/, "").trim();
 }
 
