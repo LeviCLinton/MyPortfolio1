@@ -726,7 +726,7 @@ function Contact({ prefilledBusiness }) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">Chat on WhatsApp</p>
-                <p className="text-xs text-slate-400">Fastest way to reach us — +254 700 000 000</p>
+                <p className="text-xs text-slate-400">Fastest way to reach us — +254708015027</p>
               </div>
               <ArrowRight className="ml-auto h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-[#3FC1CB]" />
             </a>
@@ -751,7 +751,7 @@ function Contact({ prefilledBusiness }) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">Call</p>
-                <p className="text-xs text-slate-400">+254 700 000 000</p>
+                <p className="text-xs text-slate-400">+254 708015027</p>
               </div>
             </div>
 
