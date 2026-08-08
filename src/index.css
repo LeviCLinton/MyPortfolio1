@@ -8,4 +8,38 @@ html {
 
 body {
   background-color: #020617; /* slate-950 fallback before Tailwind loads */
+  /* Promote body to its own compositor layer for smoother scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent layout thrash from blur filters during scroll */
+.blur-\[80px\],
+.blur-\[90px\],
+.blur-\[100px\],
+.blur-\[110px\] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ensure sticky nav stays crisp during scroll */
+header {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Gallery cards — contain paint for smooth hover */
+.group {
+  contain: layout style;
 }
