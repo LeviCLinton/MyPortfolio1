@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import {
@@ -21,6 +21,8 @@ import {
   Clock,
   Send,
   MapPin,
+  Plus,
+  ArrowLeft,
 } from "lucide-react";
 
 // ---------------------------------------------------------------------------
@@ -726,7 +728,7 @@ function Contact({ prefilledBusiness }) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">Chat on WhatsApp</p>
-                <p className="text-xs text-slate-400">Fastest way to reach us — +254708015027</p>
+                <p className="text-xs text-slate-400">Fastest way to reach us — +254 700 000 000</p>
               </div>
               <ArrowRight className="ml-auto h-4 w-4 text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-[#3FC1CB]" />
             </a>
@@ -751,7 +753,7 @@ function Contact({ prefilledBusiness }) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-white">Call</p>
-                <p className="text-xs text-slate-400">+254 708015027</p>
+                <p className="text-xs text-slate-400">+254 700 000 000</p>
               </div>
             </div>
 
@@ -820,11 +822,279 @@ function Footer() {
             <a href="#gallery" className="transition-colors hover:text-white">Templates</a>
             <a href="#invoice" className="transition-colors hover:text-white" style={{ color: "#3FC1CB" }}>Invoice Generator</a>
             <a href="#contact" className="transition-colors hover:text-white">Contact</a>
-            <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
+            <a href="#faq" className="transition-colors hover:text-white">FAQ</a>
+            <a href="#privacy" className="transition-colors hover:text-white">Privacy Policy</a>
           </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// PAGE
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// WELCOME SPLASH — shown on first visit, fades out after 2.2s
+// ---------------------------------------------------------------------------
+function WelcomeSplash({ onDone }) {
+  const [phase, setPhase] = useState("in"); // in | out
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("out"), 1800);
+    const t2 = setTimeout(() => onDone(), 2400);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [onDone]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950"
+      style={{
+        transition: "opacity 0.6s ease",
+        opacity: phase === "out" ? 0 : 1,
+        pointerEvents: phase === "out" ? "none" : "all",
+      }}
+    >
+      {/* Ambient glows */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[100px]" />
+        <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-[#F0409A]/15 blur-[100px]" />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="relative flex flex-col items-center text-center px-6"
+      >
+        {/* Logo */}
+        <img
+          src={`${import.meta.env.BASE_URL}lcn254-logo.jpeg`}
+          alt="lcn254"
+          width="72"
+          height="72"
+          className="h-18 w-18 rounded-2xl object-cover mb-6 shadow-2xl"
+          style={{ width: 72, height: 72 }}
+        />
+
+        <h1
+          className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3"
+          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+        >
+          Welcome to{" "}
+          <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">
+            lcn254
+          </span>
+        </h1>
+
+        <p className="text-slate-400 text-base max-w-xs">
+          Deployment-ready websites for local businesses — built in Kenya, for Kenya.
+        </p>
+
+        {/* Animated loading bar */}
+        <div className="mt-10 w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full rounded-full"
+            style={{ background: "linear-gradient(90deg, #1AA3B0, #F0409A)" }}
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 1.7, ease: "linear" }}
+          />
+        </div>
+
+        <p className="mt-4 font-mono text-xs text-slate-600 uppercase tracking-widest">
+          dial +254 · locally built
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// PRIVACY POLICY PAGE
+// ---------------------------------------------------------------------------
+function PrivacyPolicy() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  return (
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Nav />
+      <div className="max-w-3xl mx-auto px-6 py-20 lg:px-12">
+        {/* Back */}
+        <a href="#" onClick={() => window.history.back()}
+          className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-10 transition-colors">
+          <ArrowLeft className="h-4 w-4" /> Back
+        </a>
+
+        <div className="mb-10">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-3">Legal</span>
+          <h1 className="text-4xl font-bold tracking-tight mb-4">Privacy Policy</h1>
+          <p className="text-slate-400 text-sm">Last updated: {new Date().toLocaleDateString("en-KE", { year: "numeric", month: "long", day: "numeric" })}</p>
+        </div>
+
+        <div className="prose prose-invert prose-slate max-w-none space-y-8 text-slate-300 leading-relaxed">
+          {[
+            {
+              title: "1. Who We Are",
+              body: `lcn254 ("we", "us", "our") is a web design and development agency based in Nairobi, Kenya. We build and deploy websites for local businesses. Our website is lcn254.site and you can reach us at contact@lcn254.site.`
+            },
+            {
+              title: "2. Information We Collect",
+              body: `We collect information you voluntarily provide through our contact form: your name, email address, phone number, and business type. If you use our AI Invoice Generator, we process the document details you enter (business names, line items, amounts) solely to generate your document — we do not store this data after your session ends.`
+            },
+            {
+              title: "3. How We Use Your Information",
+              body: `We use your contact form submissions to respond to your inquiries and quote requests. We do not use your information for marketing without your consent, and we do not sell your data to any third party under any circumstances.`
+            },
+            {
+              title: "4. Payments",
+              body: `Payments for our Invoice Generator are processed by third-party providers (Stripe, M-Pesa via Safaricom Daraja, and PayPal). We do not store your card details or M-Pesa PIN. Each provider's own privacy policy governs how they handle your payment data. M-Pesa is operated by Safaricom PLC and subject to Kenyan data protection laws.`
+            },
+            {
+              title: "5. Cookies & Analytics",
+              body: `Our website does not use tracking cookies or analytics platforms that identify individual users. We may review aggregate traffic data (page views, referrer sources) via GitHub Pages' built-in reporting, which does not expose personal information.`
+            },
+            {
+              title: "6. Data Storage & Security",
+              body: `Contact form submissions are delivered to our email inbox (contact@lcn254.site via Zoho Mail) and are not stored in any third-party database. AI invoice generation requests are processed through a Cloudflare Worker and are not logged or retained. We apply reasonable technical measures to protect data in transit.`
+            },
+            {
+              title: "7. Third-Party Services",
+              body: `Our website uses Google Fonts (loaded from Google's CDN) and Framer Motion (bundled locally). The Invoice Generator uses the Anthropic Claude API to generate document text — prompts are sent securely to Anthropic's servers and are subject to Anthropic's privacy policy. We do not share personal identifiers with Anthropic.`
+            },
+            {
+              title: "8. Your Rights (Kenya Data Protection Act 2019)",
+              body: `Under the Kenya Data Protection Act 2019, you have the right to access, correct, or request deletion of any personal data we hold about you. To exercise these rights, email us at contact@lcn254.site with the subject line "Data Request". We will respond within 14 days.`
+            },
+            {
+              title: "9. Children's Privacy",
+              body: `Our services are not directed at children under the age of 18. We do not knowingly collect personal information from minors.`
+            },
+            {
+              title: "10. Changes to This Policy",
+              body: `We may update this policy from time to time. Material changes will be reflected in the "Last updated" date above. Continued use of the site after changes constitutes acceptance of the updated policy.`
+            },
+            {
+              title: "11. Contact",
+              body: `Questions about this policy? Email us at contact@lcn254.site or write to us at: lcn254, Nairobi, Kenya.`
+            },
+          ].map(({ title, body }) => (
+            <div key={title}>
+              <h2 className="text-lg font-semibold text-white mb-3">{title}</h2>
+              <p className="text-slate-400">{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// FAQ SECTION
+// ---------------------------------------------------------------------------
+const FAQS = [
+  {
+    q: "How long does it take to launch my website?",
+    a: "Most template-based sites go live within 3–5 business days from the moment you confirm your content and branding. Custom builds are scoped individually — we'll give you a clear timeline during the discovery call."
+  },
+  {
+    q: "Do I own the website after it's built?",
+    a: "Yes. Once we hand it over, the site and all its code are yours. We can also manage hosting and updates for you on a monthly retainer if you prefer."
+  },
+  {
+    q: "Can I accept M-Pesa payments through my site?",
+    a: "Yes — all our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. We handle the integration as part of the build."
+  },
+  {
+    q: "What if I need something that isn't in the gallery?",
+    a: "Get in touch and describe what you need. We scope custom builds from scratch — same speed and quality standard, priced after a short discovery call."
+  },
+  {
+    q: "Do you offer hosting?",
+    a: "We deploy to fast, reliable infrastructure (GitHub Pages for static sites, Cloudflare Workers for server-side logic). Hosting is free for most sites. For more complex setups we'll recommend and configure the right platform."
+  },
+  {
+    q: "What does the AI Invoice Generator cost?",
+    a: "KES 130 (approx. $1) per document. You pay once and download your PDF — no subscription, no account required. Supports 11 document types including invoices, quotes, receipts, purchase orders, and more."
+  },
+  {
+    q: "Can you update my site after launch?",
+    a: "Yes. We offer ad-hoc updates (billed per session) and monthly maintenance retainers. Most small content changes (prices, hours, photos) can be quoted and delivered within 24 hours."
+  },
+  {
+    q: "Is my site going to be mobile-friendly?",
+    a: "Every site we build is fully responsive and tested on mobile — this is non-negotiable. Most of your customers will arrive on a phone, so mobile is always our primary design target."
+  },
+  {
+    q: "How do I get started?",
+    a: "Pick a template from the gallery and click 'Deploy This' — it'll pre-fill the contact form for that category. Or just drop us a message directly and we'll take it from there."
+  },
+];
+
+function FAQItem({ faq, idx }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-white/5">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between py-5 text-left gap-4 group"
+      >
+        <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors pr-4">
+          {faq.q}
+        </span>
+        <motion.div
+          animate={{ rotate: open ? 45 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400"
+        >
+          <Plus className="h-3.5 w-3.5" />
+        </motion.div>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-slate-400 leading-relaxed max-w-2xl">{faq.a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function FAQ() {
+  return (
+    <section className="relative px-6 py-20 lg:px-12 border-t border-white/5">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[#1AA3B0]/8 blur-[100px]" />
+      </div>
+      <div className="relative mx-auto max-w-3xl">
+        <div className="mb-12 text-center">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-3">FAQ</span>
+          <h2
+            className="text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Questions we get a lot
+          </h2>
+          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
+            Can't find what you're looking for? Message us at{" "}
+            <a href="mailto:contact@lcn254.site" className="text-[#3FC1CB] hover:underline">
+              contact@lcn254.site
+            </a>
+          </p>
+        </div>
+        <div>
+          {FAQS.map((faq, idx) => <FAQItem key={idx} faq={faq} idx={idx} />)}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -836,6 +1106,12 @@ export default function LCN254Portfolio() {
   const [route, setRoute] = useState(
     typeof window !== "undefined" ? window.location.hash : ""
   );
+  // Show splash only on first visit per session
+  const [showSplash, setShowSplash] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const seen = sessionStorage.getItem("lcn254-welcomed");
+    return !seen;
+  });
 
   useEffect(() => {
     const onHash = () => setRoute(window.location.hash);
@@ -843,8 +1119,23 @@ export default function LCN254Portfolio() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  // Invoice generator page
-  if (route === "#invoice") return <InvoiceGenerator />;
+  const handleSplashDone = useCallback(() => {
+    sessionStorage.setItem("lcn254-welcomed", "1");
+    setShowSplash(false);
+  }, []);
+
+  // Sub-pages
+  if (route === "#invoice")  return <InvoiceGenerator />;
+  if (route === "#privacy")  return <PrivacyPolicy />;
+  if (route === "#faq") {
+    return (
+      <div className="min-h-screen bg-slate-950 font-sans text-white antialiased">
+        <Nav />
+        <FAQ />
+        <Footer />
+      </div>
+    );
+  }
 
   const handleDeploy = (businessType) => {
     setSelectedBusiness(businessType);
@@ -852,13 +1143,20 @@ export default function LCN254Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 font-sans text-white antialiased">
-      <Nav />
-      <Hero />
-      <InvoiceAdBanner />
-      <Gallery onDeploy={handleDeploy} />
-      <Contact prefilledBusiness={selectedBusiness} />
-      <Footer />
-    </div>
+    <>
+      {showSplash && <WelcomeSplash onDone={handleSplashDone} />}
+      <div
+        className="min-h-screen bg-slate-950 font-sans text-white antialiased"
+        style={{ opacity: showSplash ? 0 : 1, transition: "opacity 0.4s ease" }}
+      >
+        <Nav />
+        <Hero />
+        <InvoiceAdBanner />
+        <Gallery onDeploy={handleDeploy} />
+        <FAQ />
+        <Contact prefilledBusiness={selectedBusiness} />
+        <Footer />
+      </div>
+    </>
   );
 }
