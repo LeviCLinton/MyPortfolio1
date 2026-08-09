@@ -348,75 +348,211 @@ function CinematicHero({ onNavigate }) {
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/20 to-slate-950" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-12 pt-28 pb-20 w-full">
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[80vh]">
 
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/60 px-4 py-1.5 backdrop-blur-xl">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: T }} />
-              <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: T }} />
-            </span>
-            <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
-              Online now · Building across Kenya
-            </span>
-          </div>
+          {/* ── LEFT: copy ── */}
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-4 leading-[1.02]"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Websites for
-            <br />
-            <span className="relative inline-block min-w-[280px]">
-              <AnimatePresence mode="wait">
-                <motion.span key={wordIdx}
-                  initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute left-0 bg-gradient-to-r bg-clip-text text-transparent"
-                  style={{ backgroundImage: `linear-gradient(135deg,${T},${P})` }}>
-                  {words[wordIdx]}
-                </motion.span>
-              </AnimatePresence>
-              <span className="invisible">{words[0]}</span>
-            </span>
-          </h1>
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/60 px-4 py-1.5 backdrop-blur-xl">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: T }} />
+                <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: T }} />
+              </span>
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
+                Online now · Building across Kenya
+              </span>
+            </div>
 
-          <p className="text-slate-400 text-lg sm:text-xl max-w-xl mb-10 leading-relaxed mt-6">
-            From small businesses to large enterprises — we build fast, functional websites that work for your customers and grow with your ambitions.
-          </p>
+            <h1 className="text-5xl sm:text-6xl font-black tracking-tight text-white mb-4 leading-[1.02]"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Websites for
+              <br />
+              <span className="relative inline-block min-w-[280px]">
+                <AnimatePresence mode="wait">
+                  <motion.span key={wordIdx}
+                    initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute left-0 bg-gradient-to-r bg-clip-text text-transparent"
+                    style={{ backgroundImage: `linear-gradient(135deg,${T},${P})` }}>
+                    {words[wordIdx]}
+                  </motion.span>
+                </AnimatePresence>
+                <span className="invisible">{words[0]}</span>
+              </span>
+            </h1>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-              onClick={() => onNavigate("#templates")}
-              className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
-              style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
-              Explore Templates <ArrowRight className="h-5 w-5" />
-            </motion.button>
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-              onClick={() => onNavigate("#contact")}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-xl transition-colors hover:bg-white/10">
-              Get a Free Quote
-            </motion.button>
-          </div>
+            <p className="text-slate-400 text-lg max-w-lg mb-10 leading-relaxed mt-6">
+              From small businesses to large enterprises — we build fast, functional websites that work for your customers and grow with your ambitions.
+            </p>
 
-          {/* Stats */}
-          <div className="mt-16 flex gap-8 sm:gap-12 flex-wrap">
-            {[["48+","Sites delivered"],["3–5","Days to launch"],["Any","Business size"]].map(([v,l]) => (
-              <motion.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}>
-                <div className="text-2xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
-                <div className="text-xs text-slate-500 font-mono uppercase tracking-wider mt-0.5">{l}</div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+                onClick={() => onNavigate("#templates")}
+                className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
+                style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
+                Explore Templates <ArrowRight className="h-5 w-5" />
+              </motion.button>
+              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                onClick={() => onNavigate("#contact")}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-xl transition-colors hover:bg-white/10">
+                Get a Free Quote
+              </motion.button>
+            </div>
+
+            {/* Stats */}
+            <div className="mt-14 flex gap-8 sm:gap-12 flex-wrap">
+              {[["48+","Sites delivered"],["3–5","Days to launch"],["Any","Business size"]].map(([v,l]) => (
+                <motion.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}>
+                  <div className="text-2xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
+                  <div className="text-xs text-slate-500 font-mono uppercase tracking-wider mt-0.5">{l}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── RIGHT: floating mockup card ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 40, y: 10 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden lg:flex flex-col items-center justify-center"
+          >
+            <div className="relative w-full max-w-[420px]">
+              {/* Ambient glow behind card */}
+              <div className="absolute -inset-8 rounded-3xl blur-3xl opacity-25 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse at 60% 40%, ${T}, ${P})` }} />
+
+              {/* Main browser chrome */}
+              <div className="relative rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur-xl shadow-2xl overflow-hidden">
+
+                {/* Browser bar */}
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-slate-950/70">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                    <div className="w-3 h-3 rounded-full bg-amber-400/70" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/70" />
+                  </div>
+                  <div className="flex-1 mx-3 bg-slate-800/80 rounded-md px-3 py-1.5 text-xs text-slate-400 font-mono flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: T }} />
+                    <span>yourbusiness.co.ke</span>
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ repeat: Infinity, duration: 1, ease: "steps(1)" }}
+                      className="w-0.5 h-3 bg-slate-400 ml-auto"
+                    />
+                  </div>
+                </div>
+
+                {/* Simulated site content */}
+                <div className="p-5 space-y-4 bg-slate-900/60">
+
+                  {/* Mock nav bar */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg flex-shrink-0"
+                        style={{ background: `linear-gradient(135deg,${T},${P})` }} />
+                      <div className="h-2 w-16 rounded-full bg-white/20" />
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="h-2 w-8 rounded-full bg-white/10" />
+                      <div className="h-2 w-8 rounded-full bg-white/10" />
+                      <div className="h-7 w-20 rounded-lg text-xs font-bold flex items-center justify-center"
+                        style={{ background: `linear-gradient(135deg,${T},${P})`, color: "#0f172a", fontSize: 9 }}>
+                        Book Now
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mock hero */}
+                  <div className="rounded-xl p-4 space-y-2.5"
+                    style={{ background: "linear-gradient(135deg,rgba(26,163,176,0.1),rgba(240,64,154,0.06))", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="h-3.5 w-3/4 rounded-full bg-white/25" />
+                    <div className="h-3 w-1/2 rounded-full bg-white/15" />
+                    <div className="h-2 w-5/6 rounded-full bg-white/10 mt-1" />
+                    <div className="h-2 w-2/3 rounded-full bg-white/10" />
+                    <div className="flex gap-2 mt-3">
+                      <div className="h-8 w-24 rounded-lg flex items-center justify-center text-[9px] font-bold"
+                        style={{ background: `linear-gradient(135deg,${T},${P})`, color: "#0f172a" }}>
+                        Get Started
+                      </div>
+                      <div className="h-8 w-20 rounded-lg border border-white/15 bg-white/5" />
+                    </div>
+                  </div>
+
+                  {/* Live stats row */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { label: "Bookings", value: "24", color: T },
+                      { label: "Revenue", value: "KSh 48k", color: P },
+                      { label: "Visitors", value: "1,204", color: "#818cf8" },
+                    ].map(s => (
+                      <div key={s.label} className="rounded-xl p-3 border border-white/5 bg-white/[0.03] text-center">
+                        <div className="text-sm font-black text-white" style={{ color: s.color }}>{s.value}</div>
+                        <div className="text-[9px] text-slate-500 mt-0.5 uppercase tracking-wider">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Mock feature pills */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {[["M-Pesa",T],["Stripe",P],["Booking","#818cf8"],["WhatsApp","#22c55e"],["SEO","#f59e0b"]].map(([l, color]) => (
+                      <div key={l} className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
+                        style={{ background: `${color}18`, color, border: `1px solid ${color}40` }}>
+                        {l}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating badge — top right */}
+              <motion.div
+                animate={{ y: [0, -7, 0] }}
+                transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+                className="absolute -top-5 -right-5 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/95 px-3 py-2 backdrop-blur-xl shadow-xl z-10"
+              >
+                <CheckCircle2 className="h-4 w-4 flex-shrink-0" style={{ color: T }} />
+                <span className="text-xs font-semibold text-white whitespace-nowrap">Site deployed ✓</span>
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
+
+              {/* Floating badge — bottom left */}
+              <motion.div
+                animate={{ y: [0, 7, 0] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-5 -left-5 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/95 px-3 py-2 backdrop-blur-xl shadow-xl z-10"
+              >
+                <motion.div className="w-2 h-2 rounded-full flex-shrink-0"
+                  animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 1.4 }}
+                  style={{ background: "#22c55e" }} />
+                <span className="text-xs font-semibold text-white whitespace-nowrap">3 new bookings today</span>
+              </motion.div>
+
+              {/* Floating badge — middle right */}
+              <motion.div
+                animate={{ x: [0, 6, 0] }}
+                transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 2 }}
+                className="absolute top-1/2 -right-10 -translate-y-1/2 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/95 px-3 py-2 backdrop-blur-xl shadow-xl z-10"
+              >
+                <div className="w-4 h-4 rounded flex-shrink-0 flex items-center justify-center"
+                  style={{ background: `${P}20` }}>
+                  <div className="w-2 h-2 rounded-full" style={{ background: P }} />
+                </div>
+                <span className="text-xs font-semibold text-white whitespace-nowrap">M-Pesa paid</span>
+              </motion.div>
+            </div>
+          </motion.div>
+
+        </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-        <div className="w-px h-12 bg-gradient-to-b from-transparent" style={{ backgroundImage: `linear-gradient(to bottom, transparent, ${T})` }} />
+        <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${T})` }} />
         <div className="w-1.5 h-1.5 rounded-full" style={{ background: T }} />
       </motion.div>
     </section>
