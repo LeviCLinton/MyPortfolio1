@@ -5,7 +5,7 @@ import {
   Sparkles, UtensilsCrossed, Stethoscope, Scissors, BedDouble, Home,
   Truck, ChefHat, ShoppingBag, CheckCircle2, PlayCircle, Rocket,
   ArrowRight, MessageCircle, Mail, Phone, Clock, Send, MapPin,
-  Plus, ArrowLeft, Zap, Globe, Shield, TrendingUp, ChevronRight,
+  Plus, ArrowLeft, Zap, Globe, Shield, TrendingUp, ChevronRight, Award, Users,
 } from "lucide-react";
 
 // ─── Brand tokens ───────────────────────────────────────────────────────────
@@ -49,7 +49,8 @@ const FILTERS = [
   { id: "all",         label: "All Suites" },
   { id: "hospitality", label: "Hospitality & Food" },
   { id: "health",      label: "Health & Wellness" },
-  { id: "services",    label: "Services & Logistics" },
+  { id: "services",    label: "Services & Commerce" },
+  { id: "enterprise",  label: "Enterprise & Custom" },
 ];
 
 const GLOW = {
@@ -63,12 +64,14 @@ const GLOW = {
 const TEMPLATE_TO_BUSINESS_TYPE = {
   restaurants:"restaurant", clinics:"clinic", spas:"spa", hotels:"hotel",
   airbnb:"rental", logistics:"logistics", catering:"catering", ecommerce:"ecommerce",
+  corporate:"custom", ngo:"custom", saas:"custom", custom:"custom",
 };
 const TEMPLATE_TO_DEMO_PATH = {
   restaurants:"demos/restaurant.html", clinics:"demos/clinic.html",
   spas:"demos/spa-barbershop.html", hotels:"demos/boutique-hotel.html",
   airbnb:"demos/vacation-rental.html", logistics:"demos/logistics.html",
   catering:"demos/private-chef.html", ecommerce:"demos/ecommerce.html",
+  corporate:null, ngo:null, saas:null, custom:null,
 };
 
 const TEMPLATES = [
@@ -80,6 +83,10 @@ const TEMPLATES = [
   { id:"logistics",   category:"services",    icon:Truck,          color:"indigo", badge:"Logistics Suite",      name:"Delivery & Logistics Services",   description:"Customers confirm coverage, get an instant quote, and track a package — no calls needed.",                 features:["Service-Area Checker","Instant Quote Calculator","Live Package Tracking"] },
   { id:"catering",    category:"hospitality", icon:ChefHat,        color:"pink",   badge:"Private Chef Suite",   name:"Private Chefs & Catering",        description:"Menus built with the client, events booked to a date, dietary needs captured — not lost in a chat thread.", features:["Custom Menu Builder","Event Inquiry Booking","Dietary Preference Forms"] },
   { id:"ecommerce",   category:"services",    icon:ShoppingBag,    color:"teal",   badge:"Retail Suite",         name:"E-commerce & Retail",             description:"A fast, focused checkout that keeps working on a weak connection and settles the moment it's back.",         features:["Offline-First Cart","Fast One-Page Checkout","M-Pesa / Card Ready"] },
+  { id:"corporate",   category:"enterprise",  icon:Award,          color:"indigo", badge:"Corporate Suite",      name:"Corporates & SMEs",               description:"A professional web presence for established businesses — team pages, service directories, and lead capture that works.", features:["Service Directory","Team & Leadership Pages","Lead Generation Forms"] },
+  { id:"ngo",         category:"enterprise",  icon:Users,          color:"teal",   badge:"NGO & Non-Profit Suite",name:"NGOs & Non-Profits",              description:"Impact reporting, donation flows, and programme showcases that tell your story and drive support.",               features:["Programme Showcase","Donation Integration","Impact Reporting"] },
+  { id:"saas",        category:"enterprise",  icon:Globe,          color:"pink",   badge:"SaaS & Tech Suite",    name:"SaaS & Tech Products",            description:"Product landing pages, pricing tables, and onboarding flows built to convert trials into paying customers.",         features:["Pricing Table & Plans","Product Demo Section","Trial Signup Flow"] },
+  { id:"custom",      category:"enterprise",  icon:Sparkles,       color:"amber",  badge:"Custom Build",         name:"Something Else Entirely",         description:"Outside the categories above? We scope, design, and build from scratch — same speed and quality standard.",          features:["Discovery & Scoping","Custom Design System","Fixed-Quote Build"] },
 ];
 
 // ─── FAQs ───────────────────────────────────────────────────────────────────
@@ -87,7 +94,7 @@ const FAQS = [
   { q:"How long does it take to launch my website?",     a:"Most template-based sites go live within 3–5 business days from the moment you confirm your content and branding. Custom builds are scoped individually — we'll give you a clear timeline during the discovery call." },
   { q:"Do I own the website after it's built?",          a:"Yes. Once we hand it over, the site and all its code are yours. We can also manage hosting and updates for you on a monthly retainer if you prefer." },
   { q:"Can I accept M-Pesa payments through my site?",   a:"Yes — all our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. We handle the integration as part of the build." },
-  { q:"What if I need something that isn't in the gallery?", a:"Get in touch and describe what you need. We scope custom builds from scratch — same speed and quality standard, priced after a short discovery call." },
+  { q:"Do you only work with small businesses?", a:"No — we started with small businesses because that's where the gap was biggest, but we work with SMEs, corporates, NGOs, and tech startups too. The standards are the same; the scope and budget just grow with the project." },
   { q:"Do you offer hosting?",                           a:"We deploy to fast, reliable infrastructure (GitHub Pages for static sites, Cloudflare Workers for server-side logic). Hosting is free for most sites." },
   { q:"What does the AI Invoice Generator cost?",        a:"KES 130 (approx. $1) per document. You pay once and download your PDF — no subscription, no account required. Supports 11 document types." },
   { q:"Can you update my site after launch?",            a:"Yes. We offer ad-hoc updates (billed per session) and monthly maintenance retainers. Most small content changes can be quoted and delivered within 24 hours." },
@@ -196,7 +203,7 @@ function Footer({ onNavigate }) {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <p className="text-sm font-bold text-white mb-1">✦ Need a professional invoice or quote?</p>
-              <p className="text-xs text-slate-400">Generate AI-powered financial documents in seconds — $1 per PDF.</p>
+              <p className="text-xs text-slate-400">Invoices, quotes, receipts & 8 more document types — generated by AI in seconds. $1 per PDF.</p>
             </div>
             <button onClick={() => onNavigate("#invoice")}
               className="shrink-0 text-sm font-bold px-5 py-2.5 rounded-xl text-slate-950 transition-transform hover:scale-[1.02]"
@@ -326,7 +333,7 @@ function CinematicHero({ onNavigate }) {
     };
   }, []);
 
-  const words = ["Restaurants", "Clinics", "Hotels", "Barbershops", "Retailers"];
+  const words = ["Small Businesses", "Growing Brands", "Enterprises", "Non-Profits", "Tech Startups", "Service Providers"];
   const [wordIdx, setWordIdx] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setWordIdx(i => (i + 1) % words.length), 2200);
@@ -376,7 +383,7 @@ function CinematicHero({ onNavigate }) {
           </h1>
 
           <p className="text-slate-400 text-lg sm:text-xl max-w-xl mb-10 leading-relaxed mt-6">
-            Industry-specific, payment-ready websites — live in days, not months. Built for how business works in Kenya.
+            From small businesses to large enterprises — we build fast, functional websites that work for your customers and grow with your ambitions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
@@ -395,7 +402,7 @@ function CinematicHero({ onNavigate }) {
 
           {/* Stats */}
           <div className="mt-16 flex gap-8 sm:gap-12 flex-wrap">
-            {[["48+","Sites delivered"],["3–5","Days to launch"],["8","Industry templates"]].map(([v,l]) => (
+            {[["48+","Sites delivered"],["3–5","Days to launch"],["Any","Business size"]].map(([v,l]) => (
               <motion.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.5 }}>
                 <div className="text-2xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
@@ -419,10 +426,10 @@ function CinematicHero({ onNavigate }) {
 // ─── Home: Value strip ────────────────────────────────────────────────────────
 function ValueStrip({ onNavigate }) {
   const features = [
-    { icon: Zap,        title: "Live in 3–5 days",     desc: "From signed-off designs to a deployed URL. Not 3 months." },
+    { icon: Zap,        title: "Live in 3–5 days",     desc: "From signed-off designs to a deployed URL. Whether it's a simple landing page or a full enterprise platform." },
     { icon: Globe,      title: "Mobile-first always",   desc: "Your customers are on phones. So is our design process." },
     { icon: Shield,     title: "You own everything",    desc: "No lock-in, no proprietary CMS. Take the code anywhere." },
-    { icon: TrendingUp, title: "Built to convert",      desc: "Booking flows, payment rails, and CTAs that actually work." },
+    { icon: TrendingUp, title: "Scales with you",       desc: "Start with a clean landing page. Add booking, payments, portals, and integrations as your business grows." },
   ];
 
   return (
@@ -433,7 +440,7 @@ function ValueStrip({ onNavigate }) {
             <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Why LCN254</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Not a template factory. A delivery machine.
+              Any business. Any scale. One agency.
             </h2>
           </div>
         </Reveal>
@@ -469,7 +476,7 @@ function TemplateTeaserStrip({ onNavigate }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Templates</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Eight industries. One agency.
+                Every business type. One agency.
               </h2>
             </div>
             <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
@@ -505,7 +512,7 @@ function TemplateTeaserStrip({ onNavigate }) {
 // ─── Home: How it works ───────────────────────────────────────────────────────
 function HowItWorks() {
   const steps = [
-    { n:"01", title:"Pick a template",       desc:"Browse eight industry-specific starting points. Each one ships with the booking, payment, or tracking flow your business already needs." },
+    { n:"01", title:"Choose a starting point", desc:"Browse our template library — from small business suites to enterprise builds. Or start a custom project from scratch if nothing fits." },
     { n:"02", title:"Customize with us",     desc:"Tell us your branding, copy, and features. We handle the code — you focus on your business." },
     { n:"03", title:"Go live in days",       desc:"We deploy, test on mobile, and hand you a site that works. No waiting on 'revisions' for weeks." },
   ];
@@ -608,11 +615,17 @@ function TemplateCard({ template, onDeploy }) {
             ))}
           </ul>
           <div className="mt-auto flex items-center gap-2.5 border-t border-white/10 pt-4">
-            <a href={`${import.meta.env.BASE_URL}${TEMPLATE_TO_DEMO_PATH[template.id]}`}
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs font-medium text-slate-200 transition-colors hover:bg-white/10">
-              <PlayCircle className="h-3.5 w-3.5" />Live Demo
-            </a>
+            {TEMPLATE_TO_DEMO_PATH[template.id] ? (
+              <a href={`${import.meta.env.BASE_URL}${TEMPLATE_TO_DEMO_PATH[template.id]}`}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs font-medium text-slate-200 transition-colors hover:bg-white/10">
+                <PlayCircle className="h-3.5 w-3.5" />Live Demo
+              </a>
+            ) : (
+              <span className="inline-flex flex-1 items-center justify-center gap-1 rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2.5 text-xs font-medium text-slate-500 cursor-default">
+                Demo on request
+              </span>
+            )}
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               onClick={() => onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id])}
               className={`inline-flex flex-1 items-center justify-center gap-1 rounded-xl bg-gradient-to-r px-3 py-2.5 text-xs font-semibold text-slate-950 ${c.gradient}`}>
@@ -643,11 +656,10 @@ function TemplatesPage({ onNavigate, onDeploy }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Deployment-Ready Suites</span>
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-5"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Pick a{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">suite</span>
-                , not a starting point.
+                Your business,{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">your website.</span>
               </h1>
-              <p className="text-slate-400 max-w-xl mx-auto">Every template ships with the booking, payment, or tracking flow your industry already needs.</p>
+              <p className="text-slate-400 max-w-xl mx-auto">Browse our template library for small businesses and enterprises alike — or request a fully custom build scoped around your exact workflow.</p>
             </div>
           </Reveal>
 
@@ -752,7 +764,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                         </label>
                         <select className={inputCls} value={form.business} onChange={e => setF("business", e.target.value)}>
                           <option className="bg-slate-900" value="">Select one</option>
-                          {[["restaurant","Restaurant / Café"],["clinic","Clinic / Health Center"],["spa","Spa / Barbershop"],["hotel","Hotel / Boutique Stay"],["rental","Airbnb / Vacation Rental"],["logistics","Delivery / Logistics"],["catering","Private Chef / Catering"],["ecommerce","E-commerce / Retail"],["custom","Something custom"]].map(([v,l]) => (
+                          {[["restaurant","Restaurant / Café"],["clinic","Clinic / Health Center"],["spa","Spa / Barbershop"],["hotel","Hotel / Boutique Stay"],["rental","Airbnb / Vacation Rental"],["logistics","Delivery / Logistics"],["catering","Private Chef / Catering"],["ecommerce","E-commerce / Retail"],["corporate","Corporate / SME"],["ngo","NGO / Non-Profit"],["saas","SaaS / Tech Product"],["custom","Something custom / Enterprise"]].map(([v,l]) => (
                             <option key={v} className="bg-slate-900" value={v}>{l}</option>
                           ))}
                         </select>
@@ -831,7 +843,7 @@ function AboutPage({ onNavigate }) {
   const timeline = [
     { year:"2022", event:"Started building sites for Nairobi restaurants and hotels — freelance, nothing formal." },
     { year:"2023", event:"Moved into a structured agency model after seeing the same problems across every industry: no online presence, broken booking flows, no payments." },
-    { year:"2024", event:"Built the first version of our template library — eight industry-specific starting points that dramatically cut delivery time." },
+    { year:"2024", event:"Built the first version of our template library — industry-specific starting points for SMEs that cut delivery time while maintaining quality. Began taking on larger enterprise and NGO projects." },
     { year:"2025", event:"Launched the AI Invoice Generator — a tool for the same SME clients who needed professional documents without an accountant." },
     { year:"2026", event:"LCN254 today — a focused agency doing one thing well: fast, reliable websites for Kenyan businesses." },
   ];
@@ -845,11 +857,11 @@ function AboutPage({ onNavigate }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>About LCN254</span>
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Websites for businesses that{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">can't afford to look small.</span>
+                From your first site to{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">your next big one.</span>
               </h1>
               <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                LCN254 is a Nairobi-based web agency. We build fast, functional, industry-specific websites for restaurants, clinics, hotels, and local service businesses across Kenya.
+                LCN254 is a Nairobi-based web agency. We build fast, functional websites for businesses of every size — from a first-time entrepreneur launching a landing page to an established enterprise needing a full digital platform.
               </p>
             </div>
           </Reveal>
@@ -857,7 +869,7 @@ function AboutPage({ onNavigate }) {
           {/* Stats */}
           <Reveal>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-16 p-6 rounded-2xl border border-white/5 bg-slate-900/40">
-              {[["48+","Sites delivered"],["3–5","Days average"],["8","Templates"],["254","Kenya dial code"]].map(([v,l]) => (
+              {[["48+","Sites delivered"],["3–5","Days average"],["SME→Enterprise","Scale we serve"],["254","Kenya dial code"]].map(([v,l]) => (
                 <div key={l} className="text-center">
                   <div className="text-3xl font-black mb-1 bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
@@ -873,7 +885,7 @@ function AboutPage({ onNavigate }) {
               <h2 className="text-2xl font-bold text-white mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>The name is the mission.</h2>
               <div className="space-y-4 text-slate-400 leading-relaxed">
                 <p><span className="text-white font-semibold">LCN254</span> — Local Commerce Network, dial code 254. The name says what we're here to do: help Kenyan businesses compete online.</p>
-                <p>Most agencies are either too expensive for small businesses or too slow for anyone who needs to start earning. We built LCN254 to close that gap.</p>
+                <p>We started serving small businesses because that's where the gap was biggest. Today, we work with SMEs, corporates, NGOs, and tech startups too — the tools and standards are the same, the scope just grows.</p>
                 <p>We're a small team. You talk directly to the person building your site — no account managers, no handoffs.</p>
               </div>
             </Reveal>
@@ -1065,7 +1077,7 @@ function WelcomeSplash({ onDone }) {
           Welcome to{" "}
           <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">LCN254</span>
         </h1>
-        <p className="text-slate-400 max-w-xs">Deployment-ready websites for local businesses — built in Kenya, for Kenya.</p>
+        <p className="text-slate-400 max-w-xs">Websites for every Kenyan business — from your first launch to your next big platform.</p>
         <div className="mt-10 w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
           <motion.div className="h-full rounded-full"
             style={{ background: `linear-gradient(90deg,${T},${P})` }}
