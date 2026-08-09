@@ -283,6 +283,9 @@ function Nav() {
           <a href="#gallery" className="transition-colors hover:text-white">
             Templates
           </a>
+          <a href="#about" className="transition-colors hover:text-white">
+            About
+          </a>
           <a href="#invoice" className="transition-colors hover:text-white font-medium" style={{ color: "#3FC1CB" }}>
             ✦ Invoice Generator
           </a>
@@ -820,6 +823,7 @@ function Footer() {
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#gallery" className="transition-colors hover:text-white">Templates</a>
+            <a href="#about" className="transition-colors hover:text-white">About</a>
             <a href="#invoice" className="transition-colors hover:text-white" style={{ color: "#3FC1CB" }}>Invoice Generator</a>
             <a href="#contact" className="transition-colors hover:text-white">Contact</a>
             <a href="#faq" className="transition-colors hover:text-white">FAQ</a>
@@ -910,8 +914,247 @@ function WelcomeSplash({ onDone }) {
   );
 }
 
+
 // ---------------------------------------------------------------------------
-// PRIVACY POLICY PAGE
+// ABOUT PAGE
+// ---------------------------------------------------------------------------
+function About() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const values = [
+    {
+      icon: "⚡",
+      title: "Speed is a feature",
+      body: "We don't build bloated sites. Every page is optimised for fast load times because slow sites lose customers — especially on mobile networks.",
+    },
+    {
+      icon: "📍",
+      title: "Built for this market",
+      body: "M-Pesa, local pricing, Kenyan business hours, Swahili — we understand how business works here and build for it.",
+    },
+    {
+      icon: "🔒",
+      title: "No lock-in",
+      body: "You own everything we build. No proprietary CMS, no monthly platform fees, no hostages. Take the code anywhere.",
+    },
+    {
+      icon: "🎯",
+      title: "Honest scoping",
+      body: "We quote what the work actually costs. No discovery upsells, no surprise invoices halfway through a project.",
+    },
+  ];
+
+  const timeline = [
+    { year: "2022", event: "Started building sites for Nairobi restaurants and small hotels — just freelance work, nothing formal." },
+    { year: "2023", event: "Moved into a structured agency model after realising the same problems (no online presence, bad booking flows) kept appearing across industries." },
+    { year: "2024", event: "Built the first version of our template library — eight industry-specific starting points that dramatically cut delivery time." },
+    { year: "2025", event: "Launched the AI Invoice Generator — a tool for the same SME clients who needed professional documents without paying for an accountant." },
+    { year: "2026", event: "LCN254 today — a focused agency doing one thing well: fast, reliable websites for local businesses across Kenya." },
+  ];
+
+  const stats = [
+    { value: "48+", label: "Sites delivered" },
+    { value: "8",   label: "Industry templates" },
+    { value: "3",   label: "Days average launch" },
+    { value: "KE",  label: "Kenya-based team" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+      <Nav />
+
+      {/* ── HERO ── */}
+      <section className="relative overflow-hidden border-b border-white/5 px-6 py-24 lg:px-12">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-32 top-0 h-80 w-80 rounded-full bg-[#1AA3B0]/15 blur-[90px]" />
+          <div className="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-[#F0409A]/10 blur-[90px]" />
+        </div>
+        <div className="relative mx-auto max-w-4xl">
+          <a
+            href="#top"
+            onClick={e => { e.preventDefault(); window.location.hash = ""; }}
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-10 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to site
+          </a>
+          <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-4">About LCN254</span>
+          <h1
+            className="text-4xl sm:text-5xl font-bold tracking-tight mb-6"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            We build websites for{" "}
+            <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">
+              businesses that can't afford to look small.
+            </span>
+          </h1>
+          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+            LCN254 is a Nairobi-based web agency. We build fast, functional, industry-specific websites for restaurants, clinics, hotels, and local service businesses across Kenya — and we deliver them in days, not months.
+          </p>
+        </div>
+      </section>
+
+      {/* ── STATS ── */}
+      <section className="border-b border-white/5 px-6 py-12 lg:px-12">
+        <div className="mx-auto max-w-4xl grid grid-cols-2 sm:grid-cols-4 gap-8">
+          {stats.map(s => (
+            <div key={s.label} className="text-center">
+              <div
+                className="text-3xl sm:text-4xl font-bold mb-1 bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
+                {s.value}
+              </div>
+              <div className="text-slate-400 text-sm">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── STORY ── */}
+      <section className="border-b border-white/5 px-6 py-20 lg:px-12">
+        <div className="mx-auto max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-4">Our Story</span>
+            <h2
+              className="text-3xl font-bold tracking-tight mb-6"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            >
+              The name is the mission.
+            </h2>
+            <div className="space-y-5 text-slate-400 leading-relaxed">
+              <p>
+                <span className="text-white font-semibold">LCN254</span> — "LCN" for Local Commerce Network, "254" for Kenya's international dialling code. The name says exactly what we're here to do: help Kenyan businesses compete online.
+              </p>
+              <p>
+                Most web agencies in Kenya are either too expensive for small businesses or too slow for anyone who needs to start earning. We built LCN254 to close that gap — real websites, real features, real timelines, at prices that make sense for a business that's still growing.
+              </p>
+              <p>
+                We're a small team. That means you talk directly to the person building your site — no account managers, no handoffs, no telephone-game between you and the developer.
+              </p>
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-6">Timeline</span>
+            <div className="relative">
+              <div className="absolute left-3.5 top-0 bottom-0 w-px bg-white/10" />
+              <div className="space-y-8 relative">
+                {timeline.map((t, i) => (
+                  <div key={t.year} className="flex gap-5 items-start">
+                    <div className="relative shrink-0">
+                      <div
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-slate-950 relative z-10"
+                        style={{ background: i === timeline.length - 1 ? "linear-gradient(135deg,#1AA3B0,#F0409A)" : "#1e293b", color: i === timeline.length - 1 ? "#0f172a" : "#64748b", border: i === timeline.length - 1 ? "none" : "1px solid rgba(255,255,255,0.1)" }}
+                      />
+                    </div>
+                    <div className="pb-2">
+                      <div className="font-mono text-xs text-[#1AA3B0] mb-1">{t.year}</div>
+                      <p className="text-slate-400 text-sm leading-relaxed">{t.event}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VALUES ── */}
+      <section className="border-b border-white/5 px-6 py-20 lg:px-12">
+        <div className="mx-auto max-w-4xl">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-4">How We Work</span>
+          <h2
+            className="text-3xl font-bold tracking-tight mb-12"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            What we actually believe.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {values.map(v => (
+              <div
+                key={v.title}
+                className="rounded-2xl border border-white/5 bg-slate-900/40 p-6 backdrop-blur-xl"
+              >
+                <div className="text-2xl mb-4">{v.icon}</div>
+                <h3 className="font-semibold text-white mb-2">{v.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{v.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TEAM ── */}
+      <section className="border-b border-white/5 px-6 py-20 lg:px-12">
+        <div className="mx-auto max-w-4xl">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#1AA3B0] block mb-4">The Team</span>
+          <h2
+            className="text-3xl font-bold tracking-tight mb-12"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Small team, full ownership.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              { name: "Levi Clinton", role: "Founder & Lead Developer", bio: "Full-stack developer and designer. Builds everything from architecture to UI." },
+              { name: "Design Partner", role: "UI/UX & Brand Identity", bio: "Handles visual identity, template design, and client-facing mockups." },
+              { name: "You", role: "Client & Collaborator", bio: "Every project is a collaboration. The best sites come from clients who tell us what actually matters." },
+            ].map((member, i) => (
+              <div key={member.name} className="rounded-2xl border border-white/5 bg-slate-900/40 p-6 backdrop-blur-xl">
+                <div
+                  className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center text-lg font-bold"
+                  style={{ background: i === 2 ? "rgba(240,64,154,0.1)" : "rgba(26,163,176,0.1)", color: i === 2 ? "#F778B6" : "#3FC1CB" }}
+                >
+                  {member.name[0]}
+                </div>
+                <h3 className="font-semibold text-white mb-1">{member.name}</h3>
+                <div className="font-mono text-xs text-[#1AA3B0] mb-3 uppercase tracking-wider">{member.role}</div>
+                <p className="text-slate-400 text-sm leading-relaxed">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="px-6 py-20 lg:px-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2
+            className="text-3xl font-bold tracking-tight mb-4"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Ready to build something?
+          </h2>
+          <p className="text-slate-400 mb-8 max-w-md mx-auto">
+            Browse the templates, pick what fits, and get in touch. We'll give you a clear quote within 24 hours.
+          </p>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <a
+              href="#top"
+              onClick={e => { e.preventDefault(); window.location.hash = ""; setTimeout(() => document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" }), 50); }}
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-slate-950 transition-transform hover:scale-[1.02]"
+              style={{ background: "linear-gradient(135deg,#1AA3B0,#F0409A)" }}
+            >
+              Browse Templates
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#top"
+              onClick={e => { e.preventDefault(); window.location.hash = ""; setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 50); }}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Get in Touch
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------------------
 function PrivacyPolicy() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -1127,6 +1370,7 @@ export default function LCN254Portfolio() {
   // Sub-pages
   if (route === "#invoice")  return <InvoiceGenerator />;
   if (route === "#privacy")  return <PrivacyPolicy />;
+  if (route === "#about")    return <About />;
   if (route === "#faq") {
     return (
       <div className="min-h-screen bg-slate-950 font-sans text-white antialiased">
