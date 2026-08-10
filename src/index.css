@@ -9,48 +9,47 @@ html {
 body {
   background-color: #020617;
   -webkit-overflow-scrolling: touch;
-  /* Single compositor layer for the whole page */
   isolation: isolate;
 }
 
-/* ── GPU-promote the canvas so it never triggers page repaints ── */
-canvas {
-  transform: translateZ(0);
-  will-change: transform;
-  contain: strict;
+/* ── Blob keyframes ─────────────────────────────────────────────────────────
+   Only transform & border-radius — both compositor-only properties.
+   These run 100% on the GPU, never touching the main thread during scroll.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes blob1 {
+  0%,100% { transform: translate(0,0) scale(1); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+  33%      { transform: translate(40px,-30px) scale(1.05); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+  66%      { transform: translate(-20px,40px) scale(0.95); border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%; }
+}
+@keyframes blob2 {
+  0%,100% { transform: translate(0,0) scale(1); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+  33%      { transform: translate(-50px,30px) scale(1.08); border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%; }
+  66%      { transform: translate(30px,-50px) scale(0.92); border-radius: 30% 70% 40% 60% / 70% 30% 50% 50%; }
+}
+@keyframes blob3 {
+  0%,100% { transform: translate(0,0) scale(1); border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%; }
+  50%      { transform: translate(60px,-40px) scale(1.1); border-radius: 40% 60% 70% 30% / 60% 40% 30% 70%; }
 }
 
-/* ── Sticky nav: own compositor layer, never repaints on scroll ── */
+/* ── Header: own compositor layer ─────────────────────────────────────────── */
 header {
   transform: translateZ(0);
   will-change: transform;
   contain: layout style;
 }
 
-/* ── Blur elements: own layers, prevent repainting neighbours ── */
+/* ── Backdrop-blur elements: isolated layers ──────────────────────────────── */
 [class*="backdrop-blur"] {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-/* ── Absolute glow orbs: isolated so blur never affects scroll perf ── */
-[class*="blur-["] {
-  transform: translateZ(0);
-  contain: layout paint style;
-}
-
-/* ── Card hover: contain the hover effect to the card only ── */
+/* ── Cards: contain hover paint ──────────────────────────────────────────── */
 .group {
   contain: layout style;
 }
 
-/* ── Framer Motion elements: hint to browser before animation starts ── */
-[data-framer-component-type],
-[style*="transform"] {
-  backface-visibility: hidden;
-}
-
-/* ── Reduce all motion for users who prefer it (also helps low-end devices) ── */
+/* ── Reduce motion: kills all animations ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -60,5 +59,4 @@ header {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  canvas { display: none; }
 }
