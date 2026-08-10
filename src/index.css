@@ -7,21 +7,50 @@ html {
 }
 
 body {
-  background-color: #020617; /* slate-950 fallback before Tailwind loads */
-  /* Promote body to its own compositor layer for smoother scrolling */
+  background-color: #020617;
   -webkit-overflow-scrolling: touch;
+  /* Single compositor layer for the whole page */
+  isolation: isolate;
 }
 
-/* Prevent layout thrash from blur filters during scroll */
-.blur-\[80px\],
-.blur-\[90px\],
-.blur-\[100px\],
-.blur-\[110px\] {
+/* ── GPU-promote the canvas so it never triggers page repaints ── */
+canvas {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: strict;
+}
+
+/* ── Sticky nav: own compositor layer, never repaints on scroll ── */
+header {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout style;
+}
+
+/* ── Blur elements: own layers, prevent repainting neighbours ── */
+[class*="backdrop-blur"] {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-/* Reduce motion for users who prefer it */
+/* ── Absolute glow orbs: isolated so blur never affects scroll perf ── */
+[class*="blur-["] {
+  transform: translateZ(0);
+  contain: layout paint style;
+}
+
+/* ── Card hover: contain the hover effect to the card only ── */
+.group {
+  contain: layout style;
+}
+
+/* ── Framer Motion elements: hint to browser before animation starts ── */
+[data-framer-component-type],
+[style*="transform"] {
+  backface-visibility: hidden;
+}
+
+/* ── Reduce all motion for users who prefer it (also helps low-end devices) ── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -31,15 +60,5 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Ensure sticky nav stays crisp during scroll */
-header {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* Gallery cards — contain paint for smooth hover */
-.group {
-  contain: layout style;
+  canvas { display: none; }
 }
