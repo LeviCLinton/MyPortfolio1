@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import {
@@ -214,114 +214,6 @@ function Footer({ onNavigate }) {
 
 // ─── Cinematic Hero ──────────────────────────────────────────────────────────
 function CinematicHero({ onNavigate }) {
-  const canvasRef = useRef(null);
-  const animRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    // Particles
-    const W = () => canvas.offsetWidth;
-    const H = () => canvas.offsetHeight;
-
-    const particles = Array.from({ length: 35 }, () => ({
-      x: Math.random() * W(), y: Math.random() * H(),
-      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
-      r: Math.random() * 2 + 0.5,
-      opacity: Math.random() * 0.5 + 0.1,
-      color: Math.random() > 0.5 ? T : P,
-    }));
-
-    // Morphing blobs
-    const blobs = [
-      { x: 0.2, y: 0.3, r: 220, color: T, phase: 0, speed: 0.003 },
-      { x: 0.8, y: 0.6, r: 280, color: P, phase: Math.PI, speed: 0.002 },
-      { x: 0.5, y: 0.8, r: 180, color: "#6366f1", phase: Math.PI/2, speed: 0.0025 },
-    ];
-
-    let t = 0;
-    const draw = () => {
-      const w = W(), h = H();
-      ctx.clearRect(0, 0, w, h);
-
-      // Draw blobs
-      blobs.forEach(b => {
-        const x = b.x * w + Math.sin(t * b.speed * 3 + b.phase) * 40;
-        const y = b.y * h + Math.cos(t * b.speed * 2 + b.phase) * 30;
-        const r = b.r + Math.sin(t * b.speed * 5) * 30;
-        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-        grad.addColorStop(0, b.color + "22");
-        grad.addColorStop(1, "transparent");
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-      });
-
-      // Draw particles + connections
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + Math.round(p.opacity * 255).toString(16).padStart(2, "0");
-        ctx.fill();
-      });
-
-      // Connections between nearby particles
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 80) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(26,163,176,${(1 - dist/100) * 0.12})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      t++;
-      // Throttle to ~30fps — halves GPU load with imperceptible visual difference
-      animRef.current = setTimeout(() => {
-        animRef.current = requestAnimationFrame(draw);
-      }, 33);
-    };
-    draw();
-
-    // Pause animation when tab is hidden — huge battery/perf win
-    const handleVisibility = () => {
-      if (document.hidden) {
-        if (animRef.current) { clearTimeout(animRef.current); cancelAnimationFrame(animRef.current); }
-      } else {
-        draw();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibility);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", handleVisibility);
-      if (animRef.current) { clearTimeout(animRef.current); cancelAnimationFrame(animRef.current); }
-    };
-  }, []);
-
   const words = ["Small Businesses", "Growing Brands", "Enterprises", "Non-Profits", "Tech Startups", "Service Providers"];
   const [wordIdx, setWordIdx] = useState(0);
   useEffect(() => {
@@ -331,10 +223,49 @@ function CinematicHero({ onNavigate }) {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ opacity: 0.9 }} />
 
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/20 to-slate-950" />
+      {/* ── Pure CSS background — runs entirely on compositor thread ── */}
+      {/* No canvas, no JS animation loop, zero scroll impact */}
+      <div className="absolute inset-0" style={{ background: "#020617" }}>
+
+        {/* Morphing blobs — CSS only, transform & opacity only (compositor) */}
+        <div style={{
+          position:"absolute", width:600, height:600,
+          borderRadius:"60% 40% 70% 30% / 50% 60% 40% 50%",
+          background:`radial-gradient(ellipse at center, ${T}18, transparent 70%)`,
+          top:"-10%", left:"-5%",
+          animation:"blob1 18s ease-in-out infinite",
+          willChange:"transform",
+        }} />
+        <div style={{
+          position:"absolute", width:700, height:700,
+          borderRadius:"40% 60% 30% 70% / 60% 40% 60% 40%",
+          background:`radial-gradient(ellipse at center, ${P}12, transparent 70%)`,
+          top:"10%", right:"-10%",
+          animation:"blob2 22s ease-in-out infinite",
+          willChange:"transform",
+        }} />
+        <div style={{
+          position:"absolute", width:500, height:500,
+          borderRadius:"70% 30% 50% 50% / 40% 60% 40% 60%",
+          background:"radial-gradient(ellipse at center, #6366f118, transparent 70%)",
+          bottom:"-5%", left:"30%",
+          animation:"blob3 26s ease-in-out infinite",
+          willChange:"transform",
+        }} />
+
+        {/* Dot-grid overlay — static SVG background, no animation */}
+        <div style={{
+          position:"absolute", inset:0,
+          backgroundImage:`radial-gradient(circle, ${T}22 1px, transparent 1px)`,
+          backgroundSize:"48px 48px",
+          maskImage:"radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)",
+          opacity:0.35,
+        }} />
+      </div>
+
+      {/* Dark fade to page body */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-12 pt-28 pb-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[80vh]">
