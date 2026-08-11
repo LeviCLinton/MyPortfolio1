@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
+import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
 import {
   Sparkles, UtensilsCrossed, Stethoscope, Scissors, BedDouble, Home,
   Truck, ChefHat, ShoppingBag, CheckCircle2, PlayCircle, Rocket,
@@ -114,9 +115,9 @@ function Nav({ onNavigate, route }) {
 
   const links = [
     { label: "Templates", hash: "#templates" },
+    { label: "Blog",      hash: "#blog" },
     { label: "About",     hash: "#about" },
     { label: "Contact",   hash: "#contact" },
-    { label: "FAQ",       hash: "#faq" },
   ];
 
   return (
@@ -201,7 +202,7 @@ function Footer({ onNavigate }) {
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            {[["Templates","#templates"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Privacy","#privacy"]].map(([l,h]) => (
+            {[["Templates","#templates"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Privacy","#privacy"]].map(([l,h]) => (
               <button key={h} onClick={() => onNavigate(h)}
                 className="transition-colors hover:text-white">{l}</button>
             ))}
@@ -598,6 +599,72 @@ function HowItWorks() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Home: Blog teaser ────────────────────────────────────────────────────────
+function BlogTeaserStrip({ onNavigate }) {
+  // Import ARTICLES lazily via a static preview so App.jsx stays clean
+  const previews = [
+    {
+      slug: "ai-for-everyone-zuckerberg",
+      title: "The Future Is for Everyone: Zuckerberg's Vision for Personal Superintelligence",
+      category: "AI & Technology",
+      date: "Aug 10, 2026",
+      color: "#1AA3B0",
+    },
+    {
+      slug: "why-your-business-needs-a-website-2026",
+      title: "Why Every Kenyan Business Needs a Website in 2026 — Not a Facebook Page",
+      category: "Business Growth",
+      date: "Aug 5, 2026",
+      color: "#F0409A",
+    },
+    {
+      slug: "mpesa-website-integration-guide",
+      title: "M-Pesa Website Integration in 2026: What Business Owners Need to Know",
+      category: "Payments & Tech",
+      date: "Jul 28, 2026",
+      color: "#22c55e",
+    },
+  ];
+
+  return (
+    <section className="px-6 py-20 lg:px-12 border-t border-white/5">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>From the Blog</span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Tech news & business insights.
+              </h2>
+            </div>
+            <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#blog")}
+              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
+              Read all articles <ChevronRight className="h-4 w-4" />
+            </motion.button>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {previews.map((p, i) => (
+            <Reveal key={p.slug} delay={i * 0.07}>
+              <motion.button whileHover={{ y: -3 }}
+                onClick={() => onNavigate(`#blog/${p.slug}`)}
+                className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
+                <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }} />
+                <div className="p-5">
+                  <span className="text-xs font-semibold" style={{ color: p.color }}>{p.category}</span>
+                  <h3 className="mt-2 font-semibold text-sm text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">{p.title}</h3>
+                  <p className="mt-3 text-xs text-slate-500">{p.date}</p>
+                </div>
+              </motion.button>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -1152,6 +1219,7 @@ function HomePage({ onNavigate }) {
       <ValueStrip onNavigate={onNavigate} />
       <TemplateTeaserStrip onNavigate={onNavigate} />
       <HowItWorks />
+      <BlogTeaserStrip onNavigate={onNavigate} />
       <InvoiceBanner onNavigate={onNavigate} />
       <Footer onNavigate={onNavigate} />
     </div>
@@ -1196,14 +1264,19 @@ export default function LCN254Portfolio() {
   }, [navigate]);
 
   const renderPage = () => {
+    if (route.startsWith("#blog/")) {
+      const slug = route.replace("#blog/", "");
+      return <BlogArticlePage key={route} slug={slug} onNavigate={navigate} />;
+    }
     switch (route) {
-      case "#templates": return <TemplatesPage key="templates" onNavigate={navigate} onDeploy={handleDeploy} />;
-      case "#contact":   return <ContactPage   key="contact"   onNavigate={navigate} prefilledBusiness={selectedBusiness} />;
-      case "#about":     return <AboutPage     key="about"     onNavigate={navigate} />;
-      case "#faq":       return <FAQPage       key="faq"       onNavigate={navigate} />;
-      case "#privacy":   return <PrivacyPage   key="privacy"   onNavigate={navigate} />;
+      case "#blog":      return <BlogIndexPage   key="blog"      onNavigate={navigate} />;
+      case "#templates": return <TemplatesPage   key="templates" onNavigate={navigate} onDeploy={handleDeploy} />;
+      case "#contact":   return <ContactPage     key="contact"   onNavigate={navigate} prefilledBusiness={selectedBusiness} />;
+      case "#about":     return <AboutPage       key="about"     onNavigate={navigate} />;
+      case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
+      case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
       case "#invoice":   return <div key="invoice"><InvoiceGenerator /></div>;
-      default:           return <HomePage      key="home"      onNavigate={navigate} />;
+      default:           return <HomePage        key="home"      onNavigate={navigate} />;
     }
   };
 
