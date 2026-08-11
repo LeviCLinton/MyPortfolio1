@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, Calendar, User, Tag } from "lucide-react";
+import AdUnit from "./AdUnit.jsx";
 
 const T = "#1AA3B0";
 const P = "#F0409A";
@@ -349,6 +350,11 @@ export function BlogIndexPage({ onNavigate }) {
             </Reveal>
           )}
 
+          {/* Ad unit — between featured and grid */}
+          <Reveal>
+            <AdUnit slot="blogBanner" className="mb-12" />
+          </Reveal>
+
           {/* Article grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {rest.map((article, i) => (
@@ -516,7 +522,15 @@ export function BlogArticlePage({ slug, onNavigate }) {
           {/* Article body */}
           <Reveal delay={0.1}>
             <article className="prose-content">
-              {article.content.map((block, i) => renderBlock(block, i))}
+              {article.content.map((block, i) => (
+                <>
+                  {renderBlock(block, i)}
+                  {/* Mid-article ad after block 3 */}
+                  {i === 2 && (
+                    <AdUnit key="mid-ad" slot="blogBanner" className="my-8" />
+                  )}
+                </>
+              ))}
             </article>
           </Reveal>
 
@@ -532,6 +546,11 @@ export function BlogArticlePage({ slug, onNavigate }) {
                 ))}
               </div>
             </div>
+          </Reveal>
+
+          {/* Ad unit before CTA */}
+          <Reveal>
+            <AdUnit slot="blogBanner" className="mt-10" />
           </Reveal>
 
           {/* CTA */}
