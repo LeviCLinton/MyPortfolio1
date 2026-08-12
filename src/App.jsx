@@ -610,6 +610,13 @@ function BlogTeaserStrip({ onNavigate }) {
   // Import ARTICLES lazily via a static preview so App.jsx stays clean
   const previews = [
     {
+      slug: "web-architecture-mistakes-costing-revenue",
+      title: "Why Your Website Isn't Converting: 5 Invisible Web Architecture Mistakes",
+      category: "Business Growth",
+      date: "Aug 12, 2026",
+      color: "#F0409A",
+    },
+    {
       slug: "ai-for-everyone-zuckerberg",
       title: "The Future Is for Everyone: Zuckerberg's Vision for Personal Superintelligence",
       category: "AI & Technology",
@@ -621,14 +628,7 @@ function BlogTeaserStrip({ onNavigate }) {
       title: "Why Every Kenyan Business Needs a Website in 2026 — Not a Facebook Page",
       category: "Business Growth",
       date: "Aug 5, 2026",
-      color: "#F0409A",
-    },
-    {
-      slug: "mpesa-website-integration-guide",
-      title: "M-Pesa Website Integration in 2026: What Business Owners Need to Know",
-      category: "Payments & Tech",
-      date: "Jul 28, 2026",
-      color: "#22c55e",
+      color: "#6366f1",
     },
   ];
 
