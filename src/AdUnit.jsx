@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  * Replace each AD_SLOT_ID with the slot IDs from your AdSense dashboard
  */
 
-export const CA_PUB_ID = "ca-pub-XXXXXXXXXXXXXXXXX"; // ← paste your publisher ID here
+export const CA_PUB_ID = "ca-pub-2255420330589307";
 
 // Ad slot IDs — create these in AdSense dashboard → Ads → By ad unit → Display ads
 export const AD_SLOTS = {
