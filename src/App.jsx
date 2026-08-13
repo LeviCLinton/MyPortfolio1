@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
+import AdUnit from "./AdUnit.jsx";
 import {
   Sparkles, UtensilsCrossed, Stethoscope, Scissors, BedDouble, Home,
   Truck, ChefHat, ShoppingBag, CheckCircle2, PlayCircle, Rocket,
@@ -809,6 +810,10 @@ function TemplatesPage({ onNavigate, onDeploy }) {
             </div>
           </Reveal>
 
+          <Reveal>
+            <AdUnit slot="templatesBanner" className="mb-8" />
+          </Reveal>
+
           <AnimatePresence mode="popLayout">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visible.map(t => <TemplateCard key={t.id} template={t} onDeploy={(bt) => { onDeploy(bt); onNavigate("#contact"); }} />)}
@@ -1219,6 +1224,11 @@ function HomePage({ onNavigate }) {
       <ValueStrip onNavigate={onNavigate} />
       <TemplateTeaserStrip onNavigate={onNavigate} />
       <HowItWorks />
+      <div className="px-6 lg:px-12 py-4">
+        <div className="mx-auto max-w-6xl">
+          <AdUnit slot="homeBanner" />
+        </div>
+      </div>
       <BlogTeaserStrip onNavigate={onNavigate} />
       <InvoiceBanner onNavigate={onNavigate} />
       <Footer onNavigate={onNavigate} />
@@ -1275,7 +1285,7 @@ export default function LCN254Portfolio() {
       case "#about":     return <AboutPage       key="about"     onNavigate={navigate} />;
       case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
       case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
-      case "#invoice":   return <div key="invoice"><InvoiceGenerator /></div>;
+      case "#invoice":   return <InvoiceComingSoon key="invoice" onNavigate={navigate} />;
       default:           return <HomePage        key="home"      onNavigate={navigate} />;
     }
   };
