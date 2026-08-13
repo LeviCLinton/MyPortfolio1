@@ -8,12 +8,12 @@ import { useEffect, useRef } from "react";
 
 export const CA_PUB_ID = "ca-pub-2255420330589307";
 
-// Ad slot IDs — create these in AdSense dashboard → Ads → By ad unit → Display ads
+// Ad slot IDs — created in AdSense dashboard → Ads → By ad unit
 export const AD_SLOTS = {
-  blogBanner:    "XXXXXXXXXX", // horizontal banner — used between blog sections
-  blogSidebar:   "XXXXXXXXXX", // rectangle — used in article sidebar
-  homeBanner:    "XXXXXXXXXX", // horizontal banner — used on home page
-  templatesBanner:"XXXXXXXXXX",// between template cards
+  blogBanner:      "1177133644",
+  blogSidebar:     "2107071931",
+  homeBanner:      "8971225151",
+  templatesBanner: "6345061816",
 };
 
 /**
