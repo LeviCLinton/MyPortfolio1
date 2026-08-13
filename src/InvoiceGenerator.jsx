@@ -499,6 +499,25 @@ export default function InvoiceGenerator() {
   if (step === "type") return (
     <div className="min-h-screen bg-slate-950 text-white py-16 px-4">
       <div className="max-w-4xl mx-auto">
+
+        {/* ── Coming Soon Banner ── */}
+        <div className="mb-10 rounded-2xl border border-amber-400/30 bg-amber-400/5 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/10 text-amber-400 text-xl">
+            🚧
+          </div>
+          <div className="flex-1">
+            <p className="font-bold text-amber-300 mb-1">AI Invoice Generator — Coming Soon</p>
+            <p className="text-sm text-amber-200/70 leading-relaxed">
+              This feature is currently under development. We're finalising the payment integration and AI backend to make sure everything works perfectly before launch.
+              You can explore the document types below, and we'll notify you when it's live.
+            </p>
+          </div>
+          <a href="mailto:contact@lcn254.site?subject=Invoice Generator Waitlist"
+            className="shrink-0 inline-flex items-center gap-2 rounded-xl border border-amber-400/40 px-4 py-2.5 text-sm font-semibold text-amber-300 hover:bg-amber-400/10 transition-colors whitespace-nowrap">
+            Notify me →
+          </a>
+        </div>
+
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/60 px-4 py-1.5 mb-6 backdrop-blur-xl">
             <Sparkles className="h-3.5 w-3.5" style={{ color: BRAND.teal }} />
@@ -510,19 +529,18 @@ export default function InvoiceGenerator() {
           </h1>
           <p className="text-slate-400 max-w-xl mx-auto">Choose a document type. Fill in your details. Our AI assembles a professional document — download it as PDF for $1.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 opacity-60 pointer-events-none select-none">
           {DOC_TYPES.map(({ id, label, icon: Icon, desc }) => (
-            <button
+            <div
               key={id}
-              onClick={() => { setDocType(id); setStep("form"); }}
-              className="group text-left p-5 rounded-2xl border border-slate-700 bg-slate-900/60 hover:border-[#1AA3B0]/60 hover:-translate-y-1 transition-all duration-200 backdrop-blur-xl"
+              className="text-left p-5 rounded-2xl border border-slate-700 bg-slate-900/60 backdrop-blur-xl"
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(26,163,176,0.12)" }}>
                 <Icon className="h-5 w-5" style={{ color: BRAND.teal }} />
               </div>
               <div className="font-semibold text-white mb-1">{label}</div>
               <div className="text-xs text-slate-400">{desc}</div>
-            </button>
+            </div>
           ))}
         </div>
         <p className="text-center text-xs text-slate-500 mt-10">Powered by Claude AI · $1 per download · No subscription</p>
