@@ -959,7 +959,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
             {/* Contact details */}
             <Reveal delay={0.1} className="lg:col-span-2 flex flex-col gap-4">
               {[
-                { icon: MessageCircle, label: "WhatsApp", value: "+254 700 000 000", href: "https://wa.me/254700000000", color: "#00A651" },
+                { icon: MessageCircle, label: "WhatsApp", value: "+254 708 015 027", href: "https://wa.me/254708015027", color: "#00A651" },
                 { icon: Mail,          label: "Email",    value: "contact@lcn254.site", href: "mailto:contact@lcn254.site", color: T },
                 { icon: Phone,         label: "Call",     value: "+254 700 000 000", href: "tel:+254700000000", color: T },
                 { icon: Clock,         label: "Response", value: "Usually 2–4 hours", href: null, color: null },
@@ -997,7 +997,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
       </div>
 
       {/* WhatsApp FAB */}
-      <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer"
+      <a href="https://wa.me/254708015027" target="_blank" rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-110"
         style={{ background: `linear-gradient(135deg,${T},${P})` }}>
