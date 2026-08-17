@@ -98,7 +98,7 @@ const FAQS = [
   { q:"Can I accept M-Pesa payments through my site?",   a:"Yes — all our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. We handle the integration as part of the build." },
   { q:"Do you only work with small businesses?", a:"No — we started with small businesses because that's where the gap was biggest, but we work with SMEs, corporates, NGOs, and tech startups too. The standards are the same; the scope and budget just grow with the project." },
   { q:"Do you offer hosting?",                           a:"We deploy to fast, reliable infrastructure (GitHub Pages for static sites, Cloudflare Workers for server-side logic). Hosting is free for most sites." },
-  { q:"What does the AI Invoice Generator cost?",        a:"KES 130 (approx. $1) per document. You pay once and download your PDF — no subscription, no account required. Supports 11 document types." },
+  { q:"What does the AI Invoice Generator cost?",        a:"It's launching at KES 130 (approx. $1) per document — pay once, download your PDF, no subscription or account required. It's finishing testing now; use the 'Notify me' link on the invoice page to hear when it's live." },
   { q:"Can you update my site after launch?",            a:"Yes. We offer ad-hoc updates (billed per session) and monthly maintenance retainers. Most small content changes can be quoted and delivered within 24 hours." },
   { q:"Is my site going to be mobile-friendly?",         a:"Every site we build is fully responsive — mobile is always our primary design target since most of your customers will arrive on a phone." },
 ];
@@ -116,6 +116,7 @@ function Nav({ onNavigate, route }) {
 
   const links = [
     { label: "Templates", hash: "#templates" },
+    { label: "Pricing",   hash: "#pricing" },
     { label: "Blog",      hash: "#blog" },
     { label: "About",     hash: "#about" },
     { label: "Contact",   hash: "#contact" },
@@ -203,7 +204,7 @@ function Footer({ onNavigate }) {
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            {[["Templates","#templates"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Privacy","#privacy"]].map(([l,h]) => (
+            {[["Templates","#templates"],["Pricing","#pricing"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Privacy","#privacy"]].map(([l,h]) => (
               <button key={h} onClick={() => onNavigate(h)}
                 className="transition-colors hover:text-white">{l}</button>
             ))}
@@ -450,7 +451,7 @@ function CinematicHero({ onNavigate }) {
                 <motion.div className="w-2 h-2 rounded-full flex-shrink-0"
                   animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 1.4 }}
                   style={{ background: "#22c55e" }} />
-                <span className="text-xs font-semibold text-white whitespace-nowrap">3 new bookings today</span>
+                <span className="text-xs font-semibold text-white whitespace-nowrap">New booking received</span>
               </motion.div>
 
               {/* Floating badge — middle right */}
@@ -464,6 +465,9 @@ function CinematicHero({ onNavigate }) {
                 <span className="text-xs font-semibold text-white whitespace-nowrap">M-Pesa paid</span>
               </div>
             </div>
+            <p className="mt-9 text-center text-[11px] font-mono uppercase tracking-widest text-slate-600">
+              Concept preview — not a real client site
+            </p>
           </motion.div>
 
         </div>
@@ -559,6 +563,48 @@ function TemplateTeaserStrip({ onNavigate }) {
               </Reveal>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Home: Pricing teaser ──────────────────────────────────────────────────────
+function PricingTeaserStrip({ onNavigate }) {
+  const rows = [
+    { name: "Launch",     price: "From KSh 35,000", desc: "Landing page, 3–5 days" },
+    { name: "Business",   price: "From KSh 75,000", desc: "Booking + payments, 5–7 days" },
+    { name: "Enterprise", price: "Custom quote",     desc: "Portals & integrations, scoped" },
+  ];
+  return (
+    <section className="px-6 py-20 lg:px-12 border-t border-white/5">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Pricing</span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                No surprise invoices.
+              </h2>
+            </div>
+            <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#pricing")}
+              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
+              See full pricing <ChevronRight className="h-4 w-4" />
+            </motion.button>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {rows.map((r, i) => (
+            <Reveal key={r.name} delay={i * 0.07}>
+              <motion.button whileHover={{ y: -3 }} onClick={() => onNavigate("#pricing")}
+                className="w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md hover:border-white/20 transition-colors">
+                <h3 className="font-semibold text-white mb-1">{r.name}</h3>
+                <div className="text-xl font-black text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{r.price}</div>
+                <p className="text-slate-500 text-xs">{r.desc}</p>
+              </motion.button>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -688,7 +734,7 @@ function InvoiceBanner({ onNavigate }) {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-white font-bold text-xl">✦ AI Invoice Generator</span>
-                  <span className="rounded-full px-2 py-0.5 text-xs font-bold" style={{ background: `${P}30`, color: "#F778B6" }}>NEW</span>
+                  <span className="rounded-full px-2 py-0.5 text-xs font-bold" style={{ background: `${P}30`, color: "#F778B6" }}>COMING SOON</span>
                 </div>
                 <p className="text-slate-400 max-w-md">
                   Invoices, quotes, receipts, purchase orders, and 7 more financial document types — generated by AI in seconds. Download as PDF for just $1.
@@ -697,7 +743,7 @@ function InvoiceBanner({ onNavigate }) {
               <motion.div whileHover={{ x: 4 }}
                 className="shrink-0 inline-flex items-center gap-2 text-base font-bold px-7 py-4 rounded-xl text-slate-950"
                 style={{ background: `linear-gradient(135deg,${T},${P})` }}>
-                Try it now <ArrowRight className="h-5 w-5" />
+                Get notified <ArrowRight className="h-5 w-5" />
               </motion.div>
             </div>
           </motion.div>
@@ -1083,6 +1129,133 @@ function AboutPage({ onNavigate }) {
   );
 }
 
+// ─── Pricing page ──────────────────────────────────────────────────────────────
+const PRICING_TIERS = [
+  {
+    id: "launch",
+    name: "Launch",
+    price: "KSh 35,000",
+    unit: "one-time",
+    tagline: "A focused landing page to get a business online fast.",
+    features: [
+      "1–5 page site from our template library",
+      "Mobile-first, pre-rendered for fast load",
+      "Contact form to your email",
+      "Free hosting on GitHub Pages + custom domain setup",
+      "3–5 day delivery",
+    ],
+    cta: "Get started",
+    highlight: false,
+  },
+  {
+    id: "business",
+    name: "Business",
+    price: "KSh 75,000",
+    unit: "one-time",
+    tagline: "For businesses that take bookings or payments online.",
+    features: [
+      "Everything in Launch",
+      "Booking / scheduling flow",
+      "M-Pesa (Daraja) and card payment integration",
+      "Basic SEO setup (meta tags, sitemap, structured data)",
+      "1 round of revisions after launch",
+      "5–7 day delivery",
+    ],
+    cta: "Get started",
+    highlight: true,
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise & Custom",
+    price: "Custom quote",
+    unit: "scoped per project",
+    tagline: "Multi-location, portals, or integrations with your existing systems.",
+    features: [
+      "Everything in Business",
+      "Custom design system, not a template",
+      "Staff/admin portals, multi-location support",
+      "Integrations with your CRM, ERP, or booking systems",
+      "Ongoing maintenance retainer available",
+    ],
+    cta: "Talk to us",
+    highlight: false,
+  },
+];
+
+function PricingPage({ onNavigate }) {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  return (
+    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+      <Nav onNavigate={onNavigate} route="#pricing" />
+      <div className="pt-28 pb-20 px-6 lg:px-12">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <div className="mb-14 text-center">
+              <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Pricing</span>
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Straightforward pricing,{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">no surprises.</span>
+              </h1>
+              <p className="text-slate-400 max-w-xl mx-auto">
+                Every project is quoted before we start. These are our standard starting prices — final cost depends on scope, content, and integrations.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            {PRICING_TIERS.map((tier, i) => (
+              <Reveal key={tier.id} delay={i * 0.08}>
+                <div className={`relative flex h-full flex-col rounded-2xl border p-7 backdrop-blur-md ${
+                  tier.highlight ? "border-[#1AA3B0]/50 bg-slate-900/70" : "border-white/10 bg-slate-900/40"
+                }`}>
+                  {tier.highlight && (
+                    <span className="absolute -top-3 left-7 rounded-full px-3 py-1 text-[11px] font-bold text-slate-950"
+                      style={{ background: `linear-gradient(135deg,${T},${P})` }}>
+                      Most popular
+                    </span>
+                  )}
+                  <h3 className="text-lg font-bold text-white mb-1">{tier.name}</h3>
+                  <p className="text-slate-400 text-sm mb-5 min-h-[40px]">{tier.tagline}</p>
+                  <div className="mb-6">
+                    <div className="text-3xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      {tier.price}
+                    </div>
+                    <div className="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">{tier.unit}</div>
+                  </div>
+                  <ul className="flex-1 space-y-3 mb-7">
+                    {tier.features.map(f => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-slate-300">
+                        <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" style={{ color: T }} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    onClick={() => onNavigate("#contact")}
+                    className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
+                      tier.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
+                    }`}
+                    style={tier.highlight ? { background: `linear-gradient(135deg,${T},${P})` } : {}}>
+                    {tier.cta}
+                  </motion.button>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <p className="text-center text-slate-500 text-sm mt-10 max-w-2xl mx-auto">
+              Prices shown are for Kenya-based delivery and standard project scope. Hosting is free on our standard setup; a paid managed-hosting/maintenance retainer is available separately. Get in touch for an exact quote on your project.
+            </p>
+          </Reveal>
+        </div>
+      </div>
+      <Footer onNavigate={onNavigate} />
+    </div>
+  );
+}
+
 // ─── FAQ page ─────────────────────────────────────────────────────────────────
 function FAQPage({ onNavigate }) {
   const [open, setOpen] = useState(null);
@@ -1223,6 +1396,7 @@ function HomePage({ onNavigate }) {
       <CinematicHero onNavigate={onNavigate} />
       <ValueStrip onNavigate={onNavigate} />
       <TemplateTeaserStrip onNavigate={onNavigate} />
+      <PricingTeaserStrip onNavigate={onNavigate} />
       <HowItWorks />
       <div className="px-6 lg:px-12 py-4">
         <div className="mx-auto max-w-6xl">
@@ -1281,11 +1455,12 @@ export default function LCN254Portfolio() {
     switch (route) {
       case "#blog":      return <BlogIndexPage   key="blog"      onNavigate={navigate} />;
       case "#templates": return <TemplatesPage   key="templates" onNavigate={navigate} onDeploy={handleDeploy} />;
+      case "#pricing":   return <PricingPage     key="pricing"   onNavigate={navigate} />;
       case "#contact":   return <ContactPage     key="contact"   onNavigate={navigate} prefilledBusiness={selectedBusiness} />;
       case "#about":     return <AboutPage       key="about"     onNavigate={navigate} />;
       case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
       case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
-      case "#invoice":   return <InvoiceComingSoon key="invoice" onNavigate={navigate} />;
+      case "#invoice":   return <InvoiceGenerator  key="invoice" onNavigate={navigate} />;
       default:           return <HomePage        key="home"      onNavigate={navigate} />;
     }
   };
