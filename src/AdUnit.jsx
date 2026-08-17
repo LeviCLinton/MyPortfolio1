@@ -4,7 +4,14 @@ import { useEffect, useRef } from "react";
  * AdUnit — Google AdSense display ad component
  * Replace CA_PUB_ID with your real publisher ID (ca-pub-XXXXXXXXXXXXXXXXX)
  * Replace each AD_SLOT_ID with the slot IDs from your AdSense dashboard
+ *
+ * ADS_ENABLED: while the site is pending AdSense review (or any time you
+ * want ads off), set this to false. AdUnit renders nothing — no empty box,
+ * no placeholder text — and every <AdUnit /> call site elsewhere in the app
+ * needs no changes. Flip back to true once the account is approved and
+ * live ads are actually serving.
  */
+const ADS_ENABLED = false;
 
 export const CA_PUB_ID = "ca-pub-2255420330589307";
 
@@ -25,6 +32,7 @@ export default function AdUnit({ slot = "blogBanner", format = "auto", className
   const pushed = useRef(false);
 
   useEffect(() => {
+    if (!ADS_ENABLED) return;
     if (pushed.current) return;
     if (!adRef.current) return;
 
@@ -37,6 +45,8 @@ export default function AdUnit({ slot = "blogBanner", format = "auto", className
       console.warn("AdSense not ready:", e.message);
     }
   }, []);
+
+  if (!ADS_ENABLED) return null;
 
   const slotId = AD_SLOTS[slot];
 
