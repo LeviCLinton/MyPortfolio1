@@ -347,6 +347,371 @@ export const ARTICLES = [
     ],
     relatedTopics: ["Core Web Vitals", "Mobile UX", "Conversion Rate Optimisation", "Web Performance Kenya", "PageSpeed", "M-Pesa Integration"]
   },
+  {
+    slug: "chatbots-to-autonomous-agents-2026",
+    title: "From Chatbots to Autonomous Agents: How AI Is Changing Business Operations in 2026",
+    metaTitle: "Autonomous AI Agents for Business Operations 2026 | LCN254 Blog",
+    metaDescription: "Task-specific AI agents now handle customer triage, data analysis, and operational workflows with minimal supervision. Here's what that actually looks like in practice.",
+    category: "AI in Practice",
+    tag: "Agentic AI",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 2,
+    author: "LCN254 Editorial",
+    date: "August 20, 2026",
+    readTime: "7 min read",
+    excerpt: "A chatbot answers a question and stops. An agent picks up a task, works through the steps needed to finish it, and only comes back to a human when it hits a real decision point.",
+    heroGradient: "linear-gradient(135deg, #f59e0b15, #1AA3B010)",
+    featured: false,
+    content: [
+      { type: "intro", text: "For years, \"AI for business\" meant a chatbot bolted onto a website — something that could answer a handful of FAQs and then hand the conversation to a human the moment it got complicated. That's no longer the ceiling. Task-specific AI agents can now carry a piece of work from start to finish: reading a customer's message, checking it against order records, taking an action, and only escalating when something genuinely needs a person's judgment." },
+      { type: "h2", text: "What Actually Changed" },
+      { type: "p", text: "The shift isn't that the underlying models got smarter overnight — it's that they can now reliably use tools. A modern agent isn't just generating text; it can query a database, call an API, read a document, and take the next step based on what it finds, in a loop, until the task is actually done. That loop is the difference between \"answers questions\" and \"gets work done.\"" },
+      { type: "h2", text: "Where This Shows Up in Day-to-Day Operations" },
+      { type: "list", items: [
+        "**Customer triage** — an agent reads an incoming support message, checks order or account status, resolves the simple cases outright, and routes only the genuinely ambiguous ones to a human with context already attached",
+        "**Data analysis on demand** — instead of waiting for a weekly report, a manager can ask a direct question about this month's numbers and get an answer pulled live from the underlying data",
+        "**Scheduling and follow-up** — agents that check calendars, send confirmations, and chase no-shows without a person touching every step",
+        "**Document and inbox triage** — sorting, tagging, and drafting first-pass responses to routine correspondence, leaving the judgment calls for a human to approve"
+      ]},
+      { type: "h2", text: "Why This Matters More for Smaller Teams" },
+      { type: "p", text: "A large company can absorb repetitive operational work by hiring more people for it. A five-person business can't — every hour spent on routine triage is an hour not spent on the work that actually grows the business. Agentic AI compresses that overhead the same way a website compresses the cost of being reachable: once it's set up, it keeps running." },
+      { type: "blockquote", text: "The businesses moving fastest right now aren't the ones with the biggest AI budgets — they're the ones who picked one repetitive workflow and actually finished automating it." },
+      { type: "h2", text: "Starting Small, On Purpose" },
+      { type: "p", text: "The mistake most businesses make is trying to automate everything at once. A better starting point is picking a single, well-defined, repetitive workflow — order status lookups, appointment reminders, first-pass email sorting — and getting an agent to handle that one thing reliably before expanding. Reliability on one task builds the trust needed to hand over the next one." },
+      { type: "p", text: "None of this replaces judgment. The businesses getting real value from agents are using them to clear the repetitive floor of the work, so the people on the team spend their time on the calls that actually need a human." }
+    ],
+    relatedTopics: ["Agentic AI", "Workflow Automation", "Customer Support AI", "Business Operations"]
+  },
+  {
+    slug: "3-person-10m-company",
+    title: "The 3-Person, $10M Company: How Technology Is Redefining Organizational Scale",
+    metaTitle: "How Lean Teams Compete With Enterprise Incumbents in 2026 | LCN254 Blog",
+    metaDescription: "Modern web platforms, APIs, and automated systems let tiny teams do what used to require a department. Here's how the leverage actually works.",
+    category: "What's Next",
+    tag: "Lean Teams",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 3,
+    author: "LCN254 Editorial",
+    date: "August 22, 2026",
+    readTime: "6 min read",
+    excerpt: "Headcount used to be the clearest signal of a company's size. It isn't anymore — a three-person team with the right tech stack can now run operations that once needed forty people.",
+    heroGradient: "linear-gradient(135deg, #a855f715, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "It used to be safe to estimate a company's size by its headcount. That assumption is breaking down. A handful of founders with the right stack of software, APIs, and automated systems can now run marketing, customer support, fulfillment, and finance operations that would once have required entire departments." },
+      { type: "h2", text: "What Changed Underneath" },
+      { type: "p", text: "Three things converged. First, cloud infrastructure made it possible to rent enterprise-grade computing power by the hour instead of building a data centre. Second, APIs turned entire business functions — payments, logistics, email, analytics — into services you plug in rather than departments you staff. Third, AI tools took over the repetitive layer of work inside each of those functions, so one person can now do what used to take a small team." },
+      { type: "h2", text: "What Leverage Actually Looks Like" },
+      { type: "list", items: [
+        "**Payments and accounting** — M-Pesa and card processing, invoicing, and reconciliation running through integrated APIs instead of a finance team manually tracking spreadsheets",
+        "**Customer operations** — a support and triage system (often agent-assisted) doing the work that used to require a call centre",
+        "**Marketing and content** — a lean team producing at a volume that used to require an agency retainer, using AI-assisted drafting and design tools",
+        "**Infrastructure** — a website and backend that scale automatically with traffic, with no server room and no IT department"
+      ]},
+      { type: "h2", text: "The Website's Role in This" },
+      { type: "p", text: "A lot of this leverage runs through a company's website, whether people think of it that way or not. A site that takes bookings, processes payments, and answers common questions on its own is doing the work of a receptionist, a cashier, and a support rep — every hour of every day, without a payroll line. For a lean team, that's not a nice-to-have; it's the infrastructure the whole operation depends on." },
+      { type: "h2", text: "What This Means for Incumbents" },
+      { type: "p", text: "Established companies still have real advantages — capital, brand trust, existing customer relationships. But their cost structure often can't move as fast, because a lot of it is fixed in headcount and legacy systems. A lean, well-tooled competitor doesn't need to out-hire an incumbent. It needs to out-execute on a narrower set of things, at a fraction of the overhead — and technology is what makes that arithmetic work." }
+    ],
+    relatedTopics: ["Lean Teams", "Tech Stack Leverage", "Startup Operations", "API Economy"]
+  },
+  {
+    slug: "headless-cms-api-first-web-design",
+    title: "How Headless CMS and API-First Web Design Help Brands Scale Global Content Instantly",
+    metaTitle: "Headless CMS & API-First Web Architecture Explained | LCN254 Blog",
+    metaDescription: "Traditional websites break under multi-region, multi-platform growth. Here's why decoupled, API-first architecture solves the problem — and when you actually need it.",
+    category: "Web Strategy",
+    tag: "Web Architecture",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 4,
+    author: "LCN254 Editorial",
+    date: "August 25, 2026",
+    readTime: "7 min read",
+    excerpt: "A traditional website ties your content, your design, and your server together in one system. That's fine at small scale — and it's exactly what breaks when a business needs to grow fast across regions or platforms.",
+    heroGradient: "linear-gradient(135deg, #6366f115, #1AA3B010)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Most small business websites are what's called \"monolithic\": the content, the design template, and the server that renders it are all one bundled system. That's a perfectly reasonable way to build a single site. It starts to break the moment a business needs the same content to show up in more than one place — a second country's site, a mobile app, a partner's platform — because every one of those becomes a separate content-management problem." },
+      { type: "h2", text: "What \"Headless\" Actually Means" },
+      { type: "p", text: "A headless CMS separates the content from the presentation. Instead of a system that stores your text and images and also decides how they look on one specific website, the content lives in a central store and gets delivered through an API to however many \"heads\" need it — a website, a mobile app, a kiosk, a partner integration — each with its own design, all pulling from the same source of truth." },
+      { type: "h2", text: "Why This Matters as You Scale" },
+      { type: "list", items: [
+        "**One update, everywhere** — change a price or a product description once, and it updates across every platform that reads from the API, instead of editing five separate systems",
+        "**Multi-region without duplicating work** — a new country or language version pulls from the same content structure, translated and localized, rather than rebuilding the site from scratch",
+        "**Faster front-ends** — the presentation layer can be built with modern, lightweight frameworks optimised purely for speed, since it isn't constrained by a legacy content system's templates",
+        "**Future-proofing** — when a new platform emerges (a new app store, a new voice assistant, whatever comes next), you plug it into the existing API instead of rebuilding your content layer"
+      ]},
+      { type: "h2", text: "When You Don't Need This" },
+      { type: "p", text: "Headless architecture is a real solution to a real problem — but it's a solution for a specific stage of growth, not a default. A single-location restaurant or clinic with one website in one market doesn't need a decoupled content architecture; it needs a fast, well-built site, full stop. Adding this complexity before you need it just adds cost and slows delivery for no benefit." },
+      { type: "h2", text: "The Practical Signal to Watch For" },
+      { type: "p", text: "The moment it's worth the conversation: when the same content genuinely needs to live in more than one place — a second market, a companion app, a partner's site — and keeping them in sync by hand has become its own job. Before that point, a well-built traditional site, structured cleanly from day one, will get you further, faster." }
+    ],
+    relatedTopics: ["Headless CMS", "API-First Design", "Web Architecture", "Multi-Region Websites"]
+  },
+  {
+    slug: "ai-governance-small-medium-business",
+    title: "AI Governance for Small & Medium Businesses: Protecting Your Data Without Slowing Down Innovation",
+    metaTitle: "AI Governance & Data Privacy for SMEs 2026 | LCN254 Blog",
+    metaDescription: "Your team is already using AI tools, with or without a policy. Here's how to put a lightweight Acceptable Use Policy in place without slowing anyone down.",
+    category: "AI in Practice",
+    tag: "AI Governance",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 5,
+    author: "LCN254 Editorial",
+    date: "August 27, 2026",
+    readTime: "6 min read",
+    excerpt: "Somewhere on your team, someone has already pasted a client contract or a customer list into an AI tool to get a quick answer. The question isn't whether to allow AI use — it's whether you've set any guardrails around it.",
+    heroGradient: "linear-gradient(135deg, #f59e0b15, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Most small and medium businesses don't have an AI policy — not because they've decided against one, but because it hasn't come up yet. Meanwhile, staff are already using these tools on their own devices, on their own accounts, often with company data. The risk isn't hypothetical; it's already happening quietly in the background of most businesses that haven't addressed it." },
+      { type: "h2", text: "What Can Actually Go Wrong" },
+      { type: "list", items: [
+        "**Data leakage** — pasting customer records, financial figures, or proprietary pricing into a public AI tool, where it may be used to improve the provider's model unless business-tier privacy terms are in place",
+        "**Compliance exposure** — depending on your sector and the data involved, this can create real regulatory risk under data protection law, not just a vague privacy concern",
+        "**Inconsistent quality control** — AI-drafted client communications or contracts going out without review, carrying errors or commitments nobody actually approved",
+        "**Shadow tool sprawl** — every team member picking a different tool with different data-handling practices, with no one accountable for what's connected to what"
+      ]},
+      { type: "h2", text: "Why a Heavy Policy Backfires" },
+      { type: "p", text: "The instinct for many businesses is to write a long, restrictive policy — or to ban AI tools outright. Both tend to fail the same way: people find the policy impractical for actual work, and use the tools anyway, just without telling anyone. A policy nobody follows is worse than no policy, because it creates a false sense that the risk is handled." },
+      { type: "h2", text: "What a Lightweight Acceptable Use Policy Covers" },
+      { type: "list", items: [
+        "**Which tools are approved** — a short, specific list, ideally on business-tier plans with clear data-privacy terms, rather than free consumer tiers",
+        "**What data can never go into a prompt** — customer PII, financial records, unreleased pricing, anything covered by an NDA — stated plainly, not buried in legal language",
+        "**Who reviews AI-drafted external communications** before they're sent, so a human is always the last check on anything client-facing",
+        "**A single point of contact** for approving new tools, so tool sprawl doesn't happen by accident"
+      ]},
+      { type: "p", text: "This isn't about slowing your team down — it's about making sure the speed AI gives you doesn't come with a data breach or a compliance letter attached. A one-page policy that people actually read and follow protects the business far better than an exhaustive one that gets ignored." }
+    ],
+    relatedTopics: ["AI Governance", "Data Privacy", "Compliance", "Acceptable Use Policy"]
+  },
+  {
+    slug: "zero-trust-security-brand-reputation",
+    title: "Zero-Trust Security & Brand Reputation: Why Cybersecurity Is Now a Board-Level Sales Tool",
+    metaTitle: "Cybersecurity as a Competitive Sales Asset in 2026 | LCN254 Blog",
+    metaDescription: "B2B clients increasingly ask for proof of data safety before they'll sign. Here's why robust security has become one of the strongest sales assets a business can have.",
+    category: "What's Next",
+    tag: "Cybersecurity",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 6,
+    author: "LCN254 Editorial",
+    date: "August 29, 2026",
+    readTime: "6 min read",
+    excerpt: "Security used to be a cost centre — the budget line nobody wanted to justify. For businesses selling to other businesses, it's increasingly the opposite: proof of good security practice is what gets the deal signed.",
+    heroGradient: "linear-gradient(135deg, #a855f715, #1AA3B010)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Ask most business owners what cybersecurity is for, and the answer is defensive: stop the breach, avoid the fine, protect the data. That's still true. But for businesses selling to other businesses, security has quietly become something else too — a sales asset. Procurement teams increasingly ask about data handling before they'll sign, and a vague answer is a lost deal." },
+      { type: "h2", text: "What \"Zero-Trust\" Actually Means" },
+      { type: "p", text: "The old security model assumed that anything inside your network was safe and anything outside it was suspect — like a castle with a wall around it. Zero-trust drops that assumption entirely: every request, from every user and every device, is verified every time, regardless of where it's coming from. It's a shift from \"trust, then verify occasionally\" to \"never trust by default, verify continuously.\"" },
+      { type: "h2", text: "Why This Is Now a Sales Conversation, Not Just an IT One" },
+      { type: "list", items: [
+        "**Procurement checklists have changed** — many B2B buyers now ask vendors directly about data handling, access controls, and breach history before signing, regardless of company size",
+        "**Client data lives in your systems** — if you handle a client's customer data, their financial information, or their operational details, your security posture is effectively part of their risk exposure too",
+        "**Trust compounds** — a business that can clearly explain how it protects data wins the benefit of the doubt on everything else, from delivery timelines to pricing"
+      ]},
+      { type: "blockquote", text: "The question isn't whether you can afford good security practices. It's whether you can afford to lose a deal because you couldn't answer a basic question about how you handle data." },
+      { type: "h2", text: "What This Looks Like for a Smaller Business" },
+      { type: "p", text: "Zero-trust doesn't require an enterprise security team to get started. The practical starting points are things most businesses can actually implement: multi-factor authentication on every account that touches client data, role-based access so people only see what their job requires, and a documented (even simple) incident response plan. None of that is expensive. All of it is something you can point to when a client asks." },
+      { type: "p", text: "The businesses treating this as a checkbox exercise are missing the shift. The ones treating it as part of how they present themselves — alongside their portfolio and their pricing — are turning a cost centre into a reason to be chosen." }
+    ],
+    relatedTopics: ["Cybersecurity", "Zero-Trust", "B2B Sales", "Digital Trust"]
+  },
+  {
+    slug: "hyper-personalization-dynamic-web",
+    title: "Hyper-Personalization on the Web: How Dynamic Sites Double Conversion Rates",
+    metaTitle: "Website Personalization & Conversion Rates 2026 | LCN254 Blog",
+    metaDescription: "Every visitor to a static website sees the exact same page. Dynamic, behavior-aware sites change what they show based on who's looking — and it measurably changes conversion.",
+    category: "Web Strategy",
+    tag: "Personalization",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 7,
+    author: "LCN254 Editorial",
+    date: "September 01, 2026",
+    readTime: "6 min read",
+    excerpt: "A first-time visitor from a Google search and a returning customer clicking a WhatsApp link are looking for very different things. A static website shows them the exact same homepage anyway.",
+    heroGradient: "linear-gradient(135deg, #6366f115, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Most websites are static in a specific sense: every visitor sees the same homepage, in the same order, regardless of how they arrived or what they've done before. A dynamic, personalized site changes that — adjusting what it shows based on referral source, past behavior, or stated intent, so the page a visitor lands on is more relevant to why they're actually there." },
+      { type: "h2", text: "What Personalization Looks Like in Practice" },
+      { type: "list", items: [
+        "**Referral-aware landing pages** — a visitor arriving from a Facebook ad about a specific service sees content tailored to that service first, not a generic homepage they have to navigate through",
+        "**Returning-visitor recognition** — someone who's browsed a specific product or service category before sees relevant options surfaced again, instead of starting from zero every visit",
+        "**Location and language awareness** — content, currency, and contact details adjusted automatically based on where the visitor actually is",
+        "**Intent-based CTAs** — a visitor who's scrolled through pricing information sees a \"book now\" prompt, while a first-time visitor still exploring sees a lower-commitment \"learn more\" instead"
+      ]},
+      { type: "h2", text: "Why It Moves Conversion Numbers" },
+      { type: "p", text: "The underlying reason is simple: relevance reduces friction. A generic page asks every visitor to do the work of finding what applies to them. A personalized page does that work for them. Over enough visitors, that difference compounds — fewer people bounce because the page didn't seem to be about what they were looking for, and more people reach the action that actually matters to your business." },
+      { type: "h2", text: "You Don't Need a Customer Data Platform to Start" },
+      { type: "p", text: "Enterprise personalization often involves a full customer data platform (CDP) tracking behavior across every touchpoint. Most small and medium businesses don't need that to get real value. Even simple personalization — different landing pages per ad campaign, a returning-visitor cookie that skips the intro content, location-based contact details — captures a meaningful share of the benefit at a fraction of the complexity." },
+      { type: "p", text: "The mistake to avoid is treating personalization as an all-or-nothing enterprise project. Start with the one or two moments where visitor context is most obviously different — a paid ad landing page versus organic search, a returning customer versus a first-time one — and build from there." }
+    ],
+    relatedTopics: ["Website Personalization", "Conversion Optimization", "Customer Data", "Landing Pages"]
+  },
+  {
+    slug: "ai-coding-non-technical-founders",
+    title: "Repository Intelligence & AI Coding: How Non-Technical Founders Can Build Software Faster",
+    metaTitle: "AI Coding Tools for Non-Technical Founders 2026 | LCN254 Blog",
+    metaDescription: "Generative coding tools now let non-technical business leaders build, test, and iterate on software prototypes in days instead of months. Here's what's realistic and what isn't.",
+    category: "AI in Practice",
+    tag: "AI Coding",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 8,
+    author: "LCN254 Editorial",
+    date: "September 03, 2026",
+    readTime: "6 min read",
+    excerpt: "You no longer need to know how to code to build a working prototype of an idea. You do still need to know the difference between a prototype and a product — and that gap is where most founders get into trouble.",
+    heroGradient: "linear-gradient(135deg, #f59e0b15, #1AA3B010)",
+    featured: false,
+    content: [
+      { type: "intro", text: "A founder with no coding background can now describe an idea in plain language and have a working prototype within a day — a booking flow, an internal tool, a rough version of a product idea. That's a genuine and significant shift. What it doesn't do is remove the need for engineering judgment once that prototype needs to become something real customers depend on." },
+      { type: "h2", text: "What's Genuinely Possible Now" },
+      { type: "list", items: [
+        "**Rapid prototyping** — describing a workflow or interface in plain language and getting a working version to click through and test, often within hours",
+        "**Internal tools** — a founder building a simple dashboard, tracker, or automation for their own team, without waiting on a developer's schedule",
+        "**Faster iteration** — testing three different approaches to a feature in the time it used to take to spec out one",
+        "**Lower cost of validation** — proving an idea works, or discovering it doesn't, before spending real money on a full engineering build"
+      ]},
+      { type: "h2", text: "Where the Gap Still Is" },
+      { type: "p", text: "A working prototype and a production-ready product are different things, and the distance between them is where non-technical founders most often get surprised. Security, data handling, error cases, performance under real load, and long-term maintainability are exactly the things a quick AI-assisted build tends to skip — not because the tools are bad, but because those concerns aren't visible in a demo that only has to work once, for one person, on a good day." },
+      { type: "blockquote", text: "AI coding tools compress the distance from idea to prototype. They don't compress the distance from prototype to something you'd trust with real customer data." },
+      { type: "h2", text: "A Practical Way to Use This" },
+      { type: "p", text: "The strongest use of these tools for a non-technical founder isn't replacing a developer — it's arriving at that developer with something concrete. A working prototype, built and tested by the founder, turns a vague pitch into a specific brief: \"build this properly, at this scale, with this data handled correctly.\" That conversation is faster, cheaper, and far less likely to go sideways than starting from a blank page and a verbal description." }
+    ],
+    relatedTopics: ["AI Coding", "Rapid Prototyping", "No-Code", "Founder Tools"]
+  },
+  {
+    slug: "cloud-3-0-tech-sovereignty",
+    title: "Cloud 3.0 & Tech Sovereignty: Where Will Your Business Data Live in the Next 5 Years?",
+    metaTitle: "Hybrid Cloud & Data Sovereignty for Business 2026 | LCN254 Blog",
+    metaDescription: "The era of simply moving everything to a public cloud is giving way to hybrid, localized architectures shaped by AI compute needs and data regulation. Here's what that means for your business.",
+    category: "What's Next",
+    tag: "Cloud Infrastructure",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 9,
+    author: "LCN254 Editorial",
+    date: "September 05, 2026",
+    readTime: "6 min read",
+    excerpt: "For most of the last decade, the cloud playbook was simple: move everything to a public provider and don't think about where it physically lives. That playbook is getting more complicated, on purpose.",
+    heroGradient: "linear-gradient(135deg, #a855f715, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "The first wave of cloud adoption was about consolidation — moving servers out of back offices and into a handful of large public providers. That solved a real problem. It also created a new one: businesses increasingly don't know, or don't have a say in, which country their data actually lives in — and for a growing number of regulators and clients, that question now matters." },
+      { type: "h2", text: "Why \"Where\" Is Becoming a Real Question" },
+      { type: "list", items: [
+        "**Data protection law is tightening** — Kenya's Data Protection Act and similar regulation elsewhere increasingly care about where personal data is processed and stored, not just how it's secured",
+        "**AI compute has specific infrastructure needs** — running AI workloads efficiently often benefits from infrastructure placed closer to where the data and the users actually are",
+        "**Client contracts increasingly specify it** — some clients, particularly larger or regulated ones, now ask directly where their data will be hosted before agreeing to work with a vendor",
+        "**Resilience concerns** — depending entirely on infrastructure in a single distant region carries risk that a hybrid or local setup can reduce"
+      ]},
+      { type: "h2", text: "What \"Hybrid\" Actually Looks Like" },
+      { type: "p", text: "This doesn't mean abandoning public cloud providers — it means being deliberate about what runs where. Customer-facing applications might stay on a fast, globally distributed public cloud. Sensitive customer data, particularly anything covered by local data protection requirements, might sit on infrastructure specifically chosen (or contractually confirmed) to stay within a given jurisdiction. The goal is matching the infrastructure choice to what each type of data actually requires, rather than defaulting everything to one provider by habit." },
+      { type: "h2", text: "What This Means for a Growing Business" },
+      { type: "p", text: "Most small and medium businesses don't need to solve this today with a complex multi-cloud architecture. What's worth doing now is simpler: know where your customer data is actually stored, understand what your local data protection law requires, and ask your vendors the same question you'd expect a client to ask you. The businesses caught off guard by this shift won't be the ones with complicated infrastructure — they'll be the ones who never asked the question at all." }
+    ],
+    relatedTopics: ["Cloud Infrastructure", "Data Sovereignty", "Kenya Data Protection Act", "Hybrid Cloud"]
+  },
+  {
+    slug: "geo-vs-seo-ai-search-engines",
+    title: "The Search Landscape Has Shifted: Optimizing Your Website for AI Search Engines (GEO vs. SEO)",
+    metaTitle: "GEO vs SEO: Optimizing for AI Search Engines in 2026 | LCN254 Blog",
+    metaDescription: "Traditional SEO isn't dead, but AI-generated summaries are changing how people find information. Here's how to structure your site so AI engines actually reference and cite your brand.",
+    category: "Web Strategy",
+    tag: "GEO",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 10,
+    author: "LCN254 Editorial",
+    date: "September 08, 2026",
+    readTime: "7 min read",
+    excerpt: "A growing share of searches now end with an AI-generated summary instead of a list of blue links. Ranking well in that summary requires a different kind of structure than ranking well in a traditional results page.",
+    heroGradient: "linear-gradient(135deg, #6366f115, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Traditional SEO was built around one job: convince a search engine's ranking algorithm to place your page as high as possible in a list of links. That job hasn't disappeared. But an increasing share of searches now end with an AI-generated summary that answers the question directly — and getting cited or referenced inside that summary is a related, but genuinely different, discipline. That's what \"Generative Engine Optimization,\" or GEO, refers to." },
+      { type: "h2", text: "How GEO Differs From Traditional SEO" },
+      { type: "list", items: [
+        "**Citation, not just ranking** — the goal shifts from \"appear in position one\" to \"be one of the sources the AI summary actually pulls from and names\"",
+        "**Clarity over keyword density** — AI systems tend to favor content that answers a question directly and unambiguously over content stuffed with repeated search terms",
+        "**Structured data matters more** — clean schema markup, clear headings, and well-organized factual content make it easier for an AI system to extract and attribute a specific claim to your page",
+        "**Freshness and specificity** — vague, evergreen-sounding content is less useful to cite than content with specific, current, checkable facts"
+      ]},
+      { type: "h2", text: "What This Means Practically" },
+      { type: "p", text: "It doesn't mean abandoning the fundamentals of good SEO — fast pages, clean structure, genuine expertise, real backlinks. Most of that still matters and still helps. What it adds is a second layer: writing content in a way that directly and clearly answers the specific question a person is likely to ask, with structured data that makes the facts easy to extract, rather than burying the answer in marketing language." },
+      { type: "h2", text: "A Practical Starting Point" },
+      { type: "list", items: [
+        "**Answer the question in the first two sentences**, then elaborate — don't make a reader (or an AI system) dig for the direct answer",
+        "**Use structured data (schema markup)** for anything factual: prices, hours, locations, services offered",
+        "**Write in clear, declarative sentences** rather than vague marketing phrasing — AI systems extract facts more reliably from direct statements",
+        "**Keep information current** and be explicit about dates, since specificity is part of what makes a source worth citing"
+      ]},
+      { type: "p", text: "SEO and GEO aren't competing strategies — they're overlapping ones, built on the same foundation of a fast, well-structured, genuinely useful website. The difference is in the finishing touches: writing for direct extraction, not just for ranking." }
+    ],
+    relatedTopics: ["GEO", "AI Search", "SEO", "Structured Data", "Schema Markup"]
+  },
+  {
+    slug: "decision-intelligence-predictive-ai-models",
+    title: "Decision Intelligence: Using Predictive AI Models to Forecast Demand and Cut Costs",
+    metaTitle: "Predictive AI for Demand Forecasting & Cost Reduction | LCN254 Blog",
+    metaDescription: "Predictive analytics is removing the guesswork from pricing, inventory, and resource allocation. Here's how businesses are actually using it, without a data science team.",
+    category: "AI in Practice",
+    tag: "Predictive Analytics",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 11,
+    author: "LCN254 Editorial",
+    date: "September 10, 2026",
+    readTime: "6 min read",
+    excerpt: "Most small businesses set prices, order stock, and staff shifts based on gut feel and last month's numbers. Predictive models take the same historical data and turn it into an actual forecast.",
+    heroGradient: "linear-gradient(135deg, #f59e0b15, #F0409A10)",
+    featured: false,
+    content: [
+      { type: "intro", text: "\"Decision intelligence\" is a broad name for a simple idea: using data you already have to make a specific prediction, instead of relying on instinct or last month's numbers as a rough guide. For most small and medium businesses, the data already exists — sales history, seasonal patterns, booking records. What's usually missing is a system that turns it into a forecast anyone can act on." },
+      { type: "h2", text: "Where This Applies Most Directly" },
+      { type: "list", items: [
+        "**Inventory and stock ordering** — predicting which products will sell in the coming weeks based on historical patterns, seasonality, and current trends, instead of ordering the same amount every month by habit",
+        "**Pricing** — identifying when demand is likely to be higher or lower, and adjusting pricing accordingly rather than holding one static price year-round",
+        "**Staffing and scheduling** — forecasting busy and quiet periods so staffing levels actually match expected demand, rather than being set by a fixed weekly template",
+        "**Cash flow planning** — projecting upcoming revenue based on booking or order pipelines, giving more lead time to plan for slow periods"
+      ]},
+      { type: "h2", text: "You Don't Need a Data Science Team" },
+      { type: "p", text: "This is where the assumption usually goes wrong. Predictive analytics used to require a dedicated data science function to be worth doing at all. That's no longer the entry cost. A business with clean historical sales or booking data — even just what's already sitting in a spreadsheet or a booking system — can get meaningful forecasts from tools built for exactly this, without hiring a specialist." },
+      { type: "h2", text: "Where to Start" },
+      { type: "p", text: "The highest-value starting point is usually the decision that currently costs the most when it's wrong — over-ordering stock that goes unsold, under-staffing a period that turns out to be busy, pricing a service the same in a slow month as a peak one. Pick the one recurring decision where a bad guess is most expensive, and start forecasting that first. The value compounds from there as more of the business runs on forecasts instead of assumptions." }
+    ],
+    relatedTopics: ["Predictive Analytics", "Demand Forecasting", "Inventory Management", "Decision Intelligence"]
+  },
+  {
+    slug: "digital-first-playbook-tech-stack-audit",
+    title: "The Digital-First Playbook: How to Audit Your Business Tech Stack for the Year Ahead",
+    metaTitle: "How to Audit Your Business Tech Stack in 2026 | LCN254 Blog",
+    metaDescription: "A step-by-step checklist to evaluate software costs, eliminate redundant tool sprawl, and make sure your tech stack is actually built for sustainable growth.",
+    category: "What's Next",
+    tag: "Tech Stack",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 12,
+    author: "LCN254 Editorial",
+    date: "September 12, 2026",
+    readTime: "6 min read",
+    excerpt: "Most businesses accumulate software the way a house accumulates clutter — one useful tool at a time, until nobody remembers what half of it is for or what it costs every month.",
+    heroGradient: "linear-gradient(135deg, #a855f715, #1AA3B010)",
+    featured: false,
+    content: [
+      { type: "intro", text: "Every tool in a business's stack got added for a reason at the time. Few businesses ever go back and check whether that reason still holds. The result, a few years in, is usually a pile of overlapping subscriptions, half-used platforms, and integrations nobody quite remembers setting up — quietly costing money and adding friction every month." },
+      { type: "h2", text: "Why This Is Worth Doing Now" },
+      { type: "p", text: "A messy tech stack isn't just a wasted-money problem, though that's real too. It's a speed problem — every extra tool is another login, another place data can get out of sync, another thing that has to be explained to a new hire. As AI tools and automation become part of daily operations, a clean, well-understood stack is what actually lets a business take advantage of them. A cluttered one just adds another layer of confusion." },
+      { type: "h2", text: "A Practical Audit Checklist" },
+      { type: "list", items: [
+        "**List everything, with actual monthly cost** — every subscription, every tool, every integration, in one place, with what it costs and who owns the relationship with the vendor",
+        "**Mark usage, not intent** — for each tool, note whether it's actually used daily, occasionally, or effectively abandoned — not whether it was supposed to be useful",
+        "**Find the overlaps** — two tools doing the same job (two project trackers, two form builders) is money and confusion for no benefit",
+        "**Check what actually talks to what** — map which tools are integrated and which are silently disconnected, forcing someone to manually copy data between them",
+        "**Score against where the business is headed** — a tool that fit a five-person team may not fit a twenty-person one; keep what scales, flag what won't"
+      ]},
+      { type: "h2", text: "What to Do With the Results" },
+      { type: "p", text: "The goal isn't to cut everything down to the bare minimum — it's to be deliberate. Some tools earn their place easily once the actual cost and usage are visible side by side. Others turn out to be a habit nobody questioned. A stack audit, done honestly once a year, is one of the cheapest ways to free up both budget and the operational clarity needed to take on what's next — whether that's a new AI tool, a website rebuild, or simply room to grow without the clutter growing with it." }
+    ],
+    relatedTopics: ["Tech Stack Audit", "SaaS Management", "Operational Efficiency", "Business Technology"]
+  },
 ];
 
 // ─── Category colors ──────────────────────────────────────────────────────────
@@ -354,6 +719,9 @@ const CAT_COLORS = {
   "AI & Technology": { bg: `${T}15`, text: T, border: `${T}40` },
   "Business Growth":  { bg: `${P}15`, text: P, border: `${P}40` },
   "Payments & Tech":  { bg: "#22c55e15", text: "#22c55e", border: "#22c55e40" },
+  "Web Strategy":     { bg: "#6366f115", text: "#6366f1", border: "#6366f140" },
+  "AI in Practice":   { bg: "#f59e0b15", text: "#f59e0b", border: "#f59e0b40" },
+  "What's Next":      { bg: "#a855f715", text: "#a855f7", border: "#a855f740" },
 };
 
 function CategoryBadge({ category }) {
