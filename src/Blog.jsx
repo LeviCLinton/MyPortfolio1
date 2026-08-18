@@ -500,7 +500,7 @@ export function BlogArticlePage({ slug, onNavigate }) {
       if (desc) desc.setAttribute("content", article.metaDescription);
     }
     return () => {
-      document.title = "LCN254 — Deployment-Ready Websites for Local Businesses";
+      document.title = "LCN254 — We Tell Your Story Online";
     };
   }, [article]);
 
