@@ -268,6 +268,8 @@ export const ARTICLES = [
     metaDescription: "Slow load times, poor mobile UX, and broken funnels are silently draining revenue. Fix these 5 invisible architecture mistakes before your competitors do.",
     category: "Business Growth",
     tag: "Web Performance",
+    series: "Foundations — Modernizing Your Digital Engine",
+    seriesPost: 1,
     author: "LCN254 Editorial",
     date: "August 12, 2026",
     readTime: "9 min read",
@@ -275,7 +277,7 @@ export const ARTICLES = [
     heroGradient: "linear-gradient(135deg, #6366f115, #F0409A10)",
     featured: false,
     content: [
-      { type: "intro", text: "A 1-second delay in page load time reduces conversions by 7%. Google found that 53% of mobile users abandon a site that takes longer than 3 seconds to load. Yet most business owners respond to poor conversion rates by rewriting their headlines, tweaking their CTAs, or buying more ad traffic — while the actual problem sits untouched inside their site's architecture. Here are the five mistakes that silently cost businesses the most revenue, and how to fix them." },
+      { type: "intro", text: "A website isn't an online business card — it's a 24/7 revenue engine. A 1-second delay in page load time reduces conversions by 7%. Google found that 53% of mobile users abandon a site that takes longer than 3 seconds to load. Yet most business owners respond to poor conversion rates by rewriting their headlines, tweaking their CTAs, or buying more ad traffic — while the actual problem sits untouched inside their site's architecture. Here are the five mistakes that silently cost businesses the most revenue, and how to fix them." },
       { type: "h2", text: "🔑 Key Takeaways" },
       { type: "list", items: [
         "**Architecture, not copy, is usually the conversion killer** — structural problems cause 60–80% of conversion losses that businesses attribute to messaging",
@@ -448,8 +450,15 @@ export function BlogIndexPage({ onNavigate }) {
                   className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
                   <div className="h-2 w-full" style={{ background: article.heroGradient }} />
                   <div className="p-6">
-                    <CategoryBadge category={article.category} />
-                    <h3 className="mt-4 mb-3 font-bold text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">
+                    <div className="flex items-center gap-2 flex-wrap mb-2">
+                      <CategoryBadge category={article.category} />
+                      {article.series && (
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+                          {article.series} · Post {article.seriesPost}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-2 mb-3 font-bold text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">
                       {article.title}
                     </h3>
                     <p className="text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3">{article.excerpt}</p>
@@ -587,6 +596,13 @@ export function BlogArticlePage({ slug, onNavigate }) {
           {/* Header */}
           <Reveal>
             <div className="mb-10">
+              {article.series && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 mb-4 text-xs font-mono text-slate-400">
+                  <span style={{ color: T }} className="font-semibold">{article.series}</span>
+                  <span className="text-slate-600">·</span>
+                  <span>Post {article.seriesPost}</span>
+                </div>
+              )}
               <div className="flex items-center gap-3 flex-wrap mb-5">
                 <CategoryBadge category={article.category} />
                 <span className="text-xs text-slate-500">{article.tag}</span>
