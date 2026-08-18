@@ -217,7 +217,7 @@ function Footer({ onNavigate }) {
 
 // ─── Cinematic Hero ──────────────────────────────────────────────────────────
 function CinematicHero({ onNavigate }) {
-  const words = ["Small Businesses", "Growing Brands", "Enterprises", "Non-Profits", "Tech Startups", "Service Providers"];
+  const words = ["a home online.", "a website of its own.", "space to be told.", "room to grow.", "its own address.", "more than a caption."];
   const [wordIdx, setWordIdx] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setWordIdx(i => (i + 1) % words.length), 2200);
@@ -283,13 +283,13 @@ function CinematicHero({ onNavigate }) {
                 <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: T }} />
               </span>
               <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
-                Online now · Building across Kenya
+                Every story deserves to be told · Building across Kenya
               </span>
             </div>
 
             <h1 className="text-5xl sm:text-6xl font-black tracking-tight text-white mb-4 leading-[1.02]"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Websites for
+              Every story deserves
               <br />
               <span className="relative inline-block min-w-[280px]">
                 <AnimatePresence mode="wait">
@@ -308,7 +308,7 @@ function CinematicHero({ onNavigate }) {
             </h1>
 
             <p className="text-slate-400 text-lg max-w-lg mb-10 leading-relaxed mt-6">
-              From small businesses to large enterprises — we build fast, functional websites that work for your customers and grow with your ambitions.
+              Human beings are storytellers. We put meaning into words, images, and emotion — then build the website that tells yours. Personal or professional, it's your story, told your way.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -316,7 +316,7 @@ function CinematicHero({ onNavigate }) {
                 onClick={() => onNavigate("#templates")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
                 style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
-                Explore Templates <ArrowRight className="h-5 w-5" />
+                Start Your Story <ArrowRight className="h-5 w-5" />
               </motion.button>
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigate("#contact")}
@@ -486,10 +486,10 @@ function CinematicHero({ onNavigate }) {
 // ─── Home: Value strip ────────────────────────────────────────────────────────
 function ValueStrip({ onNavigate }) {
   const features = [
-    { icon: Zap,        title: "Live in 3–5 days",     desc: "From signed-off designs to a deployed URL. Whether it's a simple landing page or a full enterprise platform." },
-    { icon: Globe,      title: "Mobile-first always",   desc: "Your customers are on phones. So is our design process." },
-    { icon: Shield,     title: "You own everything",    desc: "No lock-in, no proprietary CMS. Take the code anywhere." },
-    { icon: TrendingUp, title: "Scales with you",       desc: "Start with a clean landing page. Add booking, payments, portals, and integrations as your business grows." },
+    { icon: Zap,        title: "Told at the right pace",  desc: "From signed-off designs to a deployed URL in 3–5 days. A story worth telling shouldn't wait months to be heard." },
+    { icon: Globe,      title: "Wherever they're reading", desc: "Most people meet your story on a phone first. So every site starts there, not as an afterthought." },
+    { icon: Shield,     title: "Yours, not ours",          desc: "No lock-in, no proprietary CMS. It's your story — you should be able to take it anywhere." },
+    { icon: TrendingUp, title: "Room to keep growing",     desc: "Start with a single page. Add booking, payments, and new chapters as the story continues." },
   ];
 
   return (
@@ -497,10 +497,10 @@ function ValueStrip({ onNavigate }) {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="text-center mb-14">
-            <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Why LCN254</span>
+            <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>How We Tell It</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Any business. Any scale. One agency.
+              Words, design, and feeling — built to last.
             </h2>
           </div>
         </Reveal>
@@ -533,10 +533,10 @@ function TemplateTeaserStrip({ onNavigate }) {
         <Reveal>
           <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Templates</span>
+              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Starting Points</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Every business type. One agency.
+                Every story needs a shape.
               </h2>
             </div>
             <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
@@ -614,19 +614,19 @@ function PricingTeaserStrip({ onNavigate }) {
 // ─── Home: How it works ───────────────────────────────────────────────────────
 function HowItWorks() {
   const steps = [
-    { n:"01", title:"Choose a starting point", desc:"Browse our template library — from small business suites to enterprise builds. Or start a custom project from scratch if nothing fits." },
-    { n:"02", title:"Customize with us",     desc:"Tell us your branding, copy, and features. We handle the code — you focus on your business." },
-    { n:"03", title:"Go live in days",       desc:"We deploy, test on mobile, and hand you a site that works. No waiting on 'revisions' for weeks." },
+    { n:"01", title:"Tell us your story", desc:"Browse our template library as a starting shape, or start from a blank page if nothing quite fits. Either way, it begins with what you want to say." },
+    { n:"02", title:"We help you shape it",     desc:"Your words, your images, your voice. We handle the code and the craft — you stay focused on the story itself." },
+    { n:"03", title:"It goes live in days",       desc:"We deploy, test on mobile, and hand you a site that works. No waiting weeks for 'revisions.'" },
   ];
   return (
     <section className="px-6 py-20 lg:px-12 border-t border-white/5">
       <div className="mx-auto max-w-4xl">
         <Reveal>
           <div className="text-center mb-14">
-            <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Process</span>
+            <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>How We Write It</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Three steps to a live site.
+              Three steps to telling it online.
             </h2>
           </div>
         </Reveal>
@@ -1029,11 +1029,11 @@ function AboutPage({ onNavigate }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>About LCN254</span>
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                From your first site to{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">your next big one.</span>
+                Human beings are{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">storytellers.</span>
               </h1>
               <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                LCN254 is a Nairobi-based web agency. We build fast, functional websites for businesses of every size — from a first-time entrepreneur launching a landing page to an established enterprise needing a full digital platform.
+                We put meaning into words, images, and emotion — it's how we always have. A website is just where that meaning lives online. LCN254 is a Nairobi-based web agency that builds the site that tells your story, personal or professional: from a first-time entrepreneur launching a single page to an established enterprise that needs a full digital platform.
               </p>
             </div>
           </Reveal>
@@ -1059,6 +1059,7 @@ function AboutPage({ onNavigate }) {
                 <p><span className="text-white font-semibold">LCN254</span> — Local Commerce Network, dial code 254. The name says what we're here to do: help Kenyan businesses compete online.</p>
                 <p>We started serving small businesses because that's where the gap was biggest. Today, we work with SMEs, corporates, NGOs, and tech startups too — the tools and standards are the same, the scope just grows.</p>
                 <p>We're a small team. You talk directly to the person building your site — no account managers, no handoffs.</p>
+                <p>And underneath all of it, the same belief: every business, every founder, every family has a story worth telling well.</p>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
@@ -1376,7 +1377,7 @@ function WelcomeSplash({ onDone }) {
           Welcome to{" "}
           <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">LCN254</span>
         </h1>
-        <p className="text-slate-400 max-w-xs">Websites for every Kenyan business — from your first launch to your next big platform.</p>
+        <p className="text-slate-400 max-w-xs">Human beings are storytellers. Let's tell yours — personal or professional.</p>
         <div className="mt-10 w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
           <motion.div className="h-full rounded-full"
             style={{ background: `linear-gradient(90deg,${T},${P})` }}
