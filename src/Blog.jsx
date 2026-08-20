@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, Calendar, User, Tag } from "lucide-react";
 import AdUnit from "./AdUnit.jsx";
 
@@ -9,13 +9,13 @@ const P = "#F0409A";
 // ─── Reveal helper ────────────────────────────────────────────────────────────
 function Reveal({ children, delay = 0, className = "" }) {
   return (
-    <motion.div className={className}
+    <m.div className={className}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px", amount: 0.1 }}
       transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -813,7 +813,7 @@ export function BlogIndexPage({ onNavigate }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {rest.map((article, i) => (
               <Reveal key={article.slug} delay={i * 0.07}>
-                <motion.button whileHover={{ y: -3 }}
+                <m.button whileHover={{ y: -3 }}
                   onClick={() => onNavigate(`#blog/${article.slug}`)}
                   className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
                   <div className="h-2 w-full" style={{ background: article.heroGradient }} />
@@ -835,7 +835,7 @@ export function BlogIndexPage({ onNavigate }) {
                       <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{article.readTime}</span>
                     </div>
                   </div>
-                </motion.button>
+                </m.button>
               </Reveal>
             ))}
           </div>
@@ -846,15 +846,15 @@ export function BlogIndexPage({ onNavigate }) {
               <h2 className="font-bold text-white text-xl mb-2">Ready to get your business online?</h2>
               <p className="text-slate-400 text-sm mb-6">Browse our templates or get in touch for a custom quote.</p>
               <div className="flex justify-center gap-4 flex-wrap">
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
                   className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-slate-950"
                   style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                   Browse Templates <ArrowRight className="h-4 w-4" />
-                </motion.button>
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
+                </m.button>
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                   Get a Free Quote
-                </motion.button>
+                </m.button>
               </div>
             </div>
           </Reveal>
@@ -1028,15 +1028,15 @@ export function BlogArticlePage({ slug, onNavigate }) {
               <p className="font-bold text-white mb-2">Need a website for your business?</p>
               <p className="text-slate-400 text-sm mb-5">LCN254 builds fast, functional websites for businesses of every size — live in days.</p>
               <div className="flex justify-center gap-3 flex-wrap">
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
                   className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-slate-950"
                   style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                   Browse Templates <ArrowRight className="h-4 w-4" />
-                </motion.button>
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
+                </m.button>
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white">
                   Get a Free Quote
-                </motion.button>
+                </m.button>
               </div>
             </div>
           </Reveal>
@@ -1047,7 +1047,7 @@ export function BlogArticlePage({ slug, onNavigate }) {
               <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-6">More Articles</p>
               <div className="space-y-4">
                 {ARTICLES.filter(a => a.slug !== slug).slice(0, 2).map(a => (
-                  <motion.button key={a.slug} whileHover={{ x: 4 }}
+                  <m.button key={a.slug} whileHover={{ x: 4 }}
                     onClick={() => onNavigate(`#blog/${a.slug}`)}
                     className="group w-full text-left flex items-center gap-4 rounded-xl border border-white/5 bg-slate-900/40 p-4 hover:border-white/10 transition-colors">
                     <div className="h-12 w-12 rounded-xl flex-shrink-0"
@@ -1057,7 +1057,7 @@ export function BlogArticlePage({ slug, onNavigate }) {
                       <p className="text-xs text-slate-500 mt-0.5">{a.date} · {a.readTime}</p>
                     </div>
                     <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-[#3FC1CB] transition-colors flex-shrink-0" />
-                  </motion.button>
+                  </m.button>
                 ))}
               </div>
             </div>
