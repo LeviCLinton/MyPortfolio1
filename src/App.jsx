@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
 import AdUnit from "./AdUnit.jsx";
@@ -26,23 +26,23 @@ const pageVariants = {
 
 function PageWrap({ children, id }) {
   return (
-    <motion.div key={id} variants={pageVariants}
+    <m.div key={id} variants={pageVariants}
       initial="initial" animate="animate" exit="exit">
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
 // ─── Scroll-reveal ───────────────────────────────────────────────────────────
 function Reveal({ children, delay = 0, y = 16, className = "" }) {
   return (
-    <motion.div className={className}
+    <m.div className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px", amount: 0.1 }}
       transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -123,7 +123,7 @@ function Nav({ onNavigate, route }) {
   ];
 
   return (
-    <motion.header
+    <m.header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       animate={{ backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
         background: scrolled ? "rgba(2,6,23,0.85)" : "transparent",
@@ -165,9 +165,9 @@ function Nav({ onNavigate, route }) {
         <button className="md:hidden text-white p-2" onClick={() => setMenuOpen(o => !o)}
           aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
           <div className="space-y-1.5">
-            <motion.div className="h-0.5 w-6 bg-white" animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} />
-            <motion.div className="h-0.5 w-6 bg-white" animate={{ opacity: menuOpen ? 0 : 1 }} />
-            <motion.div className="h-0.5 w-6 bg-white" animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -8 : 0 }} />
+            <m.div className="h-0.5 w-6 bg-white" animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} />
+            <m.div className="h-0.5 w-6 bg-white" animate={{ opacity: menuOpen ? 0 : 1 }} />
+            <m.div className="h-0.5 w-6 bg-white" animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -8 : 0 }} />
           </div>
         </button>
       </div>
@@ -175,7 +175,7 @@ function Nav({ onNavigate, route }) {
       {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
+          <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
             className="md:hidden overflow-hidden bg-slate-950/95 border-t border-white/5">
             <div className="px-6 py-4 space-y-3">
@@ -190,10 +190,10 @@ function Nav({ onNavigate, route }) {
                 ✦ Invoice AI
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </m.header>
   );
 }
 
@@ -275,7 +275,7 @@ function CinematicHero({ onNavigate }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[80vh]">
 
           {/* ── LEFT: copy ── */}
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}
+          <m.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
 
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/60 px-4 py-1.5 backdrop-blur-md">
@@ -294,7 +294,7 @@ function CinematicHero({ onNavigate }) {
               <br />
               <span className="relative inline-block min-w-[280px]">
                 <AnimatePresence mode="wait">
-                  <motion.span key={wordIdx}
+                  <m.span key={wordIdx}
                     initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
@@ -302,7 +302,7 @@ function CinematicHero({ onNavigate }) {
                     className="absolute left-0 bg-gradient-to-r bg-clip-text text-transparent"
                     style={{ backgroundImage: `linear-gradient(135deg,${T},${P})` }}>
                     {words[wordIdx]}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
                 <span className="invisible">{words[0]}</span>
               </span>
@@ -313,33 +313,33 @@ function CinematicHero({ onNavigate }) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+              <m.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigate("#templates")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
                 style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
                 Start Your Story <ArrowRight className="h-5 w-5" />
-              </motion.button>
-              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              </m.button>
+              <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigate("#contact")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/10">
                 Get a Free Quote
-              </motion.button>
+              </m.button>
             </div>
 
             {/* Stats */}
             <div className="mt-14 flex gap-8 sm:gap-12 flex-wrap">
               {[["48+","Sites delivered"],["3–5","Days to launch"],["Any","Business size"]].map(([v,l]) => (
-                <motion.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                <m.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}>
                   <div className="text-2xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
                   <div className="text-xs text-slate-500 font-mono uppercase tracking-wider mt-0.5">{l}</div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* ── RIGHT: floating mockup card ── */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 40, y: 10 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -363,7 +363,7 @@ function CinematicHero({ onNavigate }) {
                   <div className="flex-1 mx-3 bg-slate-800/80 rounded-md px-3 py-1.5 text-xs text-slate-400 font-mono flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: T }} />
                     <span>yourbusiness.co.ke</span>
-                    <motion.span
+                    <m.span
                       animate={{ opacity: [1, 0, 1] }}
                       transition={{ repeat: Infinity, duration: 1, ease: "steps(1)" }}
                       className="w-0.5 h-3 bg-slate-400 ml-auto"
@@ -434,26 +434,26 @@ function CinematicHero({ onNavigate }) {
               </div>
 
               {/* Floating badge — top right */}
-              <motion.div
+              <m.div
                 animate={{ y: [0, -7, 0] }}
                 transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
                 className="absolute -top-5 -right-5 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/95 px-3 py-2 backdrop-blur-md shadow-xl z-10"
               >
                 <CheckCircle2 className="h-4 w-4 flex-shrink-0" style={{ color: T }} />
                 <span className="text-xs font-semibold text-white whitespace-nowrap">Site deployed ✓</span>
-              </motion.div>
+              </m.div>
 
               {/* Floating badge — bottom left */}
-              <motion.div
+              <m.div
                 animate={{ y: [0, 7, 0] }}
                 transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
                 className="absolute -bottom-5 -left-5 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/95 px-3 py-2 backdrop-blur-md shadow-xl z-10"
               >
-                <motion.div className="w-2 h-2 rounded-full flex-shrink-0"
+                <m.div className="w-2 h-2 rounded-full flex-shrink-0"
                   animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 1.4 }}
                   style={{ background: "#22c55e" }} />
                 <span className="text-xs font-semibold text-white whitespace-nowrap">New booking received</span>
-              </motion.div>
+              </m.div>
 
               {/* Floating badge — middle right */}
               <div
@@ -469,17 +469,17 @@ function CinematicHero({ onNavigate }) {
             <p className="mt-9 text-center text-[11px] font-mono uppercase tracking-widest text-slate-600">
               Concept preview — not a real client site
             </p>
-          </motion.div>
+          </m.div>
 
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      <m.div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
         <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, transparent, ${T})` }} />
         <div className="w-1.5 h-1.5 rounded-full" style={{ background: T }} />
-      </motion.div>
+      </m.div>
     </section>
   );
 }
@@ -508,7 +508,7 @@ function ValueStrip({ onNavigate }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {features.map((f, i) => (
             <Reveal key={f.title} delay={i * 0.08}>
-              <motion.div whileHover={{ y: -4, borderColor: `${T}60` }}
+              <m.div whileHover={{ y: -4, borderColor: `${T}60` }}
                 className="rounded-2xl border border-white/5 bg-slate-900/40 p-6 backdrop-blur-md transition-colors">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                   style={{ background: `${T}18` }}>
@@ -516,7 +516,7 @@ function ValueStrip({ onNavigate }) {
                 </div>
                 <h3 className="font-semibold text-white mb-2">{f.title}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
-              </motion.div>
+              </m.div>
             </Reveal>
           ))}
         </div>
@@ -540,10 +540,10 @@ function TemplateTeaserStrip({ onNavigate }) {
                 Every story needs a shape.
               </h2>
             </div>
-            <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               View all templates <ChevronRight className="h-4 w-4" />
-            </motion.button>
+            </m.button>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -551,7 +551,7 @@ function TemplateTeaserStrip({ onNavigate }) {
             const c = GLOW[t.color];
             return (
               <Reveal key={t.id} delay={i * 0.07}>
-                <motion.div whileHover={{ y: -3 }}
+                <m.div whileHover={{ y: -3 }}
                   className={`group rounded-2xl border border-white/10 bg-slate-900/40 p-5 backdrop-blur-md cursor-pointer transition-colors ${c.ring}`}
                   onClick={() => onNavigate("#templates")}>
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${c.glow} bg-opacity-20`}
@@ -560,7 +560,7 @@ function TemplateTeaserStrip({ onNavigate }) {
                   </div>
                   <h3 className="font-semibold text-white text-sm mb-1">{t.name}</h3>
                   <p className="text-slate-500 text-xs">{t.features[0]} · {t.features[1]}</p>
-                </motion.div>
+                </m.div>
               </Reveal>
             );
           })}
@@ -589,21 +589,21 @@ function PricingTeaserStrip({ onNavigate }) {
                 No surprise invoices.
               </h2>
             </div>
-            <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#pricing")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#pricing")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               See full pricing <ChevronRight className="h-4 w-4" />
-            </motion.button>
+            </m.button>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {rows.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.07}>
-              <motion.button whileHover={{ y: -3 }} onClick={() => onNavigate("#pricing")}
+              <m.button whileHover={{ y: -3 }} onClick={() => onNavigate("#pricing")}
                 className="w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md hover:border-white/20 transition-colors">
                 <h3 className="font-semibold text-white mb-1">{r.name}</h3>
                 <div className="text-xl font-black text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{r.price}</div>
                 <p className="text-slate-500 text-xs">{r.desc}</p>
-              </motion.button>
+              </m.button>
             </Reveal>
           ))}
         </div>
@@ -692,16 +692,16 @@ function BlogTeaserStrip({ onNavigate }) {
                 Tech news & business insights.
               </h2>
             </div>
-            <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#blog")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#blog")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               Read all articles <ChevronRight className="h-4 w-4" />
-            </motion.button>
+            </m.button>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {previews.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.07}>
-              <motion.button whileHover={{ y: -3 }}
+              <m.button whileHover={{ y: -3 }}
                 onClick={() => onNavigate(`#blog/${p.slug}`)}
                 className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
                 <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }} />
@@ -710,7 +710,7 @@ function BlogTeaserStrip({ onNavigate }) {
                   <h3 className="mt-2 font-semibold text-sm text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">{p.title}</h3>
                   <p className="mt-3 text-xs text-slate-500">{p.date}</p>
                 </div>
-              </motion.button>
+              </m.button>
             </Reveal>
           ))}
         </div>
@@ -725,7 +725,7 @@ function InvoiceBanner({ onNavigate }) {
     <Reveal>
       <section className="px-6 py-12 lg:px-12 border-t border-white/5">
         <div className="mx-auto max-w-6xl">
-          <motion.div whileHover={{ scale: 1.01 }}
+          <m.div whileHover={{ scale: 1.01 }}
             className="relative overflow-hidden rounded-3xl p-8 sm:p-10 cursor-pointer"
             style={{ background: `linear-gradient(135deg,rgba(26,163,176,0.12),rgba(240,64,154,0.12))`, border: "1px solid rgba(255,255,255,0.07)" }}
             onClick={() => onNavigate("#invoice")}>
@@ -741,13 +741,13 @@ function InvoiceBanner({ onNavigate }) {
                   Invoices, quotes, receipts, purchase orders, and 7 more financial document types — generated by AI in seconds. Download as PDF for just $1.
                 </p>
               </div>
-              <motion.div whileHover={{ x: 4 }}
+              <m.div whileHover={{ x: 4 }}
                 className="shrink-0 inline-flex items-center gap-2 text-base font-bold px-7 py-4 rounded-xl text-slate-950"
                 style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                 Get notified <ArrowRight className="h-5 w-5" />
-              </motion.div>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
     </Reveal>
@@ -758,7 +758,7 @@ function InvoiceBanner({ onNavigate }) {
 function TemplateCard({ template, onDeploy }) {
   const c = GLOW[template.color];
   return (
-    <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+    <m.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.28 }}
       whileHover={{ y: -3 }} className="group relative">
       <div className={`pointer-events-none absolute -inset-3 rounded-3xl ${c.glow} opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100`} />
@@ -795,15 +795,15 @@ function TemplateCard({ template, onDeploy }) {
                 Demo on request
               </span>
             )}
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+            <m.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               onClick={() => onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id])}
               className={`inline-flex flex-1 items-center justify-center gap-1 rounded-xl bg-gradient-to-r px-3 py-2.5 text-xs font-semibold text-slate-950 ${c.gradient}`}>
               <Rocket className="h-3.5 w-3.5" />Deploy This
-            </motion.button>
+            </m.button>
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -814,6 +814,28 @@ function TemplatesPage({ onNavigate, onDeploy }) {
     [active]
   );
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  // Sliding pill behind the active filter tab — plain CSS transition driven
+  // by measured tab position, instead of framer-motion's layoutId shared-
+  // layout animation. Framer Motion's layout-animation engine only ships
+  // in its heaviest feature bundle (domMax), which is nearly as large as
+  // importing the whole library — not worth it for one decorative pill.
+  const tabsRef = useRef(null);
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+
+  useEffect(() => {
+    const container = tabsRef.current;
+    if (!container) return;
+    const activeEl = container.querySelector(`[data-tab-id="${active}"]`);
+    if (!activeEl) return;
+    const containerRect = container.getBoundingClientRect();
+    const activeRect = activeEl.getBoundingClientRect();
+    setPillStyle({
+      left: activeRect.left - containerRect.left,
+      width: activeRect.width,
+      opacity: 1,
+    });
+  }, [active]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
@@ -835,18 +857,23 @@ function TemplatesPage({ onNavigate, onDeploy }) {
           {/* Filter tabs */}
           <Reveal>
             <div className="flex justify-center mb-10">
-              <div className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/60 p-1.5 backdrop-blur-md">
+              <div ref={tabsRef} className="relative inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-white/10 bg-slate-900/60 p-1.5 backdrop-blur-md">
+                <div
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    left: pillStyle.left,
+                    width: pillStyle.width,
+                    top: 6, bottom: 6,
+                    opacity: pillStyle.opacity,
+                    background: `linear-gradient(135deg,${T}cc,${P}cc)`,
+                    transition: "left 300ms cubic-bezier(0.22,1,0.36,1), width 300ms cubic-bezier(0.22,1,0.36,1), opacity 200ms ease",
+                  }}
+                />
                 {FILTERS.map(f => {
                   const isActive = f.id === active;
                   return (
-                    <button key={f.id} onClick={() => setActive(f.id)}
+                    <button key={f.id} data-tab-id={f.id} onClick={() => setActive(f.id)}
                       className="relative rounded-full px-4 py-2 text-sm font-medium transition-colors">
-                      {isActive && (
-                        <motion.div layoutId="activeTab"
-                          className="absolute inset-0 rounded-full"
-                          style={{ background: `linear-gradient(135deg,${T}cc,${P}cc)` }}
-                          transition={{ type: "spring", stiffness: 350, damping: 30 }} />
-                      )}
                       <span className={`relative z-10 ${isActive ? "text-white" : "text-slate-400 hover:text-white"}`}>
                         {f.label}
                       </span>
@@ -905,7 +932,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
             <Reveal className="lg:col-span-3">
               <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6 sm:p-8 backdrop-blur-md">
                 {sent ? (
-                  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                  <m.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center py-12 text-center">
                     <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
                       style={{ background: `${T}18` }}>
@@ -913,7 +940,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">Message sent!</h3>
                     <p className="text-slate-400">Thanks {form.name || ""}. We'll be in touch at {form.email} shortly.</p>
-                  </motion.div>
+                  </m.div>
                 ) : (
                   <form onSubmit={e => { e.preventDefault(); setSent(true); }} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -947,11 +974,11 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                       <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Message</label>
                       <textarea className={inputCls} rows={4} placeholder="Tell us what you're building and any deadlines we should know about." value={form.message} onChange={e => setF("message", e.target.value)} required style={{ resize: "vertical" }} />
                     </div>
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit"
+                    <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit"
                       className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-slate-950"
                       style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                       Send Message <Send className="h-4 w-4" />
-                    </motion.button>
+                    </m.button>
                   </form>
                 )}
               </div>
@@ -966,7 +993,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                 { icon: Clock,         label: "Response", value: "Usually 2–4 hours", href: null, color: null },
                 { icon: MapPin,        label: "Based in", value: "Nairobi, Kenya — working nationwide", href: null, color: null },
               ].map(({ icon: Icon, label, value, href, color }) => (
-                <motion.div key={label} whileHover={{ x: 4 }}>
+                <m.div key={label} whileHover={{ x: 4 }}>
                   {href ? (
                     <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
                       className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-slate-900/40 p-4 backdrop-blur-md transition-colors hover:border-[#1AA3B0]/40">
@@ -990,7 +1017,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                       </div>
                     </div>
                   )}
-                </motion.div>
+                </m.div>
               ))}
             </Reveal>
           </div>
@@ -1096,12 +1123,12 @@ function AboutPage({ onNavigate }) {
                 { icon:"🔒", t:"No lock-in",             d:"You own everything we build. No proprietary CMS, no monthly platform fees." },
                 { icon:"🎯", t:"Honest scoping",         d:"We quote what the work actually costs. No surprise invoices halfway through." },
               ].map(v => (
-                <motion.div key={v.t} whileHover={{ y: -3 }}
+                <m.div key={v.t} whileHover={{ y: -3 }}
                   className="rounded-2xl border border-white/5 bg-slate-900/40 p-6 backdrop-blur-md">
                   <div className="text-2xl mb-3">{v.icon}</div>
                   <h3 className="font-semibold text-white mb-2">{v.t}</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">{v.d}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </Reveal>
@@ -1112,15 +1139,15 @@ function AboutPage({ onNavigate }) {
               <h2 className="text-2xl font-bold text-white mb-3">Ready to build something?</h2>
               <p className="text-slate-400 mb-6">Browse the templates, pick what fits, and get in touch.</p>
               <div className="flex items-center justify-center gap-4 flex-wrap">
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
                   className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
                   style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                   Browse Templates <ArrowRight className="h-4 w-4" />
-                </motion.button>
-                <motion.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
+                </m.button>
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                   Get in Touch
-                </motion.button>
+                </m.button>
               </div>
             </div>
           </Reveal>
@@ -1233,14 +1260,14 @@ function PricingPage({ onNavigate }) {
                       </li>
                     ))}
                   </ul>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                     onClick={() => onNavigate("#contact")}
                     className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
                       tier.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
                     }`}
                     style={tier.highlight ? { background: `linear-gradient(135deg,${T},${P})` } : {}}>
                     {tier.cta}
-                  </motion.button>
+                  </m.button>
                 </div>
               </Reveal>
             ))}
@@ -1284,17 +1311,17 @@ function FAQPage({ onNavigate }) {
                   <button onClick={() => setOpen(open === i ? null : i)}
                     className="w-full flex items-center justify-between py-5 text-left gap-4 group">
                     <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors">{faq.q}</span>
-                    <motion.div animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }}
+                    <m.div animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }}
                       className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400">
                       <Plus className="h-3.5 w-3.5" />
-                    </motion.div>
+                    </m.div>
                   </button>
                   <AnimatePresence initial={false}>
                     {open === i && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
+                      <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
                         <p className="pb-6 text-slate-400 leading-relaxed">{faq.a}</p>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
                 </div>
@@ -1361,14 +1388,14 @@ function WelcomeSplash({ onDone }) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onDone]);
   return (
-    <motion.div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950"
+    <m.div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950"
       animate={{ opacity: phase === "out" ? 0 : 1 }} transition={{ duration: 0.6 }}
       style={{ pointerEvents: phase === "out" ? "none" : "all" }}>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#1AA3B0]/20 blur-[100px]" />
         <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-[#F0409A]/15 blur-[100px]" />
       </div>
-      <motion.div initial={{ opacity:0, scale:0.9, y:20 }} animate={{ opacity:1, scale:1, y:0 }}
+      <m.div initial={{ opacity:0, scale:0.9, y:20 }} animate={{ opacity:1, scale:1, y:0 }}
         transition={{ duration:0.6, ease:[0.22,1,0.36,1] }}
         className="relative flex flex-col items-center text-center px-6">
         <img src={`${import.meta.env.BASE_URL}lcn254-logo.jpeg`} alt="LCN254"
@@ -1380,13 +1407,13 @@ function WelcomeSplash({ onDone }) {
         </h1>
         <p className="text-slate-400 max-w-xs">Human beings are storytellers. Let's tell yours — personal or professional.</p>
         <div className="mt-10 w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
-          <motion.div className="h-full rounded-full"
+          <m.div className="h-full rounded-full"
             style={{ background: `linear-gradient(90deg,${T},${P})` }}
             initial={{ width:"0%" }} animate={{ width:"100%" }} transition={{ duration:1.7, ease:"linear" }} />
         </div>
         <p className="mt-4 font-mono text-xs text-slate-600 uppercase tracking-widest">dial +254 · locally built</p>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -1468,7 +1495,7 @@ export default function LCN254Portfolio() {
   };
 
   return (
-    <>
+    <LazyMotion features={domAnimation} strict>
       {showSplash && <WelcomeSplash onDone={handleSplashDone} />}
       <div style={{ opacity: showSplash ? 0 : 1, transition: "opacity 0.4s ease" }}>
         <AnimatePresence mode="wait">
@@ -1477,6 +1504,6 @@ export default function LCN254Portfolio() {
           </PageWrap>
         </AnimatePresence>
       </div>
-    </>
+    </LazyMotion>
   );
 }
