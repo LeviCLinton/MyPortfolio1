@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
@@ -823,7 +823,7 @@ function TemplatesPage({ onNavigate, onDeploy }) {
   const tabsRef = useRef(null);
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
-  useEffect(() => {
+  const measurePill = useCallback(() => {
     const container = tabsRef.current;
     if (!container) return;
     const activeEl = container.querySelector(`[data-tab-id="${active}"]`);
@@ -836,6 +836,19 @@ function TemplatesPage({ onNavigate, onDeploy }) {
       opacity: 1,
     });
   }, [active]);
+
+  // useLayoutEffect (not useEffect) so the measurement + style update happen
+  // synchronously before the browser paints — useEffect runs after paint,
+  // which would show the pill flash at its stale position for a frame
+  // before snapping to the correct spot on every tab click.
+  useLayoutEffect(() => { measurePill(); }, [measurePill]);
+
+  // The tab row uses flex-wrap, so it can reflow on window resize —
+  // recompute so the pill doesn't go stale after a resize.
+  useEffect(() => {
+    window.addEventListener("resize", measurePill, { passive: true });
+    return () => window.removeEventListener("resize", measurePill);
+  }, [measurePill]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
