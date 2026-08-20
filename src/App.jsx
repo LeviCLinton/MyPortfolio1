@@ -162,7 +162,8 @@ function Nav({ onNavigate, route }) {
         </div>
 
         {/* Mobile hamburger */}
-        <button className="md:hidden text-white p-2" onClick={() => setMenuOpen(o => !o)}>
+        <button className="md:hidden text-white p-2" onClick={() => setMenuOpen(o => !o)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
           <div className="space-y-1.5">
             <motion.div className="h-0.5 w-6 bg-white" animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} />
             <motion.div className="h-0.5 w-6 bg-white" animate={{ opacity: menuOpen ? 0 : 1 }} />
