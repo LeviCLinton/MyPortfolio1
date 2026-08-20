@@ -344,10 +344,6 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                       className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors block">
                       Cancel and try again
                     </button>
-                    <button onClick={() => onPaid("dev-bypass-2026")}
-                      className="mt-2 text-xs text-amber-500 hover:text-amber-300 transition-colors block">
-                      ⚡ Dev mode: skip payment verification
-                    </button>
                   </div>
                 ) : null}
               </div>
@@ -374,13 +370,9 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                   style={{ background: "#635BFF" }}>
                   Pay with Card (Stripe)
                 </a>
-                <p className="text-xs text-slate-500 text-center mt-3">
-                  After paying, come back here and click below:
+                <p className="text-xs text-amber-500/80 text-center mt-3 bg-amber-500/10 rounded-lg px-3 py-2">
+                  Card payment confirmation isn't wired up yet — this needs a real Stripe webhook before it can safely verify payment. Use M-Pesa for now, or check back soon.
                 </p>
-                <button onClick={() => onPaid("dev-bypass-2026")}
-                  className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
-                  I've completed payment →
-                </button>
                 <p className="text-xs text-slate-600 text-center mt-2">
                   ⓘ Replace STRIPE_PAYMENT_LINK in InvoiceGenerator.jsx with your real Stripe Payment Link
                 </p>
@@ -408,13 +400,9 @@ function PaymentStep({ docType, form, totals, onBack, onPaid, error, setError })
                   style={{ background: "#0070BA" }}>
                   Pay with PayPal — $1.00
                 </a>
-                <p className="text-xs text-slate-500 text-center mt-3">
-                  After paying, come back here and click below:
+                <p className="text-xs text-amber-500/80 text-center mt-3 bg-amber-500/10 rounded-lg px-3 py-2">
+                  PayPal payment confirmation isn't wired up yet — this needs real IPN verification before it can safely confirm payment. Use M-Pesa for now, or check back soon.
                 </p>
-                <button onClick={() => onPaid("dev-bypass-2026")}
-                  className="w-full mt-2 py-3 rounded-xl font-semibold border border-slate-600 text-slate-300 hover:border-slate-400 transition-colors text-sm">
-                  I've completed payment →
-                </button>
                 <p className="text-xs text-slate-600 text-center mt-2">
                   ⓘ Replace PAYPAL_LINK in InvoiceGenerator.jsx with your real PayPal.me link
                 </p>
@@ -628,7 +616,7 @@ export default function InvoiceGenerator() {
                     <div className="col-span-1 text-right text-sm text-slate-400 font-mono text-xs">
                       {fmt(item.quantity * item.unit_price * (1 - item.discount / 100), form.currency)}
                     </div>
-                    <button onClick={() => removeItem(idx)} disabled={items.length === 1} className="col-span-1 flex justify-center text-slate-600 hover:text-red-400 disabled:opacity-20 transition-colors">
+                    <button onClick={() => removeItem(idx)} disabled={items.length === 1} aria-label="Remove line item" className="col-span-1 flex justify-center text-slate-600 hover:text-red-400 disabled:opacity-20 transition-colors">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
