@@ -88,8 +88,11 @@ async function handleStkPush(request, env) {
   const token = await getMpesaToken(env);
 
   // 2. Build STK push payload
-  const shortcode   = env.MPESA_SHORTCODE || "174379";
-  const passkey     = env.MPESA_PASSKEY   || "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+  const shortcode   = env.MPESA_SHORTCODE || "174379"; // 174379 is Safaricom's public sandbox shortcode, not a secret
+  if (!env.MPESA_PASSKEY) {
+    throw new Error("MPESA_PASSKEY is not configured. Set it via `wrangler secret put MPESA_PASSKEY` — refusing to fall back to a hardcoded value.");
+  }
+  const passkey     = env.MPESA_PASSKEY;
   const timestamp   = getTimestamp();
   const password    = btoa(`${shortcode}${passkey}${timestamp}`);
   const callbackUrl = env.MPESA_CALLBACK_URL || "https://lcn254-api-proxy.levnyan2018.workers.dev/mpesa/callback";
@@ -233,17 +236,19 @@ async function handleStripeVerify(request, env) {
 // AI DOCUMENT GENERATION (Gemini — only after payment verified)
 // ─────────────────────────────────────────────────────────────────────────────
 async function handleGenerate(request, env) {
-  const { prompt, paymentToken, checkoutRequestId, stripePaymentIntentId } = await request.json();
+  const { prompt, checkoutRequestId, stripePaymentIntentId } = await request.json();
 
-  // Verify payment — accept either a verified M-Pesa checkoutRequestId,
-  // a verified Stripe paymentIntentId, or the PAYMENT_SECRET (for PayPal/manual)
+  // Verify payment — only two paths are trusted, and both are verified
+  // server-side against a source of truth the client cannot forge:
+  //   1. M-Pesa: Safaricom's callback webhook sets status="paid" in KV
+  //   2. Stripe: this worker calls Stripe's API directly to confirm the
+  //      payment intent before ever writing status="paid" to KV
+  // There is deliberately no client-supplied "trust me, I paid" token —
+  // any such token is exploitable the moment it exists in the public
+  // client bundle, regardless of what string it is.
   let paymentVerified = false;
 
-  if (paymentToken && paymentToken === env.PAYMENT_SECRET) {
-    paymentVerified = true; // PayPal or manual override
-  }
-
-  if (!paymentVerified && checkoutRequestId && env.PAYMENTS) {
+  if (checkoutRequestId && env.PAYMENTS) {
     const record = await env.PAYMENTS.get(`mpesa:${checkoutRequestId}`);
     if (record) {
       const data = JSON.parse(record);
