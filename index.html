@@ -2,6 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- Content-Security-Policy: GitHub Pages doesn't support custom HTTP
+         response headers, so this meta tag is the baseline protection
+         available without putting a CDN (e.g. Cloudflare) in front of the
+         domain. If you do proxy through Cloudflare, prefer setting CSP as
+         a real response header there instead — it can do things (like
+         frame-ancestors) that a meta tag cannot. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://lcn254-api-proxy.levnyan2018.workers.dev;">
+
     <link rel="icon" type="image/jpeg" href="/lcn254-logo.jpeg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LCN254 — We Tell Your Story Online | Websites for Kenyan Businesses</title>
@@ -11,6 +20,13 @@
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://lcn254.site/" />
+
+    <!-- Site font: Plus Jakarta Sans is used throughout App.jsx via inline
+         fontFamily styles but was previously never loaded, causing every
+         heading site-wide to silently fall back to a generic sans-serif. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn link previews) -->
     <meta property="og:type" content="website" />
@@ -36,9 +52,15 @@
       once you generate your meta tag from Search Console, paste it here, e.g.
       <meta name="google-site-verification" content="YOUR_CODE_HERE" />
     -->
-    <!-- Google AdSense -->
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2255420330589307"
-     crossorigin="anonymous"></script>
+    <!-- Google AdSense — disabled while site is pending AdSense review.
+         AdUnit.jsx already has ADS_ENABLED = false so no ad slots render,
+         but this loader script was still firing on every page load
+         regardless, which is wasted bandwidth for zero benefit until the
+         account is approved. Re-enable both together. -->
+    <!--
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2255420330589307"
+      crossorigin="anonymous"></script>
+    -->
 
     <!-- Structured data: helps Google understand this is a real, locatable business -->
     <script type="application/ld+json">
