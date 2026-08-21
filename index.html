@@ -52,15 +52,16 @@
       once you generate your meta tag from Search Console, paste it here, e.g.
       <meta name="google-site-verification" content="YOUR_CODE_HERE" />
     -->
-    <!-- Google AdSense — disabled while site is pending AdSense review.
-         AdUnit.jsx already has ADS_ENABLED = false so no ad slots render,
-         but this loader script was still firing on every page load
-         regardless, which is wasted bandwidth for zero benefit until the
-         account is approved. Re-enable both together. -->
-    <!--
+    <!-- Google AdSense verification/detection script. This must stay live
+         even while ads aren't visibly showing — Google's crawler needs it
+         present to confirm the site is connected to the AdSense account
+         and to perform (or re-run) a policy review. Actual visible ad
+         units are controlled separately by ADS_ENABLED in AdUnit.jsx,
+         which stays false until the account is approved — so no ad boxes
+         or empty placeholders show to visitors, but Google can still see
+         and review the site correctly. -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2255420330589307"
       crossorigin="anonymous"></script>
-    -->
 
     <!-- Structured data: helps Google understand this is a real, locatable business -->
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"LCN254","url":"https://lcn254.site/","logo":"https://lcn254.site/lcn254-logo.jpeg","image":"https://lcn254.site/lcn254-logo-share.jpeg","description":"LCN254 builds the website that tells your story. We put meaning into words, images, and emotion for businesses, brands, and personal projects across Kenya.","areaServed":{"@type":"Country","name":"Kenya"},"address":{"@type":"PostalAddress","addressLocality":"Nairobi","addressCountry":"KE"},"telephone":"+254700000000","email":"contact@lcn254.site","priceRange":"KSh 35,000 - KSh 200,000+","sameAs":[]}</script>
