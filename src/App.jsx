@@ -205,7 +205,7 @@ function Footer({ onNavigate }) {
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            {[["Templates","#templates"],["Pricing","#pricing"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Privacy","#privacy"]].map(([l,h]) => (
+            {[["Templates","#templates"],["Pricing","#pricing"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Terms","#terms"],["Privacy","#privacy"]].map(([l,h]) => (
               <button key={h} onClick={() => onNavigate(h)}
                 className="transition-colors hover:text-white">{l}</button>
             ))}
@@ -1392,6 +1392,51 @@ function PrivacyPage({ onNavigate }) {
   );
 }
 
+// ─── Terms of Service page ─────────────────────────────────────────────────────
+function TermsPage({ onNavigate }) {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  const sections = [
+    { t:"1. Agreement to Terms", b:`By using lcn254.site or engaging LCN254 for a website, you agree to these terms. LCN254 is a web design and development agency based in Nairobi, Kenya — reach us at contact@lcn254.site.` },
+    { t:"2. Services We Provide", b:`We design, build, and deploy websites for businesses and individuals, using either our template library as a starting point or a fully custom build. Specific deliverables, timelines, and pricing for any project are agreed in writing (email or signed quote) before work begins — the pricing shown on this site is a starting reference, not a binding quote until confirmed for your specific project.` },
+    { t:"3. Quotes, Payment & Cancellation", b:`Project pricing is scoped individually. Where a deposit is required to begin work, that deposit is non-refundable once design or development work has started, unless we fail to deliver what was agreed. Either party may cancel a project in writing before work begins with no charge; cancellation after work has started is billed for work completed to that point.` },
+    { t:"4. What You Own", b:`Once a project is paid in full and delivered, the resulting website code and content are yours. We don't hold your site hostage behind a proprietary CMS or ongoing licence fee. Stock assets, fonts, or third-party libraries used in the build remain subject to their own original licences.` },
+    { t:"5. The AI Invoice Generator", b:`Our Invoice Generator tool is currently in testing and marked "Coming Soon" — it is not yet available for public use, and no payment should be sent for it outside the tool's own checkout flow once live. When launched, it will generate financial documents from information you provide; you are responsible for the accuracy of that information before sending any document to a third party.` },
+    { t:"6. Acceptable Use of This Site", b:`You may not use lcn254.site to transmit malicious code, attempt to access data that isn't yours, scrape the site at a rate that degrades service for others, or use any content from this site to misrepresent your business as LCN254 or as an LCN254 client without our agreement.` },
+    { t:"7. Template Demos", b:`The businesses shown on our template demo pages (e.g. "Ember & Co.", "Hotel Marlow") are fictional examples built to showcase design and functionality — they do not represent real businesses, and any resemblance to an actual business is coincidental.` },
+    { t:"8. Limitation of Liability", b:`We build sites to a professional standard and test across common devices and browsers before handover, but we don't guarantee uninterrupted uptime for third-party hosting, payment processors (M-Pesa, Stripe, PayPal), or APIs your site depends on — those are governed by their own providers' terms.` },
+    { t:"9. Changes to These Terms", b:`We may update these terms as our services evolve. Continued use of the site after an update means you accept the revised terms. Material changes affecting an active project will be communicated directly.` },
+    { t:"10. Governing Law", b:`These terms are governed by the laws of Kenya. Any dispute arising from these terms or a project engagement will first be handled through direct good-faith discussion between the parties.` },
+    { t:"11. Contact", b:`Questions about these terms? Email contact@lcn254.site or write to: LCN254, Nairobi, Kenya.` },
+  ];
+  return (
+    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+      <Nav onNavigate={onNavigate} route="#terms" />
+      <div className="pt-28 pb-20 px-6 lg:px-12">
+        <div className="mx-auto max-w-3xl">
+          <Reveal>
+            <div className="mb-10">
+              <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Legal</span>
+              <h1 className="text-4xl font-bold text-white mb-2">Terms of Service</h1>
+              <p className="text-slate-500 text-sm">Last updated: {new Date().toLocaleDateString("en-KE",{year:"numeric",month:"long",day:"numeric"})}</p>
+            </div>
+          </Reveal>
+          <div className="space-y-8">
+            {sections.map((s,i) => (
+              <Reveal key={s.t} delay={i * 0.04}>
+                <div>
+                  <h2 className="text-base font-semibold text-white mb-2">{s.t}</h2>
+                  <p className="text-slate-400 leading-relaxed text-sm">{s.b}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Footer onNavigate={onNavigate} />
+    </div>
+  );
+}
+
 // ─── Welcome Splash ──────────────────────────────────────────────────────────
 function WelcomeSplash({ onDone }) {
   const [phase, setPhase] = useState("in");
@@ -1502,6 +1547,7 @@ export default function LCN254Portfolio() {
       case "#about":     return <AboutPage       key="about"     onNavigate={navigate} />;
       case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
       case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
+      case "#terms":     return <TermsPage       key="terms"     onNavigate={navigate} />;
       case "#invoice":   return <InvoiceGenerator  key="invoice" onNavigate={navigate} />;
       default:           return <HomePage        key="home"      onNavigate={navigate} />;
     }
