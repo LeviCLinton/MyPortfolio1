@@ -378,7 +378,13 @@ export const ARTICLES = [
       { type: "blockquote", text: "The businesses moving fastest right now aren't the ones with the biggest AI budgets — they're the ones who picked one repetitive workflow and actually finished automating it." },
       { type: "h2", text: "Starting Small, On Purpose" },
       { type: "p", text: "The mistake most businesses make is trying to automate everything at once. A better starting point is picking a single, well-defined, repetitive workflow — order status lookups, appointment reminders, first-pass email sorting — and getting an agent to handle that one thing reliably before expanding. Reliability on one task builds the trust needed to hand over the next one." },
-      { type: "p", text: "None of this replaces judgment. The businesses getting real value from agents are using them to clear the repetitive floor of the work, so the people on the team spend their time on the calls that actually need a human." }
+      { type: "p", text: "None of this replaces judgment. The businesses getting real value from agents are using them to clear the repetitive floor of the work, so the people on the team spend their time on the calls that actually need a human." },
+      { type: "h2", text: "What Agents Still Get Wrong" },
+      { type: "p", text: "None of this works perfectly out of the box. An agent given too much autonomy too quickly will confidently take the wrong action — refunding the wrong order, escalating a routine question as urgent, or missing context a human would have caught instantly. The businesses getting real value aren't the ones that trusted an agent blindly; they're the ones that built in a review step for anything above a certain stakes threshold, and only removed that step once the agent had a track record on the easy cases." },
+      { type: "h2", text: "A Concrete Example" },
+      { type: "p", text: "Picture a small logistics business fielding \"where's my package\" messages all day. Before agents, that's a person checking a tracking system and typing a reply, dozens of times a day, for a question that has the same shape every time. An agent reads the message, pulls the tracking status, and replies — correctly, instantly, for the vast majority of cases that are exactly this simple. The rare case that involves a damaged package or a genuine complaint still routes to a person, but that person is now only handling the cases that actually need judgment, not the whole queue." },
+      { type: "h2", text: "Getting Started Without Overcommitting" },
+      { type: "p", text: "You don't need a full agentic platform to test this. Many businesses start with a single well-defined workflow — routing incoming messages, drafting first-pass replies for a human to approve — before expanding to fully autonomous handling. Treat the first month as a trial with a human reviewing every action the agent takes, then gradually widen its autonomy only for the specific task types it's proven reliable on. The mistake is trying to automate everything at once instead of proving the model on one workflow first." }
     ],
     relatedTopics: ["Agentic AI", "Workflow Automation", "Customer Support AI", "Business Operations"]
   },
@@ -411,7 +417,13 @@ export const ARTICLES = [
       { type: "h2", text: "The Website's Role in This" },
       { type: "p", text: "A lot of this leverage runs through a company's website, whether people think of it that way or not. A site that takes bookings, processes payments, and answers common questions on its own is doing the work of a receptionist, a cashier, and a support rep — every hour of every day, without a payroll line. For a lean team, that's not a nice-to-have; it's the infrastructure the whole operation depends on." },
       { type: "h2", text: "What This Means for Incumbents" },
-      { type: "p", text: "Established companies still have real advantages — capital, brand trust, existing customer relationships. But their cost structure often can't move as fast, because a lot of it is fixed in headcount and legacy systems. A lean, well-tooled competitor doesn't need to out-hire an incumbent. It needs to out-execute on a narrower set of things, at a fraction of the overhead — and technology is what makes that arithmetic work." }
+      { type: "p", text: "Established companies still have real advantages — capital, brand trust, existing customer relationships. But their cost structure often can't move as fast, because a lot of it is fixed in headcount and legacy systems. A lean, well-tooled competitor doesn't need to out-hire an incumbent. It needs to out-execute on a narrower set of things, at a fraction of the overhead — and technology is what makes that arithmetic work." },
+      { type: "h2", text: "Where Lean Teams Actually Break" },
+      { type: "p", text: "This model isn't free of trade-offs. A three-person team running on leverage has almost no redundancy — if the one person who understands the payment integration is unreachable for a week, that's a real operational risk in a way it wouldn't be for a team of twenty. Lean teams also tend to under-invest in documentation, because there's no one to hand knowledge off to; that catches up with them the moment they try to actually hire their first employee." },
+      { type: "h2", text: "A Simple Test for What to Automate vs Hire For" },
+      { type: "p", text: "The useful question isn't \"can this be automated?\" — almost everything can, eventually. It's whether the task is judgment-heavy or pattern-heavy. Pattern-heavy work — processing a standard order, answering a common question, generating a routine report — is exactly what tools and APIs now handle well. Judgment-heavy work, like deciding how to handle an upset client or making a call on a genuinely ambiguous situation, is still where a human belongs. Lean teams that scale well are ruthless about keeping people on the second category and tools on the first, not the other way around." },
+      { type: "h2", text: "How This Plays Out Over Time" },
+      { type: "p", text: "Most lean, tech-leveraged businesses don't stay a three-person operation forever — the model is usually a phase, not a permanent structure. As revenue grows, the smart move is hiring selectively into the judgment-heavy roles first, like a second decision-maker or someone who owns client relationships, while keeping the pattern-heavy work automated. The businesses that get this transition wrong tend to hire back into the automated layer out of habit, rebuilding the overhead they spent years avoiding." }
     ],
     relatedTopics: ["Lean Teams", "Tech Stack Leverage", "Startup Operations", "API Economy"]
   },
@@ -444,7 +456,13 @@ export const ARTICLES = [
       { type: "h2", text: "When You Don't Need This" },
       { type: "p", text: "Headless architecture is a real solution to a real problem — but it's a solution for a specific stage of growth, not a default. A single-location restaurant or clinic with one website in one market doesn't need a decoupled content architecture; it needs a fast, well-built site, full stop. Adding this complexity before you need it just adds cost and slows delivery for no benefit." },
       { type: "h2", text: "The Practical Signal to Watch For" },
-      { type: "p", text: "The moment it's worth the conversation: when the same content genuinely needs to live in more than one place — a second market, a companion app, a partner's site — and keeping them in sync by hand has become its own job. Before that point, a well-built traditional site, structured cleanly from day one, will get you further, faster." }
+      { type: "p", text: "The moment it's worth the conversation: when the same content genuinely needs to live in more than one place — a second market, a companion app, a partner's site — and keeping them in sync by hand has become its own job. Before that point, a well-built traditional site, structured cleanly from day one, will get you further, faster." },
+      { type: "h2", text: "What Migrating Actually Involves" },
+      { type: "p", text: "Moving an existing site from a traditional, bundled system to a headless architecture isn't a weekend project. Content has to be modeled properly in the new system — not just copy-pasted, but structured into fields and types that make sense for every platform that will eventually read from it. The front-end typically gets rebuilt from scratch against the new API, since the old templates were tightly coupled to the old system. Budget for this as a genuine project, not a plugin install." },
+      { type: "h2", text: "A Middle Ground Worth Knowing About" },
+      { type: "p", text: "Not every business has to choose between a fully monolithic site and a fully headless one. Some modern site builders now offer a hybrid: a single content source with the flexibility to expose it through an API later, without committing to the full complexity of a headless build on day one. If there's a realistic chance you'll need a second platform within the next year or two, it's worth asking any developer you work with whether the system they're proposing leaves that door open, even if you don't walk through it yet." },
+      { type: "h2", text: "Signs You're Not Ready Yet" },
+      { type: "p", text: "A useful gut check: if your team is still debating what your core content types even are — what counts as a \"product,\" what fields a \"location\" needs — that's a sign the content model isn't mature enough for a headless build yet. Headless architecture rewards clarity you already have; it doesn't create that clarity for you. Nail down a simple, well-structured site first, and the migration later will be far smoother than trying to solve both problems simultaneously." }
     ],
     relatedTopics: ["Headless CMS", "API-First Design", "Web Architecture", "Multi-Region Websites"]
   },
@@ -481,7 +499,13 @@ export const ARTICLES = [
         "**Who reviews AI-drafted external communications** before they're sent, so a human is always the last check on anything client-facing",
         "**A single point of contact** for approving new tools, so tool sprawl doesn't happen by accident"
       ]},
-      { type: "p", text: "This isn't about slowing your team down — it's about making sure the speed AI gives you doesn't come with a data breach or a compliance letter attached. A one-page policy that people actually read and follow protects the business far better than an exhaustive one that gets ignored." }
+      { type: "p", text: "This isn't about slowing your team down — it's about making sure the speed AI gives you doesn't come with a data breach or a compliance letter attached. A one-page policy that people actually read and follow protects the business far better than an exhaustive one that gets ignored." },
+      { type: "h2", text: "What This Looks Like When It Goes Wrong" },
+      { type: "p", text: "A common real scenario: an employee pastes a client's contract into a free AI tool to get a quick summary before a meeting. The tool's terms allow that input to be used for further model training. Nothing malicious happened — but confidential client information is now outside the business's control, in a system nobody at the company can retrieve it from or delete it from. Multiply that by however many people on a team are doing something similar, and the exposure adds up fast, invisibly." },
+      { type: "h2", text: "Rolling a Policy Out Without Killing Adoption" },
+      { type: "p", text: "The businesses that get this right introduce the policy as an enabler, not a restriction — framing it as \"here are the approved tools, use them freely\" rather than \"here's what you can't do.\" Pair the policy with actually paying for one or two good business-tier AI tools, so staff have a legitimate fast option instead of reaching for a free consumer tool out of necessity. A policy that only says no, with nothing to say yes to, gets worked around within a week." },
+      { type: "h2", text: "Reviewing the Policy Over Time" },
+      { type: "p", text: "AI tools and their data-handling terms change quickly enough that a policy written once and never revisited will drift out of date within a year. Put a specific date on the calendar — even just twice a year — to re-check which tools are approved, whether their terms have changed, and whether new tools have appeared that staff are already using informally. A stale policy creates the same false sense of security as having no policy at all." }
     ],
     relatedTopics: ["AI Governance", "Data Privacy", "Compliance", "Acceptable Use Policy"]
   },
@@ -513,7 +537,18 @@ export const ARTICLES = [
       { type: "blockquote", text: "The question isn't whether you can afford good security practices. It's whether you can afford to lose a deal because you couldn't answer a basic question about how you handle data." },
       { type: "h2", text: "What This Looks Like for a Smaller Business" },
       { type: "p", text: "Zero-trust doesn't require an enterprise security team to get started. The practical starting points are things most businesses can actually implement: multi-factor authentication on every account that touches client data, role-based access so people only see what their job requires, and a documented (even simple) incident response plan. None of that is expensive. All of it is something you can point to when a client asks." },
-      { type: "p", text: "The businesses treating this as a checkbox exercise are missing the shift. The ones treating it as part of how they present themselves — alongside their portfolio and their pricing — are turning a cost centre into a reason to be chosen." }
+      { type: "p", text: "The businesses treating this as a checkbox exercise are missing the shift. The ones treating it as part of how they present themselves — alongside their portfolio and their pricing — are turning a cost centre into a reason to be chosen." },
+      { type: "h2", text: "What a Breach Actually Costs a Small Business" },
+      { type: "p", text: "The direct costs of a data incident — investigation, notification, potential regulatory penalties — are real, but for a small or medium business, the reputational cost is usually larger. A single publicized incident with client data can end relationships that took years to build, and unlike a large company, a smaller business often doesn't have the brand recognition to absorb that kind of story and recover quickly. Prevention is dramatically cheaper than recovery, on every axis." },
+      { type: "h2", text: "Where to Start This Month" },
+      { type: "list", items: [
+        "**Turn on multi-factor authentication** on every account that touches client data or payments — email, cloud storage, payment dashboards, all of it",
+        "**Review who has access to what**, and remove access for anyone who doesn't currently need it for their role",
+        "**Write down what happens if something goes wrong** — even a one-page incident response plan beats having no plan at all",
+        "**Ask your vendors the same question clients ask you** — how do they handle and protect your data?"
+      ]},
+      { type: "h2", text: "Making It Part of How You Sell" },
+      { type: "p", text: "Once the basics are in place, don't leave them buried in an internal document. A short, plain-language summary of how you handle client data — no jargon, just what you actually do — is something a sales conversation can point to directly. Clients increasingly notice when a vendor can answer a security question confidently versus when they visibly haven't thought about it before. That difference alone has closed deals that price alone wouldn't have." }
     ],
     relatedTopics: ["Cybersecurity", "Zero-Trust", "B2B Sales", "Digital Trust"]
   },
@@ -545,7 +580,13 @@ export const ARTICLES = [
       { type: "p", text: "The underlying reason is simple: relevance reduces friction. A generic page asks every visitor to do the work of finding what applies to them. A personalized page does that work for them. Over enough visitors, that difference compounds — fewer people bounce because the page didn't seem to be about what they were looking for, and more people reach the action that actually matters to your business." },
       { type: "h2", text: "You Don't Need a Customer Data Platform to Start" },
       { type: "p", text: "Enterprise personalization often involves a full customer data platform (CDP) tracking behavior across every touchpoint. Most small and medium businesses don't need that to get real value. Even simple personalization — different landing pages per ad campaign, a returning-visitor cookie that skips the intro content, location-based contact details — captures a meaningful share of the benefit at a fraction of the complexity." },
-      { type: "p", text: "The mistake to avoid is treating personalization as an all-or-nothing enterprise project. Start with the one or two moments where visitor context is most obviously different — a paid ad landing page versus organic search, a returning customer versus a first-time one — and build from there." }
+      { type: "p", text: "The mistake to avoid is treating personalization as an all-or-nothing enterprise project. Start with the one or two moments where visitor context is most obviously different — a paid ad landing page versus organic search, a returning customer versus a first-time one — and build from there." },
+      { type: "h2", text: "How to Know It's Working" },
+      { type: "p", text: "Personalization is easy to implement badly and hard to measure without the right baseline. Before making any change, capture your current conversion rate for the specific visitor segment you're targeting — say, visitors from a particular ad campaign. After introducing a tailored landing page for that segment, compare against that same baseline, not against your site's overall average, which mixes in traffic the change was never meant to affect. Small, segment-specific comparisons are what actually reveal whether personalization moved the number." },
+      { type: "h2", text: "Where Personalization Goes Wrong" },
+      { type: "p", text: "The most common mistake is personalizing based on assumptions rather than actual behavior — guessing what a visitor wants instead of using what they've already shown you, like their referral source, their past visits, or their location. The second most common mistake is over-personalizing to the point where the experience feels invasive rather than helpful; a visitor who feels tracked, rather than understood, disengages faster than one shown a generic page. Subtle and relevant beats clever and conspicuous." },
+      { type: "h2", text: "Privacy Considerations Worth Keeping in Mind" },
+      { type: "p", text: "Personalization runs on data about visitor behavior, which means it comes with the same responsibility as any other customer data — be clear about what you're collecting and why, and don't collect more than the personalization actually needs. A simple, honest note in your privacy policy about how the site adapts to visitor behavior goes a long way, and keeping the data used for personalization to only what's genuinely necessary avoids creating a bigger compliance footprint than the feature is worth." }
     ],
     relatedTopics: ["Website Personalization", "Conversion Optimization", "Customer Data", "Landing Pages"]
   },
@@ -577,7 +618,18 @@ export const ARTICLES = [
       { type: "p", text: "A working prototype and a production-ready product are different things, and the distance between them is where non-technical founders most often get surprised. Security, data handling, error cases, performance under real load, and long-term maintainability are exactly the things a quick AI-assisted build tends to skip — not because the tools are bad, but because those concerns aren't visible in a demo that only has to work once, for one person, on a good day." },
       { type: "blockquote", text: "AI coding tools compress the distance from idea to prototype. They don't compress the distance from prototype to something you'd trust with real customer data." },
       { type: "h2", text: "A Practical Way to Use This" },
-      { type: "p", text: "The strongest use of these tools for a non-technical founder isn't replacing a developer — it's arriving at that developer with something concrete. A working prototype, built and tested by the founder, turns a vague pitch into a specific brief: \"build this properly, at this scale, with this data handled correctly.\" That conversation is faster, cheaper, and far less likely to go sideways than starting from a blank page and a verbal description." }
+      { type: "p", text: "The strongest use of these tools for a non-technical founder isn't replacing a developer — it's arriving at that developer with something concrete. A working prototype, built and tested by the founder, turns a vague pitch into a specific brief: \"build this properly, at this scale, with this data handled correctly.\" That conversation is faster, cheaper, and far less likely to go sideways than starting from a blank page and a verbal description." },
+      { type: "h2", text: "A Realistic Founder Scenario" },
+      { type: "p", text: "Consider a founder with an idea for a simple booking tool for a niche service. A decade ago, that idea needed a developer, a spec document, and weeks of back-and-forth before there was anything to look at. Today, that same founder can describe the booking flow in plain language, get a clickable prototype within hours, test it on a handful of real potential customers, and walk away either encouraged — people understand it and want it — or with a clear reason it doesn't work, all before spending a shilling on development." },
+      { type: "h2", text: "Questions Worth Asking Before You Build Further" },
+      { type: "list", items: [
+        "**Does this need to handle real customer data**, and if so, has anyone who understands data protection looked at how it's stored?",
+        "**What happens if a hundred people use this at once**, instead of the one person who tested it?",
+        "**Who is responsible for this tool if something breaks** after the founder who built the prototype moves on to the next idea?",
+        "**Is this meant to stay internal, or eventually face real customers** — that distinction changes how much engineering rigor it actually needs"
+      ]},
+      { type: "h2", text: "When to Bring in a Developer" },
+      { type: "p", text: "The clearest signal it's time to hand a prototype to a professional developer is the moment real money, real customer data, or real reputational risk enters the picture. A prototype used internally to test an idea with a handful of friendly users carries very different stakes than the same tool opened up to the public. Founders who get this right treat the AI-built prototype as a proof of concept to bring to an engineer, not as the finished product to ship." }
     ],
     relatedTopics: ["AI Coding", "Rapid Prototyping", "No-Code", "Founder Tools"]
   },
@@ -608,7 +660,18 @@ export const ARTICLES = [
       { type: "h2", text: "What \"Hybrid\" Actually Looks Like" },
       { type: "p", text: "This doesn't mean abandoning public cloud providers — it means being deliberate about what runs where. Customer-facing applications might stay on a fast, globally distributed public cloud. Sensitive customer data, particularly anything covered by local data protection requirements, might sit on infrastructure specifically chosen (or contractually confirmed) to stay within a given jurisdiction. The goal is matching the infrastructure choice to what each type of data actually requires, rather than defaulting everything to one provider by habit." },
       { type: "h2", text: "What This Means for a Growing Business" },
-      { type: "p", text: "Most small and medium businesses don't need to solve this today with a complex multi-cloud architecture. What's worth doing now is simpler: know where your customer data is actually stored, understand what your local data protection law requires, and ask your vendors the same question you'd expect a client to ask you. The businesses caught off guard by this shift won't be the ones with complicated infrastructure — they'll be the ones who never asked the question at all." }
+      { type: "p", text: "Most small and medium businesses don't need to solve this today with a complex multi-cloud architecture. What's worth doing now is simpler: know where your customer data is actually stored, understand what your local data protection law requires, and ask your vendors the same question you'd expect a client to ask you. The businesses caught off guard by this shift won't be the ones with complicated infrastructure — they'll be the ones who never asked the question at all." },
+      { type: "h2", text: "The AI Compute Angle, in Plain Terms" },
+      { type: "p", text: "Running AI workloads efficiently often benefits from infrastructure that's physically closer to both the data being processed and the people using the result — latency and data transfer costs both favor proximity. As more businesses build AI features into their own products, this quietly pushes some infrastructure decisions toward regional or local providers, not because of regulation, but because of plain performance and cost, in addition to the compliance angle covered above." },
+      { type: "h2", text: "Questions Worth Asking Your Current Provider" },
+      { type: "list", items: [
+        "**Where physically is our data stored and processed**, and can that be confirmed contractually, not just assumed?",
+        "**What happens to our data if we switch providers** — is it portable, or effectively locked in?",
+        "**Does our current setup meet what Kenya's Data Protection Act actually requires**, or has nobody checked since it was first set up?",
+        "**If this provider's region were unavailable for a day**, what would that mean for our business?"
+      ]},
+      { type: "h2", text: "What This Doesn't Mean" },
+      { type: "p", text: "None of this means public cloud providers are becoming obsolete, or that every business needs a complex hybrid setup immediately. For most small and medium businesses, the actual action item is much smaller: understanding where data currently sits, and building in the flexibility to make a different choice later if requirements change. Overreacting with a costly infrastructure overhaul before it's genuinely needed is its own kind of mistake." }
     ],
     relatedTopics: ["Cloud Infrastructure", "Data Sovereignty", "Kenya Data Protection Act", "Hybrid Cloud"]
   },
@@ -645,7 +708,13 @@ export const ARTICLES = [
         "**Write in clear, declarative sentences** rather than vague marketing phrasing — AI systems extract facts more reliably from direct statements",
         "**Keep information current** and be explicit about dates, since specificity is part of what makes a source worth citing"
       ]},
-      { type: "p", text: "SEO and GEO aren't competing strategies — they're overlapping ones, built on the same foundation of a fast, well-structured, genuinely useful website. The difference is in the finishing touches: writing for direct extraction, not just for ranking." }
+      { type: "p", text: "SEO and GEO aren't competing strategies — they're overlapping ones, built on the same foundation of a fast, well-structured, genuinely useful website. The difference is in the finishing touches: writing for direct extraction, not just for ranking." },
+      { type: "h2", text: "How to Tell If It's Working" },
+      { type: "p", text: "Unlike traditional SEO, where rank tracking tools give a clear number, measuring GEO performance is still evolving. The most direct signal available today is simply asking the AI systems your customers are likely to use the exact questions your content answers, and checking whether your site gets cited or referenced in the response. It's manual, and imperfect, but it's the closest thing to a rank check this discipline currently has." },
+      { type: "h2", text: "A Common Misconception Worth Correcting" },
+      { type: "p", text: "Some businesses hear \"AI search is changing everything\" and conclude traditional SEO no longer matters. That's not accurate — AI-generated summaries are still often built from the same crawled, indexed web that traditional search ranks. A page that doesn't rank well in traditional search is also less likely to be surfaced or cited by an AI summary, because the AI system still has to find and trust the page first. GEO is additive to good SEO, not a replacement for it." },
+      { type: "h2", text: "What to Do This Quarter" },
+      { type: "p", text: "Rather than treating GEO as a separate project, fold it into whatever content work you're already doing. When writing or revising a page, add a direct, plainly-worded answer near the top before the more detailed explanation underneath. Add or update structured data for anything factual — prices, hours, locations. These are small adjustments layered onto normal content maintenance, not a new initiative requiring its own budget and timeline." }
     ],
     relatedTopics: ["GEO", "AI Search", "SEO", "Structured Data", "Schema Markup"]
   },
@@ -676,7 +745,13 @@ export const ARTICLES = [
       { type: "h2", text: "You Don't Need a Data Science Team" },
       { type: "p", text: "This is where the assumption usually goes wrong. Predictive analytics used to require a dedicated data science function to be worth doing at all. That's no longer the entry cost. A business with clean historical sales or booking data — even just what's already sitting in a spreadsheet or a booking system — can get meaningful forecasts from tools built for exactly this, without hiring a specialist." },
       { type: "h2", text: "Where to Start" },
-      { type: "p", text: "The highest-value starting point is usually the decision that currently costs the most when it's wrong — over-ordering stock that goes unsold, under-staffing a period that turns out to be busy, pricing a service the same in a slow month as a peak one. Pick the one recurring decision where a bad guess is most expensive, and start forecasting that first. The value compounds from there as more of the business runs on forecasts instead of assumptions." }
+      { type: "p", text: "The highest-value starting point is usually the decision that currently costs the most when it's wrong — over-ordering stock that goes unsold, under-staffing a period that turns out to be busy, pricing a service the same in a slow month as a peak one. Pick the one recurring decision where a bad guess is most expensive, and start forecasting that first. The value compounds from there as more of the business runs on forecasts instead of assumptions." },
+      { type: "h2", text: "A Concrete Example, With Numbers" },
+      { type: "p", text: "Imagine a small retailer that has ordered the same 200 units of a seasonal product every month for two years, regardless of actual sales. A basic forecast looking at the last two years of the same month, adjusted for a recent growth trend, might suggest 260 units this year and 140 the following month as the season winds down. That's the entire value proposition: replacing a fixed habit with a number grounded in the business's own history, adjusted for what's actually different this time." },
+      { type: "h2", text: "Where Forecasts Go Wrong" },
+      { type: "p", text: "Predictive models are only as good as the historical data feeding them, and they struggle with genuinely novel situations — a new product with no sales history, a sudden shift in the market, an event with no precedent in the data. Treat a forecast as a strong starting point that replaces a guess, not as a guarantee that replaces judgment entirely. The businesses that get the most value pair the forecast with a person who still sanity-checks it against what they know that the data doesn't capture." },
+      { type: "h2", text: "What Data You Actually Need to Start" },
+      { type: "p", text: "The bar to get started is lower than most businesses assume. A spreadsheet or export from an existing point-of-sale or booking system, covering at least a year of history to capture seasonal patterns, is usually enough for a first useful forecast. Businesses that wait for a \"perfect\" data setup before starting often wait years longer than necessary — a rough forecast built on the data you already have beats no forecast at all." }
     ],
     relatedTopics: ["Predictive Analytics", "Demand Forecasting", "Inventory Management", "Decision Intelligence"]
   },
@@ -708,7 +783,13 @@ export const ARTICLES = [
         "**Score against where the business is headed** — a tool that fit a five-person team may not fit a twenty-person one; keep what scales, flag what won't"
       ]},
       { type: "h2", text: "What to Do With the Results" },
-      { type: "p", text: "The goal isn't to cut everything down to the bare minimum — it's to be deliberate. Some tools earn their place easily once the actual cost and usage are visible side by side. Others turn out to be a habit nobody questioned. A stack audit, done honestly once a year, is one of the cheapest ways to free up both budget and the operational clarity needed to take on what's next — whether that's a new AI tool, a website rebuild, or simply room to grow without the clutter growing with it." }
+      { type: "p", text: "The goal isn't to cut everything down to the bare minimum — it's to be deliberate. Some tools earn their place easily once the actual cost and usage are visible side by side. Others turn out to be a habit nobody questioned. A stack audit, done honestly once a year, is one of the cheapest ways to free up both budget and the operational clarity needed to take on what's next — whether that's a new AI tool, a website rebuild, or simply room to grow without the clutter growing with it." },
+      { type: "h2", text: "A Worked Example" },
+      { type: "p", text: "A small business runs an audit and finds three different tools all doing some version of \"send automated emails\" — one left over from an old marketing push, one that came bundled with their booking system, and one a former employee set up and never mentioned. Combined, they cost more per month than a single, properly-used platform would, and nobody was fully using any of them well because attention was split three ways. Consolidating down to one, actually learned properly, both saved money and made the automation genuinely more effective." },
+      { type: "h2", text: "How Often to Repeat This" },
+      { type: "p", text: "A full audit once a year is enough for most small and medium businesses — more frequently than that, and the exercise itself becomes another item competing for attention; less frequently, and clutter has time to compound significantly before it's addressed. The best time to do it is right before planning the next year's budget, so the savings and clarity it produces directly inform what gets funded next." },
+      { type: "h2", text: "Who Should Own This" },
+      { type: "p", text: "In a small business, the audit often falls through the cracks because it doesn't obviously belong to any one role — it's not quite finance, not quite IT, not quite operations. Assign it to a specific person explicitly, even if that's the owner themselves, rather than leaving it as everyone's job and therefore no one's. An audit with a named owner and a date on the calendar actually happens; one that's \"someone should really do this sometime\" usually doesn't." }
     ],
     relatedTopics: ["Tech Stack Audit", "SaaS Management", "Operational Efficiency", "Business Technology"]
   },
