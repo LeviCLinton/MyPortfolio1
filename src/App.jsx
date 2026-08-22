@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
-import InvoiceGenerator from "./InvoiceGenerator.jsx";
 import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
 import AdUnit from "./AdUnit.jsx";
 import {
@@ -77,18 +76,18 @@ const TEMPLATE_TO_DEMO_PATH = {
 };
 
 const TEMPLATES = [
-  { id:"restaurants", category:"hospitality", icon:UtensilsCrossed, color:"cyan",   badge:"Restaurant Suite",     name:"Restaurants & Cafés",             description:"A digital dining room — guests browse the menu, reserve a table, and follow their order in real time.", features:["Live Table Booking","Digital Menu Builder","Order Status Tracking"] },
-  { id:"clinics",     category:"health",      icon:Stethoscope,    color:"indigo", badge:"Clinical Suite",       name:"Medical Clinics & Health Centers", description:"Patients self-schedule, browse departments, and arrive prepared — no receptionist bottleneck.",           features:["Appointment Scheduling","Patient Portal Preview","Department Directory"] },
-  { id:"spas",        category:"health",      icon:Scissors,       color:"pink",   badge:"Spa & Grooming Suite", name:"Spas & Barbershops",              description:"Clients choose a stylist, a slot, and a package with the price shown up front.",                          features:["Staff Selection Calendar","Priced Service Packages","Instant Rebooking"] },
-  { id:"hotels",      category:"hospitality", icon:BedDouble,      color:"cyan",   badge:"Boutique Stay Suite",  name:"Small Hotels & Boutique Stays",   description:"Real-time room availability and a direct booking flow guests can complete before they even call.",         features:["Room Availability Engine","Virtual Room Tour","Direct Rate Booking"] },
-  { id:"airbnb",      category:"hospitality", icon:Home,           color:"teal",   badge:"Vacation Rental Suite",name:"Airbnbs & Vacation Rentals",      description:"Your own booking engine, so a stay gets confirmed without a platform's commission.",                      features:["Zero Fee Bookings","Host Story & Bio","Property Showcase Gallery"] },
-  { id:"logistics",   category:"services",    icon:Truck,          color:"indigo", badge:"Logistics Suite",      name:"Delivery & Logistics Services",   description:"Customers confirm coverage, get an instant quote, and track a package — no calls needed.",                 features:["Service-Area Checker","Instant Quote Calculator","Live Package Tracking"] },
-  { id:"catering",    category:"hospitality", icon:ChefHat,        color:"pink",   badge:"Private Chef Suite",   name:"Private Chefs & Catering",        description:"Menus built with the client, events booked to a date, dietary needs captured — not lost in a chat thread.", features:["Custom Menu Builder","Event Inquiry Booking","Dietary Preference Forms"] },
-  { id:"ecommerce",   category:"services",    icon:ShoppingBag,    color:"teal",   badge:"Retail Suite",         name:"E-commerce & Retail",             description:"A fast, focused checkout that keeps working on a weak connection and settles the moment it's back.",         features:["Offline-First Cart","Fast One-Page Checkout","M-Pesa / Card Ready"] },
-  { id:"corporate",   category:"enterprise",  icon:Award,          color:"indigo", badge:"Corporate Suite",      name:"Corporates & SMEs",               description:"A professional web presence for established businesses — team pages, service directories, and lead capture that works.", features:["Service Directory","Team & Leadership Pages","Lead Generation Forms"] },
-  { id:"ngo",         category:"enterprise",  icon:Users,          color:"teal",   badge:"NGO & Non-Profit Suite",name:"NGOs & Non-Profits",              description:"Impact reporting, donation flows, and programme showcases that tell your story and drive support.",               features:["Programme Showcase","Donation Integration","Impact Reporting"] },
-  { id:"saas",        category:"enterprise",  icon:Globe,          color:"pink",   badge:"SaaS & Tech Suite",    name:"SaaS & Tech Products",            description:"Product landing pages, pricing tables, and onboarding flows built to convert trials into paying customers.",         features:["Pricing Table & Plans","Product Demo Section","Trial Signup Flow"] },
-  { id:"custom",      category:"enterprise",  icon:Sparkles,       color:"amber",  badge:"Custom Build",         name:"Something Else Entirely",         description:"Outside the categories above? We scope, design, and build from scratch — same speed and quality standard.",          features:["Discovery & Scoping","Custom Design System","Fixed-Quote Build"] },
+  { id:"restaurants", category:"hospitality", icon:UtensilsCrossed, color:"cyan",   badge:"Restaurant Suite",     name:"Restaurants & Cafés",             description:"A digital dining room built for how people actually decide where to eat: browse a real menu with photos and pricing, reserve a table without a phone call, and follow an order's status the way they'd track a delivery — built for the pace of real dinner service, not a static brochure page.", features:["Live Table Booking","Digital Menu Builder","Order Status Tracking"] },
+  { id:"clinics",     category:"health",      icon:Stethoscope,    color:"indigo", badge:"Clinical Suite",       name:"Medical Clinics & Health Centers", description:"Patients self-schedule an appointment against real open slots, browse departments to find the right specialist before they arrive, and get a confirmation without ever waiting on hold. Built to take routine scheduling calls off your front desk, so staff time goes to patients already in the building, not the phone.",           features:["Appointment Scheduling","Patient Portal Preview","Department Directory"] },
+  { id:"spas",        category:"health",      icon:Scissors,       color:"pink",   badge:"Spa & Grooming Suite", name:"Spas & Barbershops",              description:"Clients pick their preferred stylist or barber, an open slot on a real calendar, and a priced service package — before they ever set foot in the shop. No guessing what a cut or treatment costs, no back-and-forth over messaging. Built for a business that runs on appointments, not walk-ins alone.",                          features:["Staff Selection Calendar","Priced Service Packages","Instant Rebooking"] },
+  { id:"hotels",      category:"hospitality", icon:BedDouble,      color:"cyan",   badge:"Boutique Stay Suite",  name:"Small Hotels & Boutique Stays",   description:"Real-time room availability, a virtual tour of what they're actually booking, and a direct reservation flow a guest can complete entirely on their own — no phone tag, no waiting on an email reply. Built for boutique properties that want the booking experience of a much larger hotel, without paying a platform's commission.",         features:["Room Availability Engine","Virtual Room Tour","Direct Rate Booking"] },
+  { id:"airbnb",      category:"hospitality", icon:Home,           color:"teal",   badge:"Vacation Rental Suite",name:"Airbnbs & Vacation Rentals",      description:"Your own direct booking engine, so a stay gets confirmed without a platform taking a cut of every reservation. Guests see your real calendar, your story as a host, and real photos of the property — the same trust signals a listing platform provides, minus the fee and the algorithm deciding your visibility.",                      features:["Zero Fee Bookings","Host Story & Bio","Property Showcase Gallery"] },
+  { id:"logistics",   category:"services",    icon:Truck,          color:"indigo", badge:"Logistics Suite",      name:"Delivery & Logistics Services",   description:"Customers check whether you cover their area, get an instant price quote based on size and distance, and track a package's progress in real time — all without calling your dispatch line. Built for a delivery business where every unanswered call is a customer who might just try a competitor instead.",                 features:["Service-Area Checker","Instant Quote Calculator","Live Package Tracking"] },
+  { id:"catering",    category:"hospitality", icon:ChefHat,        color:"pink",   badge:"Private Chef Suite",   name:"Private Chefs & Catering",        description:"Menus built collaboratively with each client, events booked against a firm date instead of a tentative WhatsApp thread, and dietary restrictions captured in a proper form instead of buried three messages deep in a conversation. Built for a private chef or catering business where the details actually matter on the day.", features:["Custom Menu Builder","Event Inquiry Booking","Dietary Preference Forms"] },
+  { id:"ecommerce",   category:"services",    icon:ShoppingBag,    color:"teal",   badge:"Retail Suite",         name:"E-commerce & Retail",             description:"A fast, single-page checkout that keeps a cart intact even on a weak connection, and settles the transaction the moment signal returns — built for customers shopping on mobile data, not fibre. M-Pesa and card payments both live on the same page, so nobody abandons a purchase over a missing payment method.",         features:["Offline-First Cart","Fast One-Page Checkout","M-Pesa / Card Ready"] },
+  { id:"corporate",   category:"enterprise",  icon:Award,          color:"indigo", badge:"Corporate Suite",      name:"Corporates & SMEs",               description:"A professional web presence built for a business that already has customers and needs a site that reflects that: real service directories instead of vague taglines, team pages that build trust with new clients, and lead capture forms that route inquiries to the right person instead of a shared inbox nobody checks.", features:["Service Directory","Team & Leadership Pages","Lead Generation Forms"] },
+  { id:"ngo",         category:"enterprise",  icon:Users,          color:"teal",   badge:"NGO & Non-Profit Suite",name:"NGOs & Non-Profits",              description:"Impact reporting that shows funders exactly what their money did, donation flows that make giving take thirty seconds instead of three steps, and programme showcases that tell the story behind the numbers. Built for organisations that need to earn trust with every visitor, because for a non-profit, the website often is the pitch.",               features:["Programme Showcase","Donation Integration","Impact Reporting"] },
+  { id:"saas",        category:"enterprise",  icon:Globe,          color:"pink",   badge:"SaaS & Tech Suite",    name:"SaaS & Tech Products",            description:"Product landing pages built around a single clear value proposition, pricing tables that make plan comparison genuinely easy instead of a wall of text, and onboarding flows designed to get a new signup to their first real result fast — because a trial that never gets used never converts to a paying customer.",         features:["Pricing Table & Plans","Product Demo Section","Trial Signup Flow"] },
+  { id:"custom",      category:"enterprise",  icon:Sparkles,       color:"amber",  badge:"Custom Build",         name:"Something Else Entirely",         description:"Outside every category above? We start with a proper discovery conversation, scope the actual requirements instead of guessing, and design and build from scratch — held to the same speed and quality standard as anything in our template library, just without a template to start from.",          features:["Discovery & Scoping","Custom Design System","Fixed-Quote Build"] },
 ];
 
 // ─── FAQs ───────────────────────────────────────────────────────────────────
@@ -98,7 +97,6 @@ const FAQS = [
   { q:"Can I accept M-Pesa payments through my site?",   a:"Yes — all our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. We handle the integration as part of the build." },
   { q:"Do you only work with small businesses?", a:"No — we started with small businesses because that's where the gap was biggest, but we work with SMEs, corporates, NGOs, and tech startups too. The standards are the same; the scope and budget just grow with the project." },
   { q:"Do you offer hosting?",                           a:"We deploy to fast, reliable infrastructure (GitHub Pages for static sites, Cloudflare Workers for server-side logic). Hosting is free for most sites." },
-  { q:"What does the AI Invoice Generator cost?",        a:"It's launching at KES 130 (approx. $1) per document — pay once, download your PDF, no subscription or account required. It's finishing testing now; use the 'Notify me' link on the invoice page to hear when it's live." },
   { q:"Can you update my site after launch?",            a:"Yes. We offer ad-hoc updates (billed per session) and monthly maintenance retainers. Most small content changes can be quoted and delivered within 24 hours." },
   { q:"Is my site going to be mobile-friendly?",         a:"Every site we build is fully responsive — mobile is always our primary design target since most of your customers will arrive on a phone." },
 ];
@@ -147,11 +145,6 @@ function Nav({ onNavigate, route }) {
               {l.label}
             </button>
           ))}
-          <button onClick={() => onNavigate("#invoice")}
-            className="font-medium transition-colors hover:text-white"
-            style={{ color: T }}>
-            ✦ Invoice AI
-          </button>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -185,10 +178,6 @@ function Nav({ onNavigate, route }) {
                   {l.label}
                 </button>
               ))}
-              <button onClick={() => { onNavigate("#invoice"); setMenuOpen(false); }}
-                className="block text-sm py-2 font-medium" style={{ color: T }}>
-                ✦ Invoice AI
-              </button>
             </div>
           </m.div>
         )}
@@ -719,41 +708,6 @@ function BlogTeaserStrip({ onNavigate }) {
   );
 }
 
-// ─── Home: Invoice CTA banner ─────────────────────────────────────────────────
-function InvoiceBanner({ onNavigate }) {
-  return (
-    <Reveal>
-      <section className="px-6 py-12 lg:px-12 border-t border-white/5">
-        <div className="mx-auto max-w-6xl">
-          <m.div whileHover={{ scale: 1.01 }}
-            className="relative overflow-hidden rounded-3xl p-8 sm:p-10 cursor-pointer"
-            style={{ background: `linear-gradient(135deg,rgba(26,163,176,0.12),rgba(240,64,154,0.12))`, border: "1px solid rgba(255,255,255,0.07)" }}
-            onClick={() => onNavigate("#invoice")}>
-            <div className="pointer-events-none absolute right-0 top-0 w-64 h-64 rounded-full blur-3xl opacity-30"
-              style={{ background: `radial-gradient(circle, ${P}, transparent)` }} />
-            <div className="relative flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-white font-bold text-xl">✦ AI Invoice Generator</span>
-                  <span className="rounded-full px-2 py-0.5 text-xs font-bold" style={{ background: `${P}30`, color: "#F778B6" }}>COMING SOON</span>
-                </div>
-                <p className="text-slate-400 max-w-md">
-                  Invoices, quotes, receipts, purchase orders, and 7 more financial document types — generated by AI in seconds. Download as PDF for just $1.
-                </p>
-              </div>
-              <m.div whileHover={{ x: 4 }}
-                className="shrink-0 inline-flex items-center gap-2 text-base font-bold px-7 py-4 rounded-xl text-slate-950"
-                style={{ background: `linear-gradient(135deg,${T},${P})` }}>
-                Get notified <ArrowRight className="h-5 w-5" />
-              </m.div>
-            </div>
-          </m.div>
-        </div>
-      </section>
-    </Reveal>
-  );
-}
-
 // ─── Templates page ───────────────────────────────────────────────────────────
 function TemplateCard({ template, onDeploy }) {
   const c = GLOW[template.color];
@@ -1057,7 +1011,7 @@ function AboutPage({ onNavigate }) {
     { year:"2022", event:"Started building sites for Nairobi restaurants and hotels — freelance, nothing formal." },
     { year:"2023", event:"Moved into a structured agency model after seeing the same problems across every industry: no online presence, broken booking flows, no payments." },
     { year:"2024", event:"Built the first version of our template library — industry-specific starting points for SMEs that cut delivery time while maintaining quality. Began taking on larger enterprise and NGO projects." },
-    { year:"2025", event:"Launched the AI Invoice Generator — a tool for the same SME clients who needed professional documents without an accountant." },
+    { year:"2025", event:"Began work on a suite of small internal tools for the same SME clients — starting with financial document generation." },
     { year:"2026", event:"LCN254 today — a focused agency doing one thing well: fast, reliable websites for Kenyan businesses." },
   ];
   return (
@@ -1353,12 +1307,12 @@ function PrivacyPage({ onNavigate }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const sections = [
     { t:"1. Who We Are",           b:`LCN254 is a web design and development agency based in Nairobi, Kenya. Our website is lcn254.site — reach us at contact@lcn254.site.` },
-    { t:"2. Information We Collect",b:`We collect your name, email, phone, and business type through our contact form. Invoice Generator inputs are processed to generate your document and not stored after your session.` },
+    { t:"2. Information We Collect",b:`We collect your name, email, phone, and business type through our contact form.` },
     { t:"3. How We Use Your Information",b:`We use contact form submissions to respond to inquiries and quote requests only. We do not sell your data to any third party.` },
     { t:"4. Payments",             b:`Payments are processed by Stripe, M-Pesa (Safaricom Daraja), and PayPal. We do not store card details or M-Pesa PINs.` },
     { t:"5. Cookies & Analytics",  b:`We do not use tracking cookies or analytics platforms that identify individual users.` },
-    { t:"6. Data Storage & Security",b:`Contact form submissions go to contact@lcn254.site via Zoho Mail. Invoice generation is processed through a Cloudflare Worker and not logged or retained.` },
-    { t:"7. Third-Party Services", b:`We use Google Fonts (CDN) and Framer Motion (bundled). The Invoice Generator uses the Anthropic Claude API — prompts are sent securely and not shared with Anthropic alongside personal identifiers.` },
+    { t:"6. Data Storage & Security",b:`Contact form submissions go to contact@lcn254.site via Zoho Mail.` },
+    { t:"7. Third-Party Services", b:`We use Google Fonts (CDN) and Framer Motion (bundled) to build and run this site.` },
     { t:"8. Your Rights (Kenya Data Protection Act 2019)",b:`You have the right to access, correct, or request deletion of personal data. Email contact@lcn254.site with subject "Data Request" — we respond within 14 days.` },
     { t:"9. Children's Privacy",   b:`Our services are not directed at children under 18.` },
     { t:"10. Contact",             b:`Questions about this policy? Email contact@lcn254.site or write to: LCN254, Nairobi, Kenya.` },
@@ -1400,13 +1354,12 @@ function TermsPage({ onNavigate }) {
     { t:"2. Services We Provide", b:`We design, build, and deploy websites for businesses and individuals, using either our template library as a starting point or a fully custom build. Specific deliverables, timelines, and pricing for any project are agreed in writing (email or signed quote) before work begins — the pricing shown on this site is a starting reference, not a binding quote until confirmed for your specific project.` },
     { t:"3. Quotes, Payment & Cancellation", b:`Project pricing is scoped individually. Where a deposit is required to begin work, that deposit is non-refundable once design or development work has started, unless we fail to deliver what was agreed. Either party may cancel a project in writing before work begins with no charge; cancellation after work has started is billed for work completed to that point.` },
     { t:"4. What You Own", b:`Once a project is paid in full and delivered, the resulting website code and content are yours. We don't hold your site hostage behind a proprietary CMS or ongoing licence fee. Stock assets, fonts, or third-party libraries used in the build remain subject to their own original licences.` },
-    { t:"5. The AI Invoice Generator", b:`Our Invoice Generator tool is currently in testing and marked "Coming Soon" — it is not yet available for public use, and no payment should be sent for it outside the tool's own checkout flow once live. When launched, it will generate financial documents from information you provide; you are responsible for the accuracy of that information before sending any document to a third party.` },
+    { t:"5. Template Demos", b:`The businesses shown on our template demo pages (e.g. "Ember & Co.", "Hotel Marlow") are fictional examples built to showcase design and functionality — they do not represent real businesses, and any resemblance to an actual business is coincidental.` },
     { t:"6. Acceptable Use of This Site", b:`You may not use lcn254.site to transmit malicious code, attempt to access data that isn't yours, scrape the site at a rate that degrades service for others, or use any content from this site to misrepresent your business as LCN254 or as an LCN254 client without our agreement.` },
-    { t:"7. Template Demos", b:`The businesses shown on our template demo pages (e.g. "Ember & Co.", "Hotel Marlow") are fictional examples built to showcase design and functionality — they do not represent real businesses, and any resemblance to an actual business is coincidental.` },
-    { t:"8. Limitation of Liability", b:`We build sites to a professional standard and test across common devices and browsers before handover, but we don't guarantee uninterrupted uptime for third-party hosting, payment processors (M-Pesa, Stripe, PayPal), or APIs your site depends on — those are governed by their own providers' terms.` },
-    { t:"9. Changes to These Terms", b:`We may update these terms as our services evolve. Continued use of the site after an update means you accept the revised terms. Material changes affecting an active project will be communicated directly.` },
-    { t:"10. Governing Law", b:`These terms are governed by the laws of Kenya. Any dispute arising from these terms or a project engagement will first be handled through direct good-faith discussion between the parties.` },
-    { t:"11. Contact", b:`Questions about these terms? Email contact@lcn254.site or write to: LCN254, Nairobi, Kenya.` },
+    { t:"7. Limitation of Liability", b:`We build sites to a professional standard and test across common devices and browsers before handover, but we don't guarantee uninterrupted uptime for third-party hosting, payment processors (M-Pesa, Stripe, PayPal), or APIs your site depends on — those are governed by their own providers' terms.` },
+    { t:"8. Changes to These Terms", b:`We may update these terms as our services evolve. Continued use of the site after an update means you accept the revised terms. Material changes affecting an active project will be communicated directly.` },
+    { t:"9. Governing Law", b:`These terms are governed by the laws of Kenya. Any dispute arising from these terms or a project engagement will first be handled through direct good-faith discussion between the parties.` },
+    { t:"10. Contact", b:`Questions about these terms? Email contact@lcn254.site or write to: LCN254, Nairobi, Kenya.` },
   ];
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
@@ -1491,7 +1444,6 @@ function HomePage({ onNavigate }) {
         </div>
       </div>
       <BlogTeaserStrip onNavigate={onNavigate} />
-      <InvoiceBanner onNavigate={onNavigate} />
       <Footer onNavigate={onNavigate} />
     </div>
   );
@@ -1548,7 +1500,6 @@ export default function LCN254Portfolio() {
       case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
       case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
       case "#terms":     return <TermsPage       key="terms"     onNavigate={navigate} />;
-      case "#invoice":   return <InvoiceGenerator  key="invoice" onNavigate={navigate} />;
       default:           return <HomePage        key="home"      onNavigate={navigate} />;
     }
   };
