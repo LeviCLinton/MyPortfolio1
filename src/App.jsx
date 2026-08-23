@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
-import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
+import { BlogIndexPage, BlogArticlePage, ARTICLES } from "./Blog.jsx";
 import AdUnit from "./AdUnit.jsx";
 import {
   Sparkles, UtensilsCrossed, Stethoscope, Scissors, BedDouble, Home,
@@ -114,11 +114,11 @@ function Nav({ onNavigate, route }) {
   }, []);
 
   const links = [
-    { label: "Templates", hash: "#templates" },
-    { label: "Pricing",   hash: "#pricing" },
-    { label: "Blog",      hash: "#blog" },
-    { label: "About",     hash: "#about" },
-    { label: "Contact",   hash: "#contact" },
+    { label: "Templates", hash: "/templates" },
+    { label: "Pricing",   hash: "/pricing" },
+    { label: "Blog",      hash: "/blog" },
+    { label: "About",     hash: "/about" },
+    { label: "Contact",   hash: "/contact" },
   ];
 
   return (
@@ -129,7 +129,7 @@ function Nav({ onNavigate, route }) {
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent" }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-12">
-        <button onClick={() => onNavigate("#home")} className="flex items-center gap-2.5">
+        <button onClick={() => onNavigate("/")} className="flex items-center gap-2.5">
           <img src={`${import.meta.env.BASE_URL}lcn254-logo.jpeg`} alt="LCN254 logo"
             width="36" height="36" fetchpriority="high" decoding="async"
             className="h-9 w-9 rounded-lg object-cover" />
@@ -149,7 +149,7 @@ function Nav({ onNavigate, route }) {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => onNavigate("#contact")}
+          <button onClick={() => onNavigate("/contact")}
             className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10">
             Get a Quote <ArrowRight className="h-3.5 w-3.5" />
           </button>
@@ -195,7 +195,7 @@ function Footer({ onNavigate }) {
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row border-t border-white/5 pt-6">
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
-            {[["Templates","#templates"],["Pricing","#pricing"],["Blog","#blog"],["About","#about"],["Contact","#contact"],["FAQ","#faq"],["Terms","#terms"],["Privacy","#privacy"]].map(([l,h]) => (
+            {[["Templates","/templates"],["Pricing","/pricing"],["Blog","/blog"],["About","/about"],["Contact","/contact"],["FAQ","/faq"],["Terms","/terms"],["Privacy","/privacy"]].map(([l,h]) => (
               <button key={h} onClick={() => onNavigate(h)}
                 className="transition-colors hover:text-white">{l}</button>
             ))}
@@ -304,13 +304,13 @@ function CinematicHero({ onNavigate }) {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <m.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate("#templates")}
+                onClick={() => onNavigate("/templates")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
                 style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
                 View Our Work <ArrowRight className="h-5 w-5" />
               </m.button>
               <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate("#contact")}
+                onClick={() => onNavigate("/contact")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/10">
                 Get a Free Quote
               </m.button>
@@ -530,7 +530,7 @@ function TemplateTeaserStrip({ onNavigate }) {
                 Every business needs the right foundation.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/templates")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               View all templates <ChevronRight className="h-4 w-4" />
             </m.button>
@@ -543,7 +543,7 @@ function TemplateTeaserStrip({ onNavigate }) {
               <Reveal key={t.id} delay={i * 0.07}>
                 <m.div whileHover={{ y: -3 }}
                   className={`group rounded-2xl border border-white/10 bg-slate-900/40 p-5 backdrop-blur-md cursor-pointer transition-colors ${c.ring}`}
-                  onClick={() => onNavigate("#templates")}>
+                  onClick={() => onNavigate("/templates")}>
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${c.glow} bg-opacity-20`}
                     style={{ background: `rgba(26,163,176,0.12)` }}>
                     <t.icon className={`h-5 w-5 ${c.text}`} />
@@ -579,7 +579,7 @@ function PricingTeaserStrip({ onNavigate }) {
                 No surprise invoices.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#pricing")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/pricing")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               See full pricing <ChevronRight className="h-4 w-4" />
             </m.button>
@@ -588,7 +588,7 @@ function PricingTeaserStrip({ onNavigate }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {rows.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.07}>
-              <m.button whileHover={{ y: -3 }} onClick={() => onNavigate("#pricing")}
+              <m.button whileHover={{ y: -3 }} onClick={() => onNavigate("/pricing")}
                 className="w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md hover:border-white/20 transition-colors">
                 <h3 className="font-semibold text-white mb-1">{r.name}</h3>
                 <div className="text-xl font-black text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{r.price}</div>
@@ -682,7 +682,7 @@ function BlogTeaserStrip({ onNavigate }) {
                 Tech news & business insights.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#blog")}
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/blog")}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               Read all articles <ChevronRight className="h-4 w-4" />
             </m.button>
@@ -692,7 +692,7 @@ function BlogTeaserStrip({ onNavigate }) {
           {previews.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.07}>
               <m.button whileHover={{ y: -3 }}
-                onClick={() => onNavigate(`#blog/${p.slug}`)}
+                onClick={() => onNavigate(`/blog/${p.slug}`)}
                 className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
                 <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }} />
                 <div className="p-5">
@@ -807,7 +807,7 @@ function TemplatesPage({ onNavigate, onDeploy }) {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#templates" />
+      <Nav onNavigate={onNavigate} route="/templates" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-6xl">
           <Reveal>
@@ -858,7 +858,7 @@ function TemplatesPage({ onNavigate, onDeploy }) {
 
           <AnimatePresence mode="popLayout">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {visible.map(t => <TemplateCard key={t.id} template={t} onDeploy={(bt) => { onDeploy(bt); onNavigate("#contact"); }} />)}
+              {visible.map(t => <TemplateCard key={t.id} template={t} onDeploy={(bt) => { onDeploy(bt); onNavigate("/contact"); }} />)}
             </div>
           </AnimatePresence>
         </div>
@@ -880,7 +880,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#contact" />
+      <Nav onNavigate={onNavigate} route="/contact" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
@@ -1017,7 +1017,7 @@ function AboutPage({ onNavigate }) {
   ];
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#about" />
+      <Nav onNavigate={onNavigate} route="/about" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
@@ -1107,12 +1107,12 @@ function AboutPage({ onNavigate }) {
               <h2 className="text-2xl font-bold text-white mb-3">Ready to build something?</h2>
               <p className="text-slate-400 mb-6">Browse the templates, pick what fits, and get in touch.</p>
               <div className="flex items-center justify-center gap-4 flex-wrap">
-                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/templates")}
                   className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
                   style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                   Browse Templates <ArrowRight className="h-4 w-4" />
                 </m.button>
-                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#contact")}
+                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/contact")}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                   Get in Touch
                 </m.button>
@@ -1272,7 +1272,7 @@ function PricingPage({ onNavigate }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#pricing" />
+      <Nav onNavigate={onNavigate} route="/pricing" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-6xl">
           <Reveal>
@@ -1321,7 +1321,7 @@ function PricingPage({ onNavigate }) {
                     ))}
                   </ul>
                   <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    onClick={() => onNavigate("#contact")}
+                    onClick={() => onNavigate("/contact")}
                     className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
                       tier.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
                     }`}
@@ -1426,7 +1426,7 @@ function PricingPage({ onNavigate }) {
                     ))}
                   </ul>
                   <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    onClick={() => onNavigate("#contact")}
+                    onClick={() => onNavigate("/contact")}
                     className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
                       plan.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
                     }`}
@@ -1450,7 +1450,7 @@ function FAQPage({ onNavigate }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#faq" />
+      <Nav onNavigate={onNavigate} route="/faq" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-3xl">
           <Reveal>
@@ -1511,7 +1511,7 @@ function PrivacyPage({ onNavigate }) {
   ];
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#privacy" />
+      <Nav onNavigate={onNavigate} route="/privacy" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-3xl">
           <Reveal>
@@ -1555,7 +1555,7 @@ function TermsPage({ onNavigate }) {
   ];
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#terms" />
+      <Nav onNavigate={onNavigate} route="/terms" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-3xl">
           <Reveal>
@@ -1574,6 +1574,38 @@ function TermsPage({ onNavigate }) {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </div>
+      <Footer onNavigate={onNavigate} />
+    </div>
+  );
+}
+
+// ─── 404 page ─────────────────────────────────────────────────────────────────
+function NotFoundPage({ onNavigate }) {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  return (
+    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+      <Nav onNavigate={onNavigate} route="/404" />
+      <div className="pt-32 pb-24 px-6 lg:px-12 flex items-center justify-center">
+        <div className="max-w-md text-center">
+          <span className="font-mono text-xs uppercase tracking-widest block mb-4" style={{ color: T }}>404</span>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Page not found.
+          </h1>
+          <p className="text-slate-400 mb-8">The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/")}
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
+              style={{ background: `linear-gradient(135deg,${T},${P})` }}>
+              Back to Home
+            </m.button>
+            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/contact")}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
+              Contact Us
+            </m.button>
           </div>
         </div>
       </div>
@@ -1624,7 +1656,7 @@ function WelcomeSplash({ onDone }) {
 function HomePage({ onNavigate }) {
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <Nav onNavigate={onNavigate} route="#home" />
+      <Nav onNavigate={onNavigate} route="/" />
       <CinematicHero onNavigate={onNavigate} />
       <ValueStrip onNavigate={onNavigate} />
       <TemplateTeaserStrip onNavigate={onNavigate} />
@@ -1642,31 +1674,64 @@ function HomePage({ onNavigate }) {
 }
 
 // ─── Root router ──────────────────────────────────────────────────────────────
-export default function LCN254Portfolio() {
-  const [route, setRoute] = useState(
-    typeof window !== "undefined" ? window.location.hash || "#home" : "#home"
-  );
+export default function LCN254Portfolio({ initialPath } = {}) {
+  const KNOWN_HASH_ROUTES = ["/", "/templates", "/pricing", "/contact", "/about", "/faq", "/privacy", "/terms", "/blog"];
+
+  const resolveInitialRoute = () => {
+    if (initialPath) return initialPath;
+    if (typeof window === "undefined") return "/";
+    // Legacy support: old versions of this site used hash routing
+    // (e.g. /#pricing). If someone lands on one of those old links,
+    // silently upgrade the URL to the real path instead of showing home.
+    const legacyHash = window.location.hash?.replace(/^#/, "");
+    if (legacyHash) {
+      const legacyPath = legacyHash.startsWith("/") ? legacyHash : `/${legacyHash}`;
+      if (KNOWN_HASH_ROUTES.includes(legacyPath) || legacyPath.startsWith("/blog/")) {
+        window.history.replaceState({}, "", legacyPath);
+        return legacyPath;
+      }
+    }
+    return window.location.pathname || "/";
+  };
+
+  const [route, setRoute] = useState(resolveInitialRoute);
   const [selectedBusiness, setSelectedBusiness] = useState("");
   const [showSplash, setShowSplash] = useState(() => {
     if (typeof window === "undefined") return false;
     return !sessionStorage.getItem("lcn254-welcomed");
   });
 
-  const navigate = useCallback((hash) => {
-    window.location.hash = hash;
-    setRoute(hash);
-    window.scrollTo(0, 0);
+  const navigate = useCallback((path) => {
+    if (typeof window !== "undefined") window.history.pushState({}, "", path);
+    setRoute(path);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
     const fn = () => {
-      const h = window.location.hash || "#home";
-      setRoute(h);
+      setRoute(window.location.pathname || "/");
       window.scrollTo(0, 0);
     };
-    window.addEventListener("hashchange", fn);
-    return () => window.removeEventListener("hashchange", fn);
+    window.addEventListener("popstate", fn);
+    return () => window.removeEventListener("popstate", fn);
   }, []);
+
+  // Intercept left-clicks on same-origin, non-file <a href="/..."> links so
+  // they navigate via pushState (no full reload) while still being real,
+  // crawlable <a> tags for search engines and "open in new tab".
+  useEffect(() => {
+    const onClick = (e) => {
+      const a = e.target.closest && e.target.closest("a[href^='/']");
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target && a.target !== "_self") return;
+      const url = new URL(a.href);
+      if (url.origin !== window.location.origin || /\.[a-z0-9]{2,5}$/i.test(url.pathname)) return;
+      e.preventDefault();
+      navigate(url.pathname);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [navigate]);
 
   const handleSplashDone = useCallback(() => {
     sessionStorage.setItem("lcn254-welcomed", "1");
@@ -1675,24 +1740,27 @@ export default function LCN254Portfolio() {
 
   const handleDeploy = useCallback((bt) => {
     setSelectedBusiness(bt);
-    navigate("#contact");
+    navigate("/contact");
   }, [navigate]);
 
   const renderPage = () => {
-    if (route.startsWith("#blog/")) {
-      const slug = route.replace("#blog/", "");
+    if (route.startsWith("/blog/")) {
+      const slug = route.replace("/blog/", "");
+      const known = ARTICLES.some(a => a.slug === slug);
+      if (!known) return <NotFoundPage key="404" onNavigate={navigate} />;
       return <BlogArticlePage key={route} slug={slug} onNavigate={navigate} />;
     }
     switch (route) {
-      case "#blog":      return <BlogIndexPage   key="blog"      onNavigate={navigate} />;
-      case "#templates": return <TemplatesPage   key="templates" onNavigate={navigate} onDeploy={handleDeploy} />;
-      case "#pricing":   return <PricingPage     key="pricing"   onNavigate={navigate} />;
-      case "#contact":   return <ContactPage     key="contact"   onNavigate={navigate} prefilledBusiness={selectedBusiness} />;
-      case "#about":     return <AboutPage       key="about"     onNavigate={navigate} />;
-      case "#faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
-      case "#privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
-      case "#terms":     return <TermsPage       key="terms"     onNavigate={navigate} />;
-      default:           return <HomePage        key="home"      onNavigate={navigate} />;
+      case "/":          return <HomePage        key="home"      onNavigate={navigate} />;
+      case "/blog":      return <BlogIndexPage   key="blog"      onNavigate={navigate} />;
+      case "/templates": return <TemplatesPage   key="templates" onNavigate={navigate} onDeploy={handleDeploy} />;
+      case "/pricing":   return <PricingPage     key="pricing"   onNavigate={navigate} />;
+      case "/contact":   return <ContactPage     key="contact"   onNavigate={navigate} prefilledBusiness={selectedBusiness} />;
+      case "/about":     return <AboutPage       key="about"     onNavigate={navigate} />;
+      case "/faq":       return <FAQPage         key="faq"       onNavigate={navigate} />;
+      case "/privacy":   return <PrivacyPage     key="privacy"   onNavigate={navigate} />;
+      case "/terms":     return <TermsPage       key="terms"     onNavigate={navigate} />;
+      default:           return <NotFoundPage    key="404"       onNavigate={navigate} />;
     }
   };
 
