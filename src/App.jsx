@@ -94,7 +94,8 @@ const TEMPLATES = [
 const FAQS = [
   { q:"How long does it take to launch my website?",     a:"Most template-based sites go live within 3–5 business days from the moment you confirm your content and branding. Custom builds are scoped individually — we'll give you a clear timeline during the discovery call." },
   { q:"Do I own the website after it's built?",          a:"Yes. Once we hand it over, the site and all its code are yours. We can also manage hosting and updates for you on a monthly retainer if you prefer." },
-  { q:"Can I accept M-Pesa payments through my site?",   a:"Yes — all our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. We handle the integration as part of the build." },
+  { q:"Can I accept M-Pesa payments through my site?",   a:"Yes — for Kenyan clients, our e-commerce and booking templates are M-Pesa ready via the Safaricom Daraja API. For international clients, we integrate Stripe, PayPal, or other standard global payment processors instead." },
+  { q:"Do you only work with clients in Kenya?", a:"No — LCN254 started in Nairobi, but we now build for clients anywhere in the world. Pricing is in USD, communication happens over email/video call, and delivery timelines stay the same regardless of where you're based." },
   { q:"Do you only work with small businesses?", a:"No — we started with small businesses because that's where the gap was biggest, but we work with SMEs, corporates, NGOs, and tech startups too. The standards are the same; the scope and budget just grow with the project." },
   { q:"Do you offer hosting?",                           a:"We deploy to fast, reliable infrastructure (GitHub Pages for static sites, Cloudflare Workers for server-side logic). Hosting is free for most sites." },
   { q:"Can you update my site after launch?",            a:"Yes. We offer ad-hoc updates (billed per session) and monthly maintenance retainers. Most small content changes can be quoted and delivered within 24 hours." },
@@ -207,7 +208,7 @@ function Footer({ onNavigate }) {
 
 // ─── Cinematic Hero ──────────────────────────────────────────────────────────
 function CinematicHero({ onNavigate }) {
-  const words = ["a home online.", "a website of its own.", "space to be told.", "room to grow.", "its own address.", "more than a caption."];
+  const words = ["grow your business.", "win customer trust.", "convert more visitors.", "get you found online.", "work on every device.", "scale with you."];
   const [wordIdx, setWordIdx] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setWordIdx(i => (i + 1) % words.length), 2200);
@@ -273,13 +274,13 @@ function CinematicHero({ onNavigate }) {
                 <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: T }} />
               </span>
               <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
-                Every story deserves to be told · Building across Kenya
+                Professional web design · Serving clients worldwide
               </span>
             </div>
 
             <h1 className="text-5xl sm:text-6xl font-black tracking-tight text-white mb-4 leading-[1.02]"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Every story deserves
+              We build websites that
               <br />
               <span className="relative inline-block min-w-[280px]">
                 <AnimatePresence mode="wait">
@@ -298,7 +299,7 @@ function CinematicHero({ onNavigate }) {
             </h1>
 
             <p className="text-slate-400 text-lg max-w-lg mb-10 leading-relaxed mt-6">
-              Human beings are storytellers. We put meaning into words, images, and emotion — then build the website that tells yours. Personal or professional, it's your story, told your way.
+              We design and build modern, high-performance websites that help businesses establish credibility and generate customers online — for clients in Kenya and around the world.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -306,7 +307,7 @@ function CinematicHero({ onNavigate }) {
                 onClick={() => onNavigate("#templates")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
                 style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
-                Start Your Story <ArrowRight className="h-5 w-5" />
+                View Our Work <ArrowRight className="h-5 w-5" />
               </m.button>
               <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigate("#contact")}
@@ -476,10 +477,10 @@ function CinematicHero({ onNavigate }) {
 // ─── Home: Value strip ────────────────────────────────────────────────────────
 function ValueStrip({ onNavigate }) {
   const features = [
-    { icon: Zap,        title: "Told at the right pace",  desc: "From signed-off designs to a deployed URL in 3–5 days. A story worth telling shouldn't wait months to be heard." },
-    { icon: Globe,      title: "Wherever they're reading", desc: "Most people meet your story on a phone first. So every site starts there, not as an afterthought." },
-    { icon: Shield,     title: "Yours, not ours",          desc: "No lock-in, no proprietary CMS. It's your story — you should be able to take it anywhere." },
-    { icon: TrendingUp, title: "Room to keep growing",     desc: "Start with a single page. Add booking, payments, and new chapters as the story continues." },
+    { icon: Zap,        title: "Delivered on time",       desc: "From signed-off designs to a deployed URL in 3–5 days. A business worth building shouldn't wait months to launch." },
+    { icon: Globe,      title: "Built for every device",  desc: "Most visitors meet your business on a phone first. So every site starts there, not as an afterthought." },
+    { icon: Shield,     title: "Yours, not ours",          desc: "No lock-in, no proprietary CMS. It's your website — you should be able to take it anywhere." },
+    { icon: TrendingUp, title: "Room to keep growing",     desc: "Start with a single page. Add booking, payments, and new features as your business grows." },
   ];
 
   return (
@@ -526,7 +527,7 @@ function TemplateTeaserStrip({ onNavigate }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Starting Points</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Every story needs a shape.
+                Every business needs the right foundation.
               </h2>
             </div>
             <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("#templates")}
@@ -562,9 +563,9 @@ function TemplateTeaserStrip({ onNavigate }) {
 // ─── Home: Pricing teaser ──────────────────────────────────────────────────────
 function PricingTeaserStrip({ onNavigate }) {
   const rows = [
-    { name: "Launch",     price: "From KSh 35,000", desc: "Landing page, 3–5 days" },
-    { name: "Business",   price: "From KSh 75,000", desc: "Booking + payments, 5–7 days" },
-    { name: "Enterprise", price: "Custom quote",     desc: "Portals & integrations, scoped" },
+    { name: "Starter",  price: "$350",   desc: "1–3 pages, 3–5 days" },
+    { name: "Business", price: "$750",   desc: "4–7 pages, booking-ready" },
+    { name: "Premium",  price: "$1,500+", desc: "8–15+ pages, e-commerce" },
   ];
   return (
     <section className="px-6 py-20 lg:px-12 border-t border-white/5">
@@ -604,8 +605,8 @@ function PricingTeaserStrip({ onNavigate }) {
 // ─── Home: How it works ───────────────────────────────────────────────────────
 function HowItWorks() {
   const steps = [
-    { n:"01", title:"Tell us your story", desc:"Browse our template library as a starting shape, or start from a blank page if nothing quite fits. Either way, it begins with what you want to say." },
-    { n:"02", title:"We help you shape it",     desc:"Your words, your images, your voice. We handle the code and the craft — you stay focused on the story itself." },
+    { n:"01", title:"Tell us about your business", desc:"Browse our template library as a starting point, or start from a blank page if nothing quite fits. Either way, it begins with what your business needs." },
+    { n:"02", title:"We build it with you",     desc:"Your branding, your content, your goals. We handle the code and the craft — you stay focused on running your business." },
     { n:"03", title:"It goes live in days",       desc:"We deploy, test on mobile, and hand you a site that works. No waiting weeks for 'revisions.'" },
   ];
   return (
@@ -958,7 +959,7 @@ function ContactPage({ onNavigate, prefilledBusiness }) {
                 { icon: Mail,          label: "Email",    value: "contact@lcn254.site", href: "mailto:contact@lcn254.site", color: T },
                 { icon: Phone,         label: "Call",     value: "+254 700 000 000", href: "tel:+254700000000", color: T },
                 { icon: Clock,         label: "Response", value: "Usually 2–4 hours", href: null, color: null },
-                { icon: MapPin,        label: "Based in", value: "Nairobi, Kenya — working nationwide", href: null, color: null },
+                { icon: MapPin,        label: "Based in", value: "Nairobi, Kenya — serving clients worldwide", href: null, color: null },
               ].map(({ icon: Icon, label, value, href, color }) => (
                 <m.div key={label} whileHover={{ x: 4 }}>
                   {href ? (
@@ -1012,7 +1013,7 @@ function AboutPage({ onNavigate }) {
     { year:"2023", event:"Moved into a structured agency model after seeing the same problems across every industry: no online presence, broken booking flows, no payments." },
     { year:"2024", event:"Built the first version of our template library — industry-specific starting points for SMEs that cut delivery time while maintaining quality. Began taking on larger enterprise and NGO projects." },
     { year:"2025", event:"Began work on a suite of small internal tools for the same SME clients — starting with financial document generation." },
-    { year:"2026", event:"LCN254 today — a focused agency doing one thing well: fast, reliable websites for Kenyan businesses." },
+    { year:"2026", event:"LCN254 today — a focused agency doing one thing well: fast, reliable websites for businesses in Kenya and around the world." },
   ];
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
@@ -1024,11 +1025,11 @@ function AboutPage({ onNavigate }) {
               <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>About LCN254</span>
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Human beings are{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">storytellers.</span>
+                A professional{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">web agency.</span>
               </h1>
               <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                We put meaning into words, images, and emotion — it's how we always have. A website is just where that meaning lives online. LCN254 is a Nairobi-based web agency that builds the site that tells your story, personal or professional: from a first-time entrepreneur launching a single page to an established enterprise that needs a full digital platform.
+                LCN254 designs and builds modern, high-performance websites that help businesses establish credibility and generate customers online. Founded in Nairobi, we now work with clients in Kenya and around the world — from a first-time entrepreneur launching a single page to an established enterprise that needs a full digital platform.
               </p>
             </div>
           </Reveal>
@@ -1036,7 +1037,7 @@ function AboutPage({ onNavigate }) {
           {/* Stats */}
           <Reveal>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-16 p-6 rounded-2xl border border-white/5 bg-slate-900/40">
-              {[["48+","Sites delivered"],["3–5","Days average"],["SME→Enterprise","Scale we serve"],["254","Kenya dial code"]].map(([v,l]) => (
+              {[["48+","Sites delivered"],["3–5","Days average"],["SME→Enterprise","Scale we serve"],["Worldwide","Clients we serve"]].map(([v,l]) => (
                 <div key={l} className="text-center">
                   <div className="text-3xl font-black mb-1 bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
@@ -1051,10 +1052,10 @@ function AboutPage({ onNavigate }) {
             <Reveal>
               <h2 className="text-2xl font-bold text-white mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>The name is the mission.</h2>
               <div className="space-y-4 text-slate-400 leading-relaxed">
-                <p><span className="text-white font-semibold">LCN254</span> — Local Commerce Network, dial code 254. The name says what we're here to do: help Kenyan businesses compete online.</p>
+                <p><span className="text-white font-semibold">LCN254</span> — Local Commerce Network, dial code 254. The name marks where we started: helping Kenyan businesses compete online. Today, "local" describes our roots, not our reach — we build for clients wherever they are.</p>
                 <p>We started serving small businesses because that's where the gap was biggest. Today, we work with SMEs, corporates, NGOs, and tech startups too — the tools and standards are the same, the scope just grows.</p>
                 <p>We're a small team. You talk directly to the person building your site — no account managers, no handoffs.</p>
-                <p>And underneath all of it, the same belief: every business, every founder, every family has a story worth telling well.</p>
+                <p>And underneath all of it, the same belief: every business — wherever it's based — deserves a website that actually performs.</p>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
@@ -1085,8 +1086,8 @@ function AboutPage({ onNavigate }) {
             <h2 className="text-2xl font-bold text-white mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>What we actually believe.</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-14">
               {[
-                { icon:"⚡", t:"Speed is a feature",    d:"Slow sites lose customers, especially on 4G in Nairobi traffic." },
-                { icon:"📍", t:"Built for this market",  d:"M-Pesa, local pricing, Kenyan business hours — we build for how business works here." },
+                { icon:"⚡", t:"Speed is a feature",    d:"Slow sites lose customers everywhere — especially on mobile networks." },
+                { icon:"🌍", t:"Local roots, global reach",  d:"M-Pesa for Kenyan clients, standard card and international payment options for everyone else." },
                 { icon:"🔒", t:"No lock-in",             d:"You own everything we build. No proprietary CMS, no monthly platform fees." },
                 { icon:"🎯", t:"Honest scoping",         d:"We quote what the work actually costs. No surprise invoices halfway through." },
               ].map(v => (
@@ -1128,17 +1129,22 @@ function AboutPage({ onNavigate }) {
 // ─── Pricing page ──────────────────────────────────────────────────────────────
 const PRICING_TIERS = [
   {
-    id: "launch",
-    name: "Launch",
-    price: "KSh 35,000",
+    id: "starter",
+    name: "Starter",
+    price: "$350",
     unit: "one-time",
-    tagline: "A focused landing page to get a business online fast.",
+    tagline: "A professional online presence for small businesses and individuals.",
+    goodFor: "Barbers, salons, small restaurants, freelancers, personal brands, small shops, local service providers.",
+    example: "Example: Home + About + Services + Contact.",
     features: [
-      "1–5 page site from our template library",
-      "Mobile-first, pre-rendered for fast load",
-      "Contact form to your email",
-      "Free hosting on GitHub Pages + custom domain setup",
-      "3–5 day delivery",
+      "1–3 pages",
+      "Mobile responsive, modern UI/UX",
+      "Contact form + WhatsApp button",
+      "Google Maps embed",
+      "Social media integration",
+      "Basic animations",
+      "1 round of revisions",
+      "7 days of support after launch",
     ],
     cta: "Get started",
     highlight: false,
@@ -1146,34 +1152,118 @@ const PRICING_TIERS = [
   {
     id: "business",
     name: "Business",
-    price: "KSh 75,000",
+    price: "$750",
     unit: "one-time",
-    tagline: "For businesses that take bookings or payments online.",
+    tagline: "A serious website built to generate customers. Our most popular package.",
+    goodFor: "Growing businesses, clinics, hotels, agencies — anyone who needs a site that actively brings in leads.",
+    example: "Everything in Starter, plus a blog/CMS and basic SEO.",
     features: [
-      "Everything in Launch",
-      "Booking / scheduling flow",
-      "M-Pesa (Daraja) and card payment integration",
-      "Basic SEO setup (meta tags, sitemap, structured data)",
-      "1 round of revisions after launch",
-      "5–7 day delivery",
+      "4–7 pages",
+      "Everything in Starter",
+      "Basic SEO setup",
+      "Blog / CMS",
+      "Advanced animations",
+      "Optional online booking",
+      "Google Analytics",
+      "Speed optimization",
+      "2 rounds of revisions",
+      "30 days of support after launch",
     ],
     cta: "Get started",
     highlight: true,
   },
   {
-    id: "enterprise",
-    name: "Enterprise & Custom",
-    price: "Custom quote",
-    unit: "scoped per project",
-    tagline: "Multi-location, portals, or integrations with your existing systems.",
+    id: "premium",
+    name: "Premium",
+    price: "$1,500+",
+    unit: "starting price",
+    tagline: "A fully custom build for companies that need something more.",
+    goodFor: "Established companies, multi-location businesses, and anyone needing e-commerce or custom functionality.",
+    example: "Everything in Business, plus e-commerce, custom UI/UX, and third-party integrations.",
     features: [
+      "8–15+ pages",
       "Everything in Business",
-      "Custom design system, not a template",
-      "Staff/admin portals, multi-location support",
-      "Integrations with your CRM, ERP, or booking systems",
-      "Ongoing maintenance retainer available",
+      "Custom UI/UX",
+      "Premium animations",
+      "Online booking",
+      "E-commerce",
+      "Third-party API integrations",
+      "Advanced SEO",
+      "3 rounds of revisions",
+      "60 days of support after launch",
     ],
     cta: "Talk to us",
+    highlight: false,
+  },
+];
+
+// Full feature comparison — true/false or a short label per tier
+const COMPARISON_ROWS = [
+  { label: "Pages",                     starter: "1–3",   business: "4–7",      premium: "8–15+" },
+  { label: "Mobile responsive",         starter: true,    business: true,       premium: true },
+  { label: "Modern UI/UX",              starter: true,    business: true,       premium: true },
+  { label: "Contact / WhatsApp",        starter: true,    business: true,       premium: true },
+  { label: "Basic SEO",                 starter: false,   business: true,       premium: true },
+  { label: "Google Maps",               starter: true,    business: true,       premium: true },
+  { label: "Social media integration",  starter: true,    business: true,       premium: true },
+  { label: "Contact forms",             starter: true,    business: true,       premium: true },
+  { label: "Animations",                starter: "Basic", business: "Advanced", premium: "Premium" },
+  { label: "CMS / blog",                starter: false,   business: true,       premium: true },
+  { label: "Online booking",            starter: false,   business: "Optional", premium: true },
+  { label: "E-commerce",                starter: false,   business: false,      premium: true },
+  { label: "Analytics",                 starter: false,   business: true,       premium: true },
+  { label: "Speed optimization",        starter: "Basic", business: true,       premium: true },
+  { label: "Revisions",                 starter: "1",     business: "2",        premium: "3" },
+  { label: "Support after launch",      starter: "7 days",business: "30 days",  premium: "60 days" },
+];
+
+function ComparisonCell({ value }) {
+  if (value === true) return <CheckCircle2 className="h-4 w-4 mx-auto" style={{ color: T }} />;
+  if (value === false) return <span className="text-slate-600">—</span>;
+  return <span className="text-slate-300">{value}</span>;
+}
+
+const ADDONS = [
+  { service: "Extra page",             price: "$50–$120" },
+  { service: "Landing page",           price: "$180–$350" },
+  { service: "Logo design",            price: "$120–$350" },
+  { service: "Copywriting",            price: "$70–$230" },
+  { service: "SEO setup",              price: "$120–$350" },
+  { service: "Blog setup",             price: "$120" },
+  { service: "Booking system",         price: "$180–$450" },
+  { service: "WhatsApp integration",   price: "$50" },
+  { service: "Payment integration",    price: "$230–$580" },
+  { service: "M-Pesa integration (Kenya clients)", price: "$350–$800" },
+  { service: "E-commerce",             price: "$900–$2,300+" },
+  { service: "Custom API integration", price: "$350–$1,150+" },
+  { service: "Website maintenance",    price: "$120–$350/month" },
+  { service: "Hosting management",     price: "$70–$230/year" },
+  { service: "Emergency changes",      price: "$50–$120" },
+];
+
+const CARE_PLANS = [
+  {
+    id: "basic-care",
+    name: "Basic Care",
+    price: "$70",
+    unit: "/month",
+    features: ["Hosting management", "Security monitoring", "Backups", "Minor updates", "Technical support"],
+    highlight: false,
+  },
+  {
+    id: "business-care",
+    name: "Business Care",
+    price: "$175",
+    unit: "/month",
+    features: ["Everything in Basic Care", "Content updates", "SEO monitoring", "Performance monitoring", "Monthly website improvements"],
+    highlight: true,
+  },
+  {
+    id: "growth-care",
+    name: "Growth Care",
+    price: "$350",
+    unit: "/month",
+    features: ["Everything in Business Care", "Ongoing SEO", "New landing pages", "Conversion optimization", "Monthly analytics report", "Priority support"],
     highlight: false,
   },
 ];
@@ -1194,12 +1284,13 @@ function PricingPage({ onNavigate }) {
                 <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">no surprises.</span>
               </h1>
               <p className="text-slate-400 max-w-xl mx-auto">
-                Every project is quoted before we start. These are our standard starting prices — final cost depends on scope, content, and integrations.
+                Every project is quoted before we start. These are our standard starting prices, in USD, for clients anywhere in the world — final cost depends on scope, content, and integrations.
               </p>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          {/* Tier cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start mb-16">
             {PRICING_TIERS.map((tier, i) => (
               <Reveal key={tier.id} delay={i * 0.08}>
                 <div className={`relative flex h-full flex-col rounded-2xl border p-7 backdrop-blur-md ${
@@ -1219,6 +1310,8 @@ function PricingPage({ onNavigate }) {
                     </div>
                     <div className="text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">{tier.unit}</div>
                   </div>
+                  <p className="text-xs text-slate-500 mb-2"><span className="text-slate-400 font-semibold">Good for:</span> {tier.goodFor}</p>
+                  <p className="text-xs text-slate-600 mb-5 italic">{tier.example}</p>
                   <ul className="flex-1 space-y-3 mb-7">
                     {tier.features.map(f => (
                       <li key={f} className="flex items-start gap-2.5 text-sm text-slate-300">
@@ -1241,10 +1334,109 @@ function PricingPage({ onNavigate }) {
           </div>
 
           <Reveal>
-            <p className="text-center text-slate-500 text-sm mt-10 max-w-2xl mx-auto">
-              Prices shown are for Kenya-based delivery and standard project scope. Hosting is free on our standard setup; a paid managed-hosting/maintenance retainer is available separately. Get in touch for an exact quote on your project.
+            <p className="text-center text-slate-500 text-sm mb-16 max-w-2xl mx-auto">
+              For particularly complex or multi-location websites, quotes typically range from <span className="text-slate-300">$2,500 to $7,000+</span>. Hosting is free on our standard setup. Get in touch for an exact quote on your project.
             </p>
           </Reveal>
+
+          {/* Full comparison table */}
+          <Reveal>
+            <div className="mb-20">
+              <h2 className="text-2xl font-bold text-white mb-6 text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Compare packages
+              </h2>
+              <div className="overflow-x-auto rounded-2xl border border-white/10">
+                <table className="w-full text-sm min-w-[560px]">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-slate-900/60">
+                      <th className="text-left font-semibold text-slate-400 px-5 py-4">Feature</th>
+                      <th className="text-center font-semibold text-white px-5 py-4">Starter</th>
+                      <th className="text-center font-semibold px-5 py-4" style={{ color: T }}>Business</th>
+                      <th className="text-center font-semibold text-white px-5 py-4">Premium</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {COMPARISON_ROWS.map((row, i) => (
+                      <tr key={row.label} className={i % 2 === 0 ? "bg-slate-900/20" : "bg-transparent"}>
+                        <td className="px-5 py-3.5 text-slate-300 border-t border-white/5">{row.label}</td>
+                        <td className="px-5 py-3.5 text-center border-t border-white/5"><ComparisonCell value={row.starter} /></td>
+                        <td className="px-5 py-3.5 text-center border-t border-white/5"><ComparisonCell value={row.business} /></td>
+                        <td className="px-5 py-3.5 text-center border-t border-white/5"><ComparisonCell value={row.premium} /></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Add-ons */}
+          <Reveal>
+            <div className="mb-20">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Add-ons
+                </h2>
+                <p className="text-slate-400 text-sm max-w-lg mx-auto">Extend any package with exactly what you need, without paying for a bigger tier than you need.</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl mx-auto">
+                {ADDONS.map(a => (
+                  <div key={a.service} className="flex items-center justify-between rounded-xl border border-white/10 bg-slate-900/40 px-5 py-3.5">
+                    <span className="text-sm text-slate-300">{a.service}</span>
+                    <span className="text-sm font-semibold text-white font-mono">{a.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Website Care Plans */}
+          <Reveal>
+            <div className="text-center mb-10">
+              <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>After launch</span>
+              <h2 className="text-3xl font-bold tracking-tight text-white mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Website Care Plans
+              </h2>
+              <p className="text-slate-400 max-w-xl mx-auto text-sm">Keep your site fast, secure, and up to date with an ongoing monthly plan — optional, cancel anytime.</p>
+            </div>
+          </Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            {CARE_PLANS.map((plan, i) => (
+              <Reveal key={plan.id} delay={i * 0.08}>
+                <div className={`relative flex h-full flex-col rounded-2xl border p-7 backdrop-blur-md ${
+                  plan.highlight ? "border-[#1AA3B0]/50 bg-slate-900/70" : "border-white/10 bg-slate-900/40"
+                }`}>
+                  {plan.highlight && (
+                    <span className="absolute -top-3 left-7 rounded-full px-3 py-1 text-[11px] font-bold text-slate-950"
+                      style={{ background: `linear-gradient(135deg,${T},${P})` }}>
+                      Recommended
+                    </span>
+                  )}
+                  <h3 className="text-lg font-bold text-white mb-4">{plan.name}</h3>
+                  <div className="mb-6 flex items-baseline gap-1">
+                    <span className="text-3xl font-black text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{plan.price}</span>
+                    <span className="text-sm text-slate-500">{plan.unit}</span>
+                  </div>
+                  <ul className="flex-1 space-y-3 mb-7">
+                    {plan.features.map(f => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-slate-300">
+                        <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" style={{ color: T }} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    onClick={() => onNavigate("#contact")}
+                    className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
+                      plan.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
+                    }`}
+                    style={plan.highlight ? { background: `linear-gradient(135deg,${T},${P})` } : {}}>
+                    Get started
+                  </m.button>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
       <Footer onNavigate={onNavigate} />
@@ -1416,7 +1608,7 @@ function WelcomeSplash({ onDone }) {
           Welcome to{" "}
           <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">LCN254</span>
         </h1>
-        <p className="text-slate-400 max-w-xs">Human beings are storytellers. Let's tell yours — personal or professional.</p>
+        <p className="text-slate-400 max-w-xs">We design and build modern, high-performance websites that help businesses establish credibility and generate customers online.</p>
         <div className="mt-10 w-48 h-0.5 bg-slate-800 rounded-full overflow-hidden">
           <m.div className="h-full rounded-full"
             style={{ background: `linear-gradient(90deg,${T},${P})` }}
