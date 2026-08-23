@@ -1245,7 +1245,7 @@ const CARE_PLANS = [
   {
     id: "basic-care",
     name: "Basic Care",
-    price: "$70",
+    price: "$15",
     unit: "/month",
     features: ["Hosting management", "Security monitoring", "Backups", "Minor updates", "Technical support"],
     highlight: false,
@@ -1253,7 +1253,7 @@ const CARE_PLANS = [
   {
     id: "business-care",
     name: "Business Care",
-    price: "$175",
+    price: "$100",
     unit: "/month",
     features: ["Everything in Basic Care", "Content updates", "SEO monitoring", "Performance monitoring", "Monthly website improvements"],
     highlight: true,
