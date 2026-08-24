@@ -14,6 +14,14 @@ const T = "#1AA3B0";  // teal
 const P = "#F0409A";  // pink
 const BG = "from-[#1AA3B0] to-[#F0409A]";
 
+// useLayoutEffect reads real DOM geometry synchronously before paint, which
+// is exactly right in the browser but has no meaning during SSR (there's no
+// DOM to measure, and React warns because effects never actually run during
+// renderToString anyway). This swaps to a plain useEffect on the server so
+// the SSR pass is silent, while the browser still gets the paint-flash-free
+// useLayoutEffect behavior once hydrated.
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 // ─── Page transition wrapper ─────────────────────────────────────────────────
 const pageVariants = {
   initial: { opacity: 0, filter: "blur(8px)", scale: 0.98 },
@@ -129,30 +137,30 @@ function Nav({ onNavigate, route }) {
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent" }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-12">
-        <button onClick={() => onNavigate("/")} className="flex items-center gap-2.5">
+        <a href="/" onClick={(e) => { e.preventDefault(); onNavigate("/"); }} className="flex items-center gap-2.5">
           <img src={`${import.meta.env.BASE_URL}lcn254-logo.jpeg`} alt="LCN254 logo"
             width="36" height="36" fetchpriority="high" decoding="async"
             className="h-9 w-9 rounded-lg object-cover" />
           <span className="font-semibold tracking-tight text-white text-sm">
             LCN<span className="font-mono" style={{ color: T }}>254</span>
           </span>
-        </button>
+        </a>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8 text-sm text-slate-400">
           {links.map(l => (
-            <button key={l.hash} onClick={() => onNavigate(l.hash)}
+            <a key={l.hash} href={l.hash} onClick={(e) => { e.preventDefault(); onNavigate(l.hash); }}
               className={`transition-colors hover:text-white ${route === l.hash ? "text-white font-medium" : ""}`}>
               {l.label}
-            </button>
+            </a>
           ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => onNavigate("/contact")}
+          <a href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
             className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10">
             Get a Quote <ArrowRight className="h-3.5 w-3.5" />
-          </button>
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -174,10 +182,10 @@ function Nav({ onNavigate, route }) {
             className="md:hidden overflow-hidden bg-slate-950/95 border-t border-white/5">
             <div className="px-6 py-4 space-y-3">
               {links.map(l => (
-                <button key={l.hash} onClick={() => { onNavigate(l.hash); setMenuOpen(false); }}
+                <a key={l.hash} href={l.hash} onClick={(e) => { e.preventDefault(); onNavigate(l.hash); setMenuOpen(false); }}
                   className="block text-slate-300 hover:text-white text-sm py-2 w-full text-left">
                   {l.label}
-                </button>
+                </a>
               ))}
             </div>
           </m.div>
@@ -196,8 +204,8 @@ function Footer({ onNavigate }) {
           <p>© {new Date().getFullYear()} LCN254. All rights reserved.</p>
           <div className="flex items-center gap-5 flex-wrap justify-center">
             {[["Templates","/templates"],["Pricing","/pricing"],["Blog","/blog"],["About","/about"],["Contact","/contact"],["FAQ","/faq"],["Terms","/terms"],["Privacy","/privacy"]].map(([l,h]) => (
-              <button key={h} onClick={() => onNavigate(h)}
-                className="transition-colors hover:text-white">{l}</button>
+              <a key={h} href={h} onClick={(e) => { e.preventDefault(); onNavigate(h); }}
+                className="transition-colors hover:text-white">{l}</a>
             ))}
           </div>
         </div>
@@ -303,17 +311,17 @@ function CinematicHero({ onNavigate }) {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <m.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate("/templates")}
+              <m.a whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+                href="/templates" onClick={(e) => { e.preventDefault(); onNavigate("/templates"); }}
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold text-slate-950 shadow-2xl"
                 style={{ background: `linear-gradient(135deg,${T},${P})`, boxShadow: `0 0 40px ${T}40` }}>
                 View Our Work <ArrowRight className="h-5 w-5" />
-              </m.button>
-              <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                onClick={() => onNavigate("/contact")}
+              </m.a>
+              <m.a whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/10">
                 Get a Free Quote
-              </m.button>
+              </m.a>
             </div>
 
             {/* Stats */}
@@ -530,10 +538,10 @@ function TemplateTeaserStrip({ onNavigate }) {
                 Every business needs the right foundation.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/templates")}
+            <m.a whileHover={{ scale: 1.02 }} href="/templates" onClick={(e) => { e.preventDefault(); onNavigate("/templates"); }}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               View all templates <ChevronRight className="h-4 w-4" />
-            </m.button>
+            </m.a>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -541,16 +549,15 @@ function TemplateTeaserStrip({ onNavigate }) {
             const c = GLOW[t.color];
             return (
               <Reveal key={t.id} delay={i * 0.07}>
-                <m.div whileHover={{ y: -3 }}
-                  className={`group rounded-2xl border border-white/10 bg-slate-900/40 p-5 backdrop-blur-md cursor-pointer transition-colors ${c.ring}`}
-                  onClick={() => onNavigate("/templates")}>
+                <m.a whileHover={{ y: -3 }} href="/templates" onClick={(e) => { e.preventDefault(); onNavigate("/templates"); }}
+                  className={`group block rounded-2xl border border-white/10 bg-slate-900/40 p-5 backdrop-blur-md cursor-pointer transition-colors ${c.ring}`}>
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${c.glow} bg-opacity-20`}
                     style={{ background: `rgba(26,163,176,0.12)` }}>
                     <t.icon className={`h-5 w-5 ${c.text}`} />
                   </div>
                   <h3 className="font-semibold text-white text-sm mb-1">{t.name}</h3>
                   <p className="text-slate-500 text-xs">{t.features[0]} · {t.features[1]}</p>
-                </m.div>
+                </m.a>
               </Reveal>
             );
           })}
@@ -579,21 +586,21 @@ function PricingTeaserStrip({ onNavigate }) {
                 No surprise invoices.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/pricing")}
+            <m.a whileHover={{ scale: 1.02 }} href="/pricing" onClick={(e) => { e.preventDefault(); onNavigate("/pricing"); }}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               See full pricing <ChevronRight className="h-4 w-4" />
-            </m.button>
+            </m.a>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {rows.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.07}>
-              <m.button whileHover={{ y: -3 }} onClick={() => onNavigate("/pricing")}
-                className="w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md hover:border-white/20 transition-colors">
+              <m.a whileHover={{ y: -3 }} href="/pricing" onClick={(e) => { e.preventDefault(); onNavigate("/pricing"); }}
+                className="block w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md hover:border-white/20 transition-colors">
                 <h3 className="font-semibold text-white mb-1">{r.name}</h3>
                 <div className="text-xl font-black text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{r.price}</div>
                 <p className="text-slate-500 text-xs">{r.desc}</p>
-              </m.button>
+              </m.a>
             </Reveal>
           ))}
         </div>
@@ -682,25 +689,25 @@ function BlogTeaserStrip({ onNavigate }) {
                 Tech news & business insights.
               </h2>
             </div>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/blog")}
+            <m.a whileHover={{ scale: 1.02 }} href="/blog" onClick={(e) => { e.preventDefault(); onNavigate("/blog"); }}
               className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
               Read all articles <ChevronRight className="h-4 w-4" />
-            </m.button>
+            </m.a>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {previews.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.07}>
-              <m.button whileHover={{ y: -3 }}
-                onClick={() => onNavigate(`/blog/${p.slug}`)}
-                className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
+              <m.a whileHover={{ y: -3 }}
+                href={`/blog/${p.slug}`} onClick={(e) => { e.preventDefault(); onNavigate(`/blog/${p.slug}`); }}
+                className="group block w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
                 <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }} />
                 <div className="p-5">
                   <span className="text-xs font-semibold" style={{ color: p.color }}>{p.category}</span>
                   <h3 className="mt-2 font-semibold text-sm text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">{p.title}</h3>
                   <p className="mt-3 text-xs text-slate-500">{p.date}</p>
                 </div>
-              </m.button>
+              </m.a>
             </Reveal>
           ))}
         </div>
@@ -750,11 +757,11 @@ function TemplateCard({ template, onDeploy }) {
                 Demo on request
               </span>
             )}
-            <m.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-              onClick={() => onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id])}
+            <m.a whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              href="/contact" onClick={(e) => { e.preventDefault(); onDeploy(TEMPLATE_TO_BUSINESS_TYPE[template.id]); }}
               className={`inline-flex flex-1 items-center justify-center gap-1 rounded-xl bg-gradient-to-r px-3 py-2.5 text-xs font-semibold text-slate-950 ${c.gradient}`}>
               <Rocket className="h-3.5 w-3.5" />Deploy This
-            </m.button>
+            </m.a>
           </div>
         </div>
       </div>
@@ -796,7 +803,7 @@ function TemplatesPage({ onNavigate, onDeploy }) {
   // synchronously before the browser paints — useEffect runs after paint,
   // which would show the pill flash at its stale position for a frame
   // before snapping to the correct spot on every tab click.
-  useLayoutEffect(() => { measurePill(); }, [measurePill]);
+  useIsomorphicLayoutEffect(() => { measurePill(); }, [measurePill]);
 
   // The tab row uses flex-wrap, so it can reflow on window resize —
   // recompute so the pill doesn't go stale after a resize.
@@ -1107,15 +1114,15 @@ function AboutPage({ onNavigate }) {
               <h2 className="text-2xl font-bold text-white mb-3">Ready to build something?</h2>
               <p className="text-slate-400 mb-6">Browse the templates, pick what fits, and get in touch.</p>
               <div className="flex items-center justify-center gap-4 flex-wrap">
-                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/templates")}
+                <m.a whileHover={{ scale: 1.02 }} href="/templates" onClick={(e) => { e.preventDefault(); onNavigate("/templates"); }}
                   className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
                   style={{ background: `linear-gradient(135deg,${T},${P})` }}>
                   Browse Templates <ArrowRight className="h-4 w-4" />
-                </m.button>
-                <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/contact")}
+                </m.a>
+                <m.a whileHover={{ scale: 1.02 }} href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
                   Get in Touch
-                </m.button>
+                </m.a>
               </div>
             </div>
           </Reveal>
@@ -1320,14 +1327,14 @@ function PricingPage({ onNavigate }) {
                       </li>
                     ))}
                   </ul>
-                  <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    onClick={() => onNavigate("/contact")}
-                    className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
+                  <m.a whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
+                    className={`block text-center w-full rounded-xl py-3 text-sm font-bold transition-colors ${
                       tier.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
                     }`}
                     style={tier.highlight ? { background: `linear-gradient(135deg,${T},${P})` } : {}}>
                     {tier.cta}
-                  </m.button>
+                  </m.a>
                 </div>
               </Reveal>
             ))}
@@ -1425,14 +1432,14 @@ function PricingPage({ onNavigate }) {
                       </li>
                     ))}
                   </ul>
-                  <m.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    onClick={() => onNavigate("/contact")}
-                    className={`w-full rounded-xl py-3 text-sm font-bold transition-colors ${
+                  <m.a whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                    href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
+                    className={`block text-center w-full rounded-xl py-3 text-sm font-bold transition-colors ${
                       plan.highlight ? "text-slate-950" : "text-white border border-white/15 hover:bg-white/5"
                     }`}
                     style={plan.highlight ? { background: `linear-gradient(135deg,${T},${P})` } : {}}>
                     Get started
-                  </m.button>
+                  </m.a>
                 </div>
               </Reveal>
             ))}
@@ -1597,15 +1604,15 @@ function NotFoundPage({ onNavigate }) {
           </h1>
           <p className="text-slate-400 mb-8">The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/")}
+            <m.a whileHover={{ scale: 1.02 }} href="/" onClick={(e) => { e.preventDefault(); onNavigate("/"); }}
               className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
               style={{ background: `linear-gradient(135deg,${T},${P})` }}>
               Back to Home
-            </m.button>
-            <m.button whileHover={{ scale: 1.02 }} onClick={() => onNavigate("/contact")}
+            </m.a>
+            <m.a whileHover={{ scale: 1.02 }} href="/contact" onClick={(e) => { e.preventDefault(); onNavigate("/contact"); }}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
               Contact Us
-            </m.button>
+            </m.a>
           </div>
         </div>
       </div>
