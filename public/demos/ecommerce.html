@@ -3,246 +3,44 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kindred Supply Co. — Everyday Carry, Made to Last</title>
-<meta name="description" content="Bags, tools, and everyday carry built to outlast the trend cycle. Free delivery in Nairobi over KSh 5,000." />
-<link rel="canonical" href="https://lcn254.site/demos/ecommerce.html" />
-<meta name="robots" content="index, follow" />
+<title>Kindred Supply Co. — E-commerce (Concept Demo)</title>
+<meta name="description" content="Concept demo template by LCN254 — e-commerce landing page." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#ffffff; --ink:#111111; --ink-dim:#6b6b6b;
-    --coral:#ff3b5c; --lime:#c6f135; --line:#eaeaea;
-    --display:'Archivo Black',sans-serif; --body:'Inter',sans-serif;
-  }
+  :root{--ink:#111111;--ink-dim:#6b6b6b;--coral:#ff3b5c;--lime:#c6f135;--line:#eaeaea;}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:70px}
-  a{color:inherit}
-  ::selection{background:var(--coral);color:#fff}
-  :focus-visible{outline:2px solid var(--coral);outline-offset:3px}
+  body{background:#fff;color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5}
   .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
-
-  /* MARQUEE */
-  .marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:9px 0}
-  .marquee-track{display:inline-flex;gap:40px;animation:scroll 22s linear infinite}
-  .marquee span{font-family:var(--display);font-size:.78rem;letter-spacing:.04em;display:inline-flex;align-items:center;gap:40px}
-  .marquee span::after{content:"●";color:var(--lime);margin-left:40px}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
-
-  header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:2px solid var(--ink)}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,60px)}
-  .logo{font-family:var(--display);font-size:1.15rem;letter-spacing:-.01em}
-  .navlinks{display:none;gap:30px;font-size:.92rem;font-weight:600;list-style:none}
-  @media(min-width:800px){.navlinks{display:flex}}
-  .navlinks a{text-decoration:none}
-  .cart-btn{position:relative;background:var(--ink);color:#fff;border:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .cart-count{position:absolute;top:-4px;right:-4px;background:var(--coral);color:#fff;font-size:.65rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-
-  /* HERO */
+  .badge{position:fixed;top:14px;right:14px;z-index:99;background:var(--coral);color:#fff;font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:100px;letter-spacing:.05em}
+  header{border-bottom:2px solid var(--ink);padding:18px clamp(20px,5vw,60px)}
+  .logo{font-family:'Archivo Black',sans-serif;font-size:1.1rem}
   .hero{padding:clamp(40px,7vw,70px) 0}
-  .hero-grid{display:grid;grid-template-columns:1fr;gap:14px}
-  @media(min-width:820px){.hero-grid{grid-template-columns:1.3fr .7fr}}
-  .hero-main{background:var(--ink);color:#fff;border-radius:18px;padding:clamp(32px,5vw,54px);display:flex;flex-direction:column;justify-content:flex-end;min-height:420px;position:relative;overflow:hidden}
-  .hero-main::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:var(--lime);border-radius:50%;opacity:.9}
-  .hero-main::after{content:"";position:absolute;bottom:-80px;left:-40px;width:180px;height:180px;background:var(--coral);border-radius:50%;opacity:.85}
-  .hero-badge{position:relative;z-index:1;background:var(--lime);color:var(--ink);font-size:.78rem;font-weight:800;padding:6px 12px;border-radius:100px;display:inline-block;width:fit-content;margin-bottom:18px}
-  .hero-main h1{position:relative;z-index:1;font-family:var(--display);font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.05;max-width:14ch;margin-bottom:16px}
-  .hero-main p{position:relative;z-index:1;max-width:38ch;opacity:.85;margin-bottom:22px}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;padding:14px 26px;border-radius:100px;text-decoration:none;transition:.15s;border:none;cursor:pointer;position:relative;z-index:1}
-  .btn-primary{background:var(--coral);color:#fff}
-  .btn-primary:hover{transform:translateY(-2px)}
-  .btn-light{background:#fff;color:var(--ink)}
-
-  .side-card{border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:space-between}
-  .side-card.a{background:var(--lime)}
-  .side-card.b{background:#f3f3f3;margin-top:14px}
-  .side-card h3{font-family:var(--display);font-size:1.2rem;margin-bottom:8px;line-height:1.15}
-  .side-card p{font-size:.85rem;color:var(--ink);opacity:.75}
-  .side-stack{display:flex;flex-direction:column}
-
-  /* PRODUCT GRID */
-  .products{padding:clamp(40px,7vw,70px) 0}
-  .products-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:30px;flex-wrap:wrap;gap:16px}
-  .products-head h2{font-family:var(--display);font-size:clamp(1.6rem,3.5vw,2.2rem)}
-  .filter-pills{display:flex;gap:8px;flex-wrap:wrap}
-  .pill{font-size:.82rem;font-weight:600;border:1.5px solid var(--line);padding:8px 16px;border-radius:100px;background:#fff;cursor:pointer}
-  .pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
-  .card{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s}
-  .card:hover{border-color:var(--ink);transform:translateY(-4px)}
-  .card-img{aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.7rem;color:rgba(0,0,0,.2)}
-  .card-img.c1{background:linear-gradient(135deg,#ffe1e8,#ffc2d1)}
-  .card-img.c2{background:linear-gradient(135deg,#eaf7c9,#d4f28a)}
-  .card-img.c3{background:linear-gradient(135deg,#e4e9ff,#c7d2ff)}
-  .card-img.c4{background:linear-gradient(135deg,#fff3d6,#ffe19c)}
-  .badge{position:absolute;top:12px;left:12px;background:var(--ink);color:#fff;font-size:.66rem;font-weight:700;padding:5px 10px;border-radius:100px;text-transform:uppercase}
-  .card-body{padding:16px}
-  .card-body .cat{font-size:.72rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-  .card-body h3{font-size:1rem;font-weight:700;margin:5px 0 8px}
-  .card-body .price-row{display:flex;justify-content:space-between;align-items:center}
-  .card-body .price{font-weight:800}
-  .add-btn{background:var(--ink);color:#fff;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.1rem;line-height:1}
-  .add-btn:hover{background:var(--coral)}
-
-  /* PAYMENT STRIP */
-  .payments{padding:clamp(40px,7vw,60px) 0;border-top:2px solid var(--ink)}
-  .pay-grid{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
-  .pay-grid h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,1.9rem);max-width:16ch}
-  .pay-badges{display:flex;gap:10px;flex-wrap:wrap}
-  .pay-badge{border:1.5px solid var(--line);border-radius:10px;padding:10px 18px;font-weight:700;font-size:.85rem}
-
-  footer{border-top:2px solid var(--ink);padding:44px 0 90px}
-  .foot-grid{display:grid;grid-template-columns:1fr;gap:24px}
-  @media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
-  footer h3{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
-  footer p{font-size:.9rem;color:var(--ink-dim)}
-  .fine{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-  /* STICKY CART BAR */
-  .cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;z-index:50;border-top:2px solid var(--ink)}
-  .cart-bar-inner{max-width:1200px;margin:0 auto;padding:14px clamp(20px,5vw,60px);display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .cart-bar-info{display:flex;align-items:center;gap:12px;font-size:.9rem}
-  .cart-bar-info b{color:var(--lime)}
-  .cart-bar .btn-primary{padding:11px 22px}
+  .hero-main{background:var(--ink);color:#fff;border-radius:18px;padding:clamp(32px,5vw,54px);min-height:300px}
+  .hero-main h1{font-family:'Archivo Black',sans-serif;font-size:clamp(2rem,5vw,3rem);max-width:14ch;margin-bottom:16px}
+  .hero-main p{max-width:38ch;opacity:.85}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;padding:40px 0}
+  .card{border:1.5px solid var(--line);border-radius:14px;padding:16px}
+  .card h3{margin:8px 0}
+  footer{border-top:2px solid var(--ink);padding:34px 0;text-align:center;color:var(--ink-dim);font-size:.85rem}
 </style>
 </head>
 <body>
-
-<div class="marquee">
-  <div class="marquee-track">
-    <span>FREE DELIVERY IN NAIROBI OVER KSH 5,000</span>
-    <span>NEW: THE FIELD TOTE, BACK IN STOCK</span>
-    <span>M-PESA & CARD ACCEPTED AT CHECKOUT</span>
-    <span>FREE DELIVERY IN NAIROBI OVER KSH 5,000</span>
-    <span>NEW: THE FIELD TOTE, BACK IN STOCK</span>
-    <span>M-PESA & CARD ACCEPTED AT CHECKOUT</span>
-  </div>
-</div>
-
-<header>
-  <nav class="nav">
-    <a href="#top" class="logo">KINDRED SUPPLY CO.</a>
-    <ul class="navlinks">
-      <li><a href="#shop">Shop All</a></li>
-      <li><a href="#shop">Bestsellers</a></li>
-      <li><a href="#payments">Delivery</a></li>
-    </ul>
-    <button class="cart-btn" aria-label="Cart">
-      🛍️<span class="cart-count">3</span>
-    </button>
-  </nav>
-</header>
-
-<main id="top">
-  <section class="hero wrap">
-    <div class="hero-grid">
-      <div class="hero-main">
-        <span class="hero-badge">NEW SEASON</span>
-        <h1>Gear that outlasts the trend cycle.</h1>
-        <p>Canvas bags, steel tools, and everyday carry built by hand in small batches. No drops, no hype — just things that last.</p>
-        <a href="#shop" class="btn btn-light">Shop the Collection</a>
-      </div>
-      <div class="side-stack">
-        <div class="side-card a">
-          <h3>Bestseller</h3>
-          <p>The Field Tote — sold out three times, restocked this week.</p>
-        </div>
-        <div class="side-card b">
-          <h3>Free Delivery</h3>
-          <p>On all Nairobi orders over KSh 5,000.</p>
-        </div>
-      </div>
+<div class="badge">CONCEPT DEMO — LCN254</div>
+<header><span class="logo">KINDRED SUPPLY CO.</span></header>
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-main">
+      <h1>Gear that outlasts the trend cycle.</h1>
+      <p>A concept e-commerce landing page built by LCN254 to demonstrate product catalogue and checkout UX patterns. Not a real store.</p>
     </div>
   </section>
-
-  <section class="products wrap" id="shop">
-    <div class="products-head">
-      <h2>Shop All</h2>
-      <div class="filter-pills">
-        <button class="pill active">All</button>
-        <button class="pill">Bags</button>
-        <button class="pill">Tools</button>
-        <button class="pill">Accessories</button>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img c1"><span class="badge">Bestseller</span></div>
-        <div class="card-body">
-          <span class="cat">Bags</span>
-          <h3>The Field Tote</h3>
-          <div class="price-row"><span class="price">KSh 4,200</span><button class="add-btn">+</button></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img c2"></div>
-        <div class="card-body">
-          <span class="cat">Tools</span>
-          <h3>Steel Utility Knife</h3>
-          <div class="price-row"><span class="price">KSh 2,800</span><button class="add-btn">+</button></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img c3"><span class="badge">New</span></div>
-        <div class="card-body">
-          <span class="cat">Bags</span>
-          <h3>Weekender Duffel</h3>
-          <div class="price-row"><span class="price">KSh 6,900</span><button class="add-btn">+</button></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img c4"></div>
-        <div class="card-body">
-          <span class="cat">Accessories</span>
-          <h3>Leather Card Sleeve</h3>
-          <div class="price-row"><span class="price">KSh 1,500</span><button class="add-btn">+</button></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="payments wrap" id="payments">
-    <div class="pay-grid">
-      <h2>Checkout in under a minute.</h2>
-      <div class="pay-badges">
-        <span class="pay-badge">M-Pesa</span>
-        <span class="pay-badge">Visa / Mastercard</span>
-        <span class="pay-badge">PayPal</span>
-      </div>
-    </div>
+  <section class="grid">
+    <div class="card"><h3>The Field Tote</h3><span>KSh 4,200</span></div>
+    <div class="card"><h3>Steel Utility Knife</h3><span>KSh 2,800</span></div>
+    <div class="card"><h3>Weekender Duffel</h3><span>KSh 6,900</span></div>
   </section>
 </main>
-
-<footer class="wrap">
-  <div class="foot-grid">
-    <div>
-      <h3>Kindred Supply Co.</h3>
-      <p style="max-width:34ch">Small-batch goods, made and shipped from Nairobi.</p>
-    </div>
-    <div>
-      <h3>Shop</h3>
-      <p>All Products<br>Bestsellers<br>New Arrivals</p>
-    </div>
-    <div>
-      <h3>Support</h3>
-      <p>orders@kindredsupply.co.ke<br>+254 700 000 000</p>
-    </div>
-  </div>
-  <div class="fine">
-    <span>© 2026 Kindred Supply Co.</span>
-    <span>Template by lcn254</span>
-  </div>
-</footer>
-
-<div class="cart-bar">
-  <div class="cart-bar-inner">
-    <div class="cart-bar-info">🛍️ <span><b>3 items</b> in cart · KSh 8,900</span></div>
-    <button class="btn btn-primary">Checkout</button>
-  </div>
-</div>
-
+<footer>Concept demo template · Built by LCN254 · Not a real store</footer>
 </body>
 </html>

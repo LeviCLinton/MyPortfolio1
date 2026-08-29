@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ember & Co. — Wood-Fired Grill & Wine, Nairobi</title>
-<meta name="description" content="Wood-fired grill and natural wine in Nairobi. Reserve a table at Ember & Co." />
-<link rel="canonical" href="https://lcn254.site/demos/restaurant.html" />
-<meta name="robots" content="index, follow" />
+<title>Ember & Co. — Wood-Fired Grill & Wine, Nairobi (Concept Demo)</title>
+<meta name="description" content="Concept demo template by LCN254 — wood-fired grill and natural wine landing page." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,266 +15,46 @@
     --display:'Fraunces',serif; --body:'Work Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
-  img,svg{display:block;max-width:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5}
   a{color:inherit}
-  ::selection{background:var(--rust);color:var(--ink)}
-  :focus-visible{outline:2px solid var(--rust);outline-offset:3px}
-
   .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
-  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rust)}
-
-  header{position:sticky;top:0;z-index:40;background:rgba(28,21,18,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .badge{position:fixed;top:14px;right:14px;z-index:99;background:#f5b942;color:#1c1512;font-family:var(--mono);font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:100px;letter-spacing:.05em}
+  header{position:sticky;top:0;z-index:40;background:rgba(28,21,18,.9);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,64px)}
-  .logo{font-family:var(--display);font-size:1.35rem;font-weight:500;letter-spacing:.01em}
-  .logo span{color:var(--rust);font-style:italic}
-  .navlinks{display:flex;gap:32px;font-size:.92rem;list-style:none}
-  .navlinks a{text-decoration:none;color:var(--ink-dim);transition:color .2s}
-  .navlinks a:hover{color:var(--ink)}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:11px 20px;border-radius:2px;text-decoration:none;transition:transform .15s, background .2s}
-  .btn-primary{background:var(--rust);color:#fff}
-  .btn-primary:hover{background:#c25a35;transform:translateY(-1px)}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
-  .btn-ghost:hover{border-color:var(--rust)}
-  .navcta{display:none}
-  @media(min-width:760px){.navcta{display:inline-flex}}
-  .navlinks{display:none}
-  @media(min-width:760px){.navlinks{display:flex}}
-
-  /* HERO */
-  .hero{padding:clamp(56px,10vw,110px) 0 clamp(60px,8vw,90px)}
-  .hero-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center}
-  @media(min-width:920px){.hero-grid{grid-template-columns:1.15fr .85fr}}
-  .hero h1{font-family:var(--display);font-weight:500;font-style:italic;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;margin:18px 0 22px;letter-spacing:-.01em}
+  .logo{font-family:var(--display);font-size:1.3rem}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:11px 20px;border-radius:2px;text-decoration:none;background:var(--rust);color:#fff}
+  .hero{padding:clamp(56px,10vw,110px) 0}
+  .hero h1{font-family:var(--display);font-weight:500;font-style:italic;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;margin:18px 0 22px}
   .hero h1 em{font-style:normal;color:var(--rust)}
   .hero p{max-width:46ch;color:var(--ink-dim);font-size:1.05rem}
-  .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
-
-  /* TICKET CARD */
-  .ticket{
-    position:relative;background:var(--bg-2);border:1px solid var(--line);
-    padding:28px 26px 34px;transform:rotate(-2.2deg);
-    box-shadow:0 30px 60px -20px rgba(0,0,0,.6);
-  }
-  .ticket::before{
-    content:"";position:absolute;top:-9px;left:0;right:0;height:18px;
-    background-image:radial-gradient(circle 6px at 20px 9px, var(--bg) 6px, transparent 6.5px);
-    background-size:36px 18px;background-repeat:repeat-x;
-  }
-  .ticket::after{
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:14px;background:var(--bg);
-    clip-path:polygon(0 0,4% 100%,8% 0,12% 100%,16% 0,20% 100%,24% 0,28% 100%,32% 0,36% 100%,40% 0,44% 100%,48% 0,52% 100%,56% 0,60% 100%,64% 0,68% 100%,72% 0,76% 100%,80% 0,84% 100%,88% 0,92% 100%,96% 0,100% 100%,100% 0);
-  }
-  .ticket-head{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);border-bottom:1px dashed var(--line);padding-bottom:14px;margin-bottom:16px;display:flex;justify-content:space-between}
-  .ticket-row{display:flex;align-items:baseline;gap:6px;padding:9px 0}
-  .ticket-row .name{font-family:var(--display);font-size:1.02rem;white-space:nowrap}
-  .ticket-row .leader{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px)}
-  .ticket-row .price{font-family:var(--mono);font-size:.9rem;color:var(--rust)}
-  .ticket-foot{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:.72rem;color:var(--ink-dim);display:flex;justify-content:space-between;letter-spacing:.06em}
-
-  /* MENU SECTION */
-  .menu{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
-  .menu-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px}
-  .menu-head h2{font-family:var(--display);font-size:clamp(2rem,4vw,2.8rem);font-weight:500}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap}
-  .tab{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--ink-dim);padding:9px 16px;cursor:pointer;transition:.2s}
-  .tab[aria-selected="true"]{border-color:var(--rust);color:var(--rust)}
-  .menu-panel{display:none}
-  .menu-panel.active{display:block}
-  .dish-list{max-width:760px}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rust)}
+  .menu{padding:60px 0;border-top:1px solid var(--line)}
   .dish{display:flex;align-items:baseline;gap:10px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .dish-name{font-family:var(--display);font-size:1.15rem;white-space:nowrap}
-  .dish-desc{font-size:.88rem;color:var(--ink-dim);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dish-leader{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-6px);min-width:20px}
-  .dish-price{font-family:var(--mono);color:var(--rust);white-space:nowrap}
-
-  /* ROOM SECTION */
-  .room{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
-  .room-grid{display:grid;grid-template-columns:1fr;gap:40px}
-  @media(min-width:860px){.room-grid{grid-template-columns:1fr 1fr;align-items:center}}
-  .room-art{position:relative;aspect-ratio:4/3;overflow:hidden;background:
-    radial-gradient(ellipse at 30% 20%, #4a2a1b, transparent 55%),
-    radial-gradient(ellipse at 75% 80%, #5c3420, transparent 60%),
-    linear-gradient(160deg,#2a1f18,#160f0c);
-  }
-  .room-art svg{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
-  .room h2{font-family:var(--display);font-size:clamp(2rem,4vw,2.6rem);font-weight:500;margin-bottom:16px}
-  .room p{color:var(--ink-dim);max-width:52ch;margin-bottom:14px}
-
-  /* RESERVE */
-  .reserve{padding:clamp(50px,8vw,90px) 0;border-top:1px solid var(--line)}
-  .reserve-grid{display:grid;grid-template-columns:1fr;gap:40px}
-  @media(min-width:900px){.reserve-grid{grid-template-columns:.9fr 1.1fr}}
-  .reserve h2{font-family:var(--display);font-size:clamp(2rem,4vw,2.6rem);font-weight:500;margin-bottom:14px}
-  .reserve p{color:var(--ink-dim);max-width:40ch}
-  form{background:var(--bg-2);border:1px solid var(--line);padding:32px}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-  @media(max-width:520px){.form-row{grid-template-columns:1fr}}
-  label{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:8px}
-  input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:12px 14px;font-family:var(--body);font-size:.95rem}
-  input:focus,select:focus,textarea:focus{border-color:var(--rust)}
-  textarea{resize:vertical;min-height:80px}
-  .full{grid-column:1/-1}
-  form button{margin-top:6px;width:100%;justify-content:center}
-
-  footer{border-top:1px solid var(--line);padding:44px 0 32px}
-  .foot-grid{display:grid;grid-template-columns:1fr;gap:28px}
-  @media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr}}
-  .foot-hours{font-family:var(--mono);font-size:.85rem;color:var(--ink-dim)}
-  .foot-hours div{display:flex;justify-content:space-between;max-width:220px;padding:4px 0;border-bottom:1px dotted var(--line)}
-  footer h3{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin-bottom:14px}
-  .fine{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:var(--ink-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+  .dish-name{font-family:var(--display);font-size:1.15rem}
+  .dish-price{font-family:var(--mono);color:var(--rust);margin-left:auto}
+  footer{border-top:1px solid var(--line);padding:44px 0 32px;text-align:center;color:var(--ink-dim);font-size:.85rem}
 </style>
 </head>
 <body>
-
+<div class="badge">CONCEPT DEMO — LCN254</div>
 <header>
   <nav class="nav">
-    <a href="#top" class="logo">Ember <span>&</span> Co.</a>
-    <ul class="navlinks">
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#room">The Room</a></li>
-      <li><a href="#reserve">Visit</a></li>
-    </ul>
-    <a href="#reserve" class="btn btn-primary navcta">Reserve</a>
+    <span class="logo">Ember <span style="color:var(--rust)">&</span> Co.</span>
+    <a href="#" class="btn">Reserve</a>
   </nav>
 </header>
-
-<main id="top">
+<main>
   <section class="hero wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="eyebrow">Wood-Fired · Kilimani, Nairobi</span>
-        <h1>Come hungry.<br>Leave <em>unhurried.</em></h1>
-        <p>Ember & Co. is a single wood fire, a short list of natural wines, and a room built for the meal that runs long. No tasting menu, no pretense — just food cooked the way it's meant to be.</p>
-        <div class="hero-ctas">
-          <a href="#menu" class="btn btn-primary">View Tonight's Menu</a>
-          <a href="#reserve" class="btn btn-ghost">Reserve a Table</a>
-        </div>
-      </div>
-      <div class="ticket">
-        <div class="ticket-head"><span>Table for Two</span><span>7:30 PM</span></div>
-        <div class="ticket-row"><span class="name">Charred Octopus</span><span class="leader"></span><span class="price">KSh 1,450</span></div>
-        <div class="ticket-row"><span class="name">Bone Marrow</span><span class="leader"></span><span class="price">KSh 980</span></div>
-        <div class="ticket-row"><span class="name">Whole Fire Trout</span><span class="leader"></span><span class="price">KSh 2,100</span></div>
-        <div class="ticket-row"><span class="name">Smoked Aubergine</span><span class="leader"></span><span class="price">KSh 890</span></div>
-        <div class="ticket-foot"><span>NATURAL WINE, BY THE GLASS</span><span>FROM KSh 650</span></div>
-      </div>
-    </div>
+    <span class="eyebrow">Wood-Fired · Concept Demo</span>
+    <h1>Come hungry.<br>Leave <em>unhurried.</em></h1>
+    <p>A concept restaurant landing page built by LCN254 to demonstrate menu presentation, atmosphere, and a fast reservation flow. Not a real business.</p>
   </section>
-
-  <section class="menu wrap" id="menu">
-    <div class="menu-head">
-      <h2>Tonight's Menu</h2>
-      <div class="tabs" role="tablist" aria-label="Menu categories">
-        <button class="tab" role="tab" aria-selected="true" data-panel="starters">Starters</button>
-        <button class="tab" role="tab" aria-selected="false" data-panel="mains">Mains</button>
-        <button class="tab" role="tab" aria-selected="false" data-panel="drinks">Wine & Drinks</button>
-      </div>
-    </div>
-
-    <div class="menu-panel active" id="starters">
-      <div class="dish-list">
-        <div class="dish"><span class="dish-name">Charred Octopus</span><span class="dish-desc">— nduja butter, fennel</span><span class="dish-leader"></span><span class="dish-price">1,450</span></div>
-        <div class="dish"><span class="dish-name">Bone Marrow</span><span class="dish-desc">— parsley gremolata, toast</span><span class="dish-leader"></span><span class="dish-price">980</span></div>
-        <div class="dish"><span class="dish-name">Smoked Aubergine</span><span class="dish-desc">— tahini, pomegranate</span><span class="dish-leader"></span><span class="dish-price">890</span></div>
-        <div class="dish"><span class="dish-name">Burrata</span><span class="dish-desc">— charred peach, basil oil</span><span class="dish-leader"></span><span class="dish-price">1,150</span></div>
-      </div>
-    </div>
-    <div class="menu-panel" id="mains">
-      <div class="dish-list">
-        <div class="dish"><span class="dish-name">Whole Fire Trout</span><span class="dish-desc">— brown butter, capers</span><span class="dish-leader"></span><span class="dish-price">2,100</span></div>
-        <div class="dish"><span class="dish-name">Dry-Aged Sirloin</span><span class="dish-desc">— bone marrow jus, 300g</span><span class="dish-leader"></span><span class="dish-price">3,400</span></div>
-        <div class="dish"><span class="dish-name">Half Chicken</span><span class="dish-desc">— piri piri, lemon</span><span class="dish-leader"></span><span class="dish-price">1,850</span></div>
-        <div class="dish"><span class="dish-name">Charred Cauliflower</span><span class="dish-desc">— whole roasted, chili oil</span><span class="dish-leader"></span><span class="dish-price">1,300</span></div>
-      </div>
-    </div>
-    <div class="menu-panel" id="drinks">
-      <div class="dish-list">
-        <div class="dish"><span class="dish-name">Natural Red, Glass</span><span class="dish-desc">— rotating selection</span><span class="dish-leader"></span><span class="dish-price">650</span></div>
-        <div class="dish"><span class="dish-name">Natural White, Glass</span><span class="dish-desc">— rotating selection</span><span class="dish-leader"></span><span class="dish-price">650</span></div>
-        <div class="dish"><span class="dish-name">Amber Pét-Nat</span><span class="dish-desc">— by the bottle</span><span class="dish-leader"></span><span class="dish-price">3,900</span></div>
-        <div class="dish"><span class="dish-name">Smoked Old Fashioned</span><span class="dish-desc">— house infusion</span><span class="dish-leader"></span><span class="dish-price">1,100</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="room wrap" id="room">
-    <div class="room-grid">
-      <div class="room-art" aria-hidden="true">
-        <svg viewBox="0 0 400 300"><path d="M40 260 Q 90 40 200 40 Q 310 40 360 260" stroke="#b24c2a" stroke-width="1.5" fill="none" opacity=".5"/><circle cx="200" cy="150" r="60" fill="none" stroke="#6b7a4f" stroke-width="1" opacity=".4"/></svg>
-      </div>
-      <div>
-        <h2>Built around one fire</h2>
-        <p>The whole kitchen runs off a single wood hearth — no gas, no shortcuts. Long communal tables, low light, and a room that gets louder as the night goes on.</p>
-        <p>We seat forty. Half the room is walk-in only, first come; the other half you can hold with a reservation below.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="reserve wrap" id="reserve">
-    <div class="reserve-grid">
-      <div>
-        <h2>Reserve a table</h2>
-        <p>Tell us when, and for how many. We'll confirm by SMS within the hour.</p>
-      </div>
-      <form>
-        <div class="form-row">
-          <div><label for="r-name">Name</label><input id="r-name" type="text" required></div>
-          <div><label for="r-phone">Phone</label><input id="r-phone" type="tel" required></div>
-        </div>
-        <div class="form-row">
-          <div><label for="r-date">Date</label><input id="r-date" type="date" required></div>
-          <div><label for="r-party">Party size</label><select id="r-party"><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5+ guests</option></select></div>
-        </div>
-        <div class="form-row">
-          <div class="full"><label for="r-notes">Anything we should know</label><textarea id="r-notes" placeholder="Allergies, occasion, seating preference"></textarea></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Confirm Reservation</button>
-      </form>
-    </div>
+  <section class="menu wrap">
+    <div class="dish"><span class="dish-name">Charred Octopus</span><span class="dish-price">KSh 1,450</span></div>
+    <div class="dish"><span class="dish-name">Bone Marrow</span><span class="dish-price">KSh 980</span></div>
+    <div class="dish"><span class="dish-name">Whole Fire Trout</span><span class="dish-price">KSh 2,100</span></div>
   </section>
 </main>
-
-<footer class="wrap">
-  <div class="foot-grid">
-    <div>
-      <h3>Ember & Co.</h3>
-      <p style="color:var(--ink-dim);max-width:32ch">14 Wood Ave, Kilimani, Nairobi. Walk-ins welcome after 6.</p>
-    </div>
-    <div>
-      <h3>Hours</h3>
-      <div class="foot-hours">
-        <div><span>Tue–Thu</span><span>6pm – 11pm</span></div>
-        <div><span>Fri–Sat</span><span>6pm – 1am</span></div>
-        <div><span>Sun</span><span>1pm – 9pm</span></div>
-        <div><span>Mon</span><span>Closed</span></div>
-      </div>
-    </div>
-    <div>
-      <h3>Contact</h3>
-      <p style="color:var(--ink-dim)">+254 700 000 000<br>hello@emberandco.co.ke</p>
-    </div>
-  </div>
-  <div class="fine">
-    <span>© 2026 Ember & Co.</span>
-    <span>Template by lcn254</span>
-  </div>
-</footer>
-
-<script>
-  const tabs = document.querySelectorAll('.tab');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.setAttribute('aria-selected','false'));
-      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
-      tab.setAttribute('aria-selected','true');
-      document.getElementById(tab.dataset.panel).classList.add('active');
-    });
-  });
-</script>
+<footer>Concept demo template · Built by LCN254 · Not a real restaurant</footer>
 </body>
 </html>
