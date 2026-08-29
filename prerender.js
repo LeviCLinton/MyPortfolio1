@@ -1,17 +1,15 @@
 // Runs after `vite build` (client) and `vite build --ssr` (server).
 //
-// This site is a client-side React SPA, but GitHub Pages is pure static
-// hosting — there's no server to rewrite "/pricing" to the app shell on
-// request. So instead of hash routes (/#pricing) or a single index.html
-// with client-side-only routing (which crawlers and social-preview bots
-// can't reliably see), we generate a REAL static HTML file per route at
-// build time: dist/pricing/index.html, dist/about/index.html, etc.
+// For EVERY real route in the site, this renders <App url="..."/> to a
+// static HTML string, injects it into a copy of dist/index.html with that
+// route's own <title>, meta description, canonical URL and Open Graph tags,
+// and writes it to dist/<route>/index.html.
 //
-// Each file contains the fully server-rendered content for that specific
-// page AND that page's own <title>/meta description/canonical/OG tags --
-// so every route is genuinely crawlable and shareable on its own, with no
-// JavaScript required to see real content. Once the JS bundle loads, React
-// hydrates in place and takes over client-side navigation via pushState.
+// Why per-route directories: GitHub Pages has no server-side rewrites. If we
+// only ever ship one dist/index.html, a direct visit or browser refresh on
+// e.g. /services/ecommerce would 404. Writing a real index.html into
+// dist/services/ecommerce/ makes that URL resolve exactly like a
+// traditional static site, with zero routing tricks required.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,158 +18,130 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, "dist");
 const ssrDir = path.resolve(__dirname, "dist-ssr");
 const SITE = "https://lcn254.site";
-const OG_IMAGE = `${SITE}/lcn254-logo-share.jpeg`;
 
-// — Static route metadata --------------------------------------------------
-const STATIC_ROUTES = [
-  {
-    path: "/",
-    title: "LCN254 — Professional Web Design Agency | Websites for Businesses Worldwide",
-    description: "LCN254 designs and builds modern, high-performance websites that help businesses establish credibility and generate customers online — ready to deploy in days, for clients in Kenya and worldwide.",
-  },
-  {
-    path: "/templates",
-    title: "Templates & Industry Suites | LCN254",
-    description: "Browse LCN254's industry-specific website templates — restaurants, clinics, hotels, logistics, e-commerce and more — with live, interactive demos.",
-  },
-  {
-    path: "/pricing",
-    title: "Pricing | LCN254",
-    description: "Transparent USD pricing for LCN254 websites — Starter, Business and Premium packages, add-ons, and ongoing Website Care Plans.",
-  },
-  {
-    path: "/about",
-    title: "About LCN254 | Professional Web Design Agency",
-    description: "LCN254 is a professional web design agency founded in Nairobi, now designing and building websites for clients in Kenya and around the world.",
-  },
-  {
-    path: "/contact",
-    title: "Contact LCN254 | Start Your Project",
-    description: "Get in touch with LCN254 to start your website project. Tell us what you're building and we'll reply within a few hours.",
-  },
-  {
-    path: "/faq",
-    title: "Frequently Asked Questions | LCN254",
-    description: "Answers to common questions about LCN254's process, pricing, hosting, timelines, and post-launch support.",
-  },
-  {
-    path: "/privacy",
-    title: "Privacy Policy | LCN254",
-    description: "LCN254's privacy policy — how we collect, use, and protect information submitted through our website.",
-  },
-  {
-    path: "/terms",
-    title: "Terms of Service | LCN254",
-    description: "LCN254's terms of service governing website design and development engagements.",
-  },
-  {
-    path: "/blog",
-    title: "Blog | LCN254",
-    description: "Practical articles on web performance, business growth, and technology, from the LCN254 team.",
-  },
+// ─── Data-driven route lists (plain JS, safe to import directly in Node) ───
+const { SERVICES } = await import(path.join(__dirname, "src/data/servicesData.js"));
+const { INDUSTRIES } = await import(path.join(__dirname, "src/data/industriesData.js"));
+const { WORK } = await import(path.join(__dirname, "src/data/workData.js"));
+
+// Blog lives in a .jsx file (not importable directly from plain Node), so
+// its route list is declared here. Keep in sync with src/Blog.jsx slugs.
+const BLOG_ARTICLES = [
+  { slug: "ai-for-everyone-zuckerberg", title: "Zuckerberg: AI & Personal Superintelligence for Everyone", description: "Mark Zuckerberg argues superintelligence should be distributed to all, not concentrated among a few." },
+  { slug: "why-your-business-needs-a-website-2026", title: "Why Your Kenyan Business Needs a Website in 2026", description: "Facebook pages and WhatsApp are not websites. Here's why every serious Kenyan business needs its own domain." },
+  { slug: "mpesa-website-integration-guide", title: "M-Pesa Website Integration Guide 2026", description: "Everything a Kenyan business owner needs to know about adding M-Pesa payments to their website." },
+  { slug: "web-architecture-mistakes-costing-revenue", title: "5 Web Architecture Mistakes Killing Your Conversions", description: "Slow load times, poor mobile UX, and broken funnels are silently draining revenue." },
 ];
 
-// — Helpers: robust content-attribute replacement, format-agnostic --------
-function escapeAttr(str) {
-  return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+/** Every concrete, crawlable URL on the site, with SEO metadata. */
+function buildRoutes() {
+  const routes = [
+    { path: "/", title: "LCN254 — Modern Websites That Grow Your Business", description: "LCN254 designs and builds modern, high-performance websites that help businesses establish credibility and generate customers online.", priority: "1.0" },
+    { path: "/services", title: "Web Design & Development Services | LCN254", description: "Business websites, e-commerce, landing pages, redesigns and maintenance — modern web solutions built around your business.", priority: "0.9" },
+    { path: "/work", title: "Our Work — Website Design & Development Portfolio | LCN254", description: "Explore website and digital experience concepts designed and built by LCN254.", priority: "0.8" },
+    { path: "/industries", title: "Websites by Industry | LCN254", description: "LCN254 designs websites around how your industry actually works.", priority: "0.8" },
+    { path: "/pricing", title: "Pricing | LCN254", description: "Transparent website package and care plan pricing from LCN254.", priority: "0.7" },
+    { path: "/process", title: "Our Process | LCN254", description: "How LCN254 takes a website from discovery to launch and ongoing growth, in seven clear steps.", priority: "0.6" },
+    { path: "/about", title: "About LCN254", description: "LCN254 is a Nairobi-based web agency building fast, functional websites for businesses of every size, in Kenya and internationally.", priority: "0.6" },
+    { path: "/contact", title: "Contact LCN254", description: "Tell LCN254 about your business, get a quote or ask a question, we usually reply within a few hours.", priority: "0.7" },
+    { path: "/faq", title: "Frequently Asked Questions | LCN254", description: "Common questions about working with LCN254, timelines, pricing, hosting, and payments.", priority: "0.5" },
+    { path: "/privacy", title: "Privacy Policy | LCN254", description: "LCN254's privacy policy covering data collection, use, and your rights.", priority: "0.3" },
+    { path: "/blog", title: "Blog | LCN254", description: "Practical articles on how websites help businesses scale and how to stay ahead in a fast-moving digital world.", priority: "0.6" },
+  ];
+
+  for (const s of SERVICES) {
+    routes.push({ path: `/services/${s.slug}`, title: s.metaTitle, description: s.metaDescription, priority: "0.8" });
+  }
+  for (const ind of INDUSTRIES) {
+    routes.push({ path: `/industries/${ind.slug}`, title: ind.metaTitle, description: ind.metaDescription, priority: "0.7" });
+  }
+  for (const w of WORK) {
+    routes.push({ path: `/work/${w.slug}`, title: `${w.name} — Case Study | LCN254`, description: w.shortDesc, priority: "0.6" });
+  }
+  for (const a of BLOG_ARTICLES) {
+    routes.push({ path: `/blog/${a.slug}`, title: `${a.title} | LCN254 Blog`, description: a.description, priority: "0.5" });
+  }
+
+  return routes;
 }
 
-function replaceTag(html, openTag, closeTag, newInner) {
-  const start = html.indexOf(openTag);
-  if (start === -1) return html;
-  const end = html.indexOf(closeTag, start);
-  if (end === -1) return html;
-  return html.slice(0, start + openTag.length) + newInner + html.slice(end);
-}
+function injectSEO(html, { path: routePath, title, description }) {
+  const url = `${SITE}${routePath === "/" ? "" : routePath}`;
 
-function replaceAttrValue(html, identifier, attr, newValue) {
-  const idx = html.indexOf(identifier);
-  if (idx === -1) return html;
-  const attrToken = `${attr}="`;
-  const attrIdx = html.indexOf(attrToken, idx);
-  if (attrIdx === -1) return html;
-  const valueStart = attrIdx + attrToken.length;
-  const valueEnd = html.indexOf('"', valueStart);
-  if (valueEnd === -1) return html;
-  return html.slice(0, valueStart) + escapeAttr(newValue) + html.slice(valueEnd);
-}
-
-function applyMeta(html, route) {
-  const routePath = route.path;
-  const title = route.title;
-  const description = route.description;
-  const url = routePath === "/" ? `${SITE}/` : `${SITE}${routePath}`;
   let out = html;
-  out = replaceTag(out, "<title>", "</title>", title);
-  out = replaceAttrValue(out, 'name="description"', "content", description);
-  out = replaceAttrValue(out, 'rel="canonical"', "href", url);
-  out = replaceAttrValue(out, 'property="og:url"', "content", url);
-  out = replaceAttrValue(out, 'property="og:title"', "content", title);
-  out = replaceAttrValue(out, 'property="og:description"', "content", description);
-  out = replaceAttrValue(out, 'property="og:image"', "content", OG_IMAGE);
-  out = replaceAttrValue(out, 'name="twitter:title"', "content", title);
-  out = replaceAttrValue(out, 'name="twitter:description"', "content", description);
-  out = replaceAttrValue(out, 'name="twitter:image"', "content", OG_IMAGE);
+  out = out.replace(/<title>.*?<\/title>/, `<title>${escapeHtml(title)}</title>`);
+  out = out.replace(
+    /<meta\s+name="description"\s+content=".*?"\s*\/>/,
+    `<meta name="description" content="${escapeHtml(description)}" />`
+  );
+  out = out.replace(
+    /<link\s+rel="canonical"\s+href=".*?"\s*\/>/,
+    `<link rel="canonical" href="${url}" />`
+  );
+  out = out.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${url}" />`);
+  out = out.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${escapeHtml(title)}" />`);
+  out = out.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${escapeHtml(description)}" />`);
+  out = out.replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${escapeHtml(title)}" />`);
+  out = out.replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${escapeHtml(description)}" />`);
+
   return out;
 }
 
-function writeRoute(template, render, route) {
-  const appHtml = render(route.path);
-  const withRoot = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
-  const finalHtml = applyMeta(withRoot, route);
+function escapeHtml(str = "") {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 
-  const outDir = route.path === "/" ? distDir : path.join(distDir, route.path.replace(/^\//, ""));
-  fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, "index.html"), finalHtml);
+function writeRouteFile(routePath, html) {
+  if (routePath === "/") {
+    fs.writeFileSync(path.join(distDir, "index.html"), html);
+    return;
+  }
+  const dir = path.join(distDir, routePath.replace(/^\//, ""));
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, "index.html"), html);
+}
+
+function buildSitemap(routes) {
+  const urls = routes
+    .map(
+      (r) => `<url>
+<loc>${SITE}${r.path === "/" ? "/" : r.path}</loc>
+<changefreq>weekly</changefreq>
+<priority>${r.priority}</priority>
+</url>`
+    )
+    .join("\n");
+  return `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
 async function main() {
-  const mod = await import(path.join(ssrDir, "entry-server.js"));
-  const render = mod.render;
-  const ARTICLES = mod.ARTICLES;
+  const { render } = await import(path.join(ssrDir, "entry-server.js"));
 
-  // Pristine template, read once — every route renders from this same
-  // starting point so per-route replacements never stack on each other.
   const template = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
+  const routes = buildRoutes();
 
-  const blogRoutes = (ARTICLES || []).map((a) => ({
-    path: `/blog/${a.slug}`,
-    title: a.metaTitle || `${a.title} | LCN254 Blog`,
-    description: a.metaDescription || a.excerpt,
-  }));
-
-  const allRoutes = STATIC_ROUTES.concat(blogRoutes);
-
-  for (const route of allRoutes) {
-    writeRoute(template, render, route);
+  for (const route of routes) {
+    const appHtml = render(route.path);
+    const injected = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
+    const withSEO = injectSEO(injected, route);
+    writeRouteFile(route.path, withSEO);
   }
 
-  // GitHub Pages 404 fallback: any genuinely unmatched path (typo, removed
-  // page, old external link) falls through to this file. It renders the
-  // app's own NotFoundPage — hydration then reads the real (still wrong)
-  // URL from the browser and renders the same 404 state client-side, so
-  // there's no redirect flash or mismatch.
-  writeRoute(template, render, {
-    path: "/__lcn254_404__",
-    title: "Page Not Found | LCN254",
-    description: "The page you're looking for doesn't exist or may have moved.",
-  });
-  fs.renameSync(path.join(distDir, "__lcn254_404__", "index.html"), path.join(distDir, "404.html"));
-  fs.rmSync(path.join(distDir, "__lcn254_404__"), { recursive: true, force: true });
+  // 404.html: GitHub Pages serves this for any path with no matching file.
+  // Every real route above already has its own generated index.html, so
+  // this only catches genuine typos/broken links.
+  const notFoundHtml = injectSEO(
+    template.replace('<div id="root"></div>', `<div id="root">${render("/__not_found__")}</div>`),
+    { path: "/404", title: "Page Not Found | LCN254", description: "The page you're looking for doesn't exist." }
+  );
+  fs.writeFileSync(path.join(distDir, "404.html"), notFoundHtml);
 
-  // Regenerate the sitemap from the exact same route list used to build the
-  // pages above, so it can never drift out of sync with what's deployed.
-  const sitemapUrls = allRoutes.map(r => (r.path === "/" ? `${SITE}/` : `${SITE}${r.path}`));
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls
-    .map(u => `<url><loc>${u}</loc><changefreq>weekly</changefreq><priority>${u === `${SITE}/` ? "1.0" : "0.7"}</priority></url>`)
-    .join("\n")}\n</urlset>\n`;
-  fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml);
+  fs.writeFileSync(path.join(__dirname, "public", "sitemap.xml"), buildSitemap(routes));
+  fs.writeFileSync(path.join(distDir, "sitemap.xml"), buildSitemap(routes));
 
-  // dist-ssr is a build artifact only needed to generate the strings above --
-  // don't ship it to GitHub Pages.
   fs.rmSync(ssrDir, { recursive: true, force: true });
 
-  console.log(`Pre-rendered ${allRoutes.length} route(s) + 404.html as static HTML`);
+  console.log(`✓ Pre-rendered ${routes.length} routes + 404.html, and wrote sitemap.xml`);
 }
 
 main().catch((err) => {
