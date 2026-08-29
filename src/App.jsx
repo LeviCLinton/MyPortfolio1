@@ -555,6 +555,7 @@ function ContactPage() {
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Contact" description="Tell LCN254 about your business — get a quote or ask a question, we usually reply within a few hours." path="/contact" />
       <Nav route="/contact" />
+      <main>
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
@@ -597,8 +598,8 @@ function ContactPage() {
                         <input type="tel" className={inputCls} placeholder="+254 700 000 000" value={form.phone} onChange={(e) => setF("phone", e.target.value)} />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Service interested in</label>
-                        <select className={inputCls} value={form.business} onChange={(e) => setF("business", e.target.value)}>
+                        <label htmlFor="contact-business-select" className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Service interested in</label>
+                        <select id="contact-business-select" className={inputCls} value={form.business} onChange={(e) => setF("business", e.target.value)}>
                           <option className="bg-slate-900" value="">Select one</option>
                           {SERVICES.map((s) => <option key={s.slug} className="bg-slate-900" value={s.slug}>{s.name}</option>)}
                         </select>
@@ -663,6 +664,7 @@ function ContactPage() {
         <MessageCircle className="h-6 w-6" />
       </a>
 
+      </main>
       <Footer />
     </div>
   );
@@ -682,6 +684,7 @@ function AboutPage() {
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="About LCN254" description="LCN254 is a Nairobi-based web agency building fast, functional websites for businesses of every size, in Kenya and internationally." path="/about" />
       <Nav route="/about" />
+      <main>
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <Reveal>
@@ -777,6 +780,7 @@ function AboutPage() {
           </Reveal>
         </div>
       </div>
+      </main>
       <Footer />
     </div>
   );
@@ -799,6 +803,7 @@ function FAQPage() {
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Frequently Asked Questions" description="Common questions about working with LCN254 — timelines, pricing, hosting, and payments." path="/faq" />
       <Nav route="/faq" />
+      <main>
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-3xl">
           <Reveal>
@@ -834,6 +839,7 @@ function FAQPage() {
           </div>
         </div>
       </div>
+      </main>
       <Footer />
     </div>
   );
@@ -858,6 +864,7 @@ function PrivacyPage() {
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Privacy Policy" description="LCN254's privacy policy covering data collection, use, and your rights." path="/privacy" />
       <Nav route="/privacy" />
+      <main>
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-3xl">
           <Reveal>
@@ -879,6 +886,7 @@ function PrivacyPage() {
           </div>
         </div>
       </div>
+      </main>
       <Footer />
     </div>
   );
@@ -928,12 +936,14 @@ function HomePage() {
         path="/"
       />
       <Nav route="/" />
+      <main>
       <CinematicHero />
       <ValueStrip />
       <ServicesTeaserStrip />
       <IndustriesTeaserStrip />
       <HowItWorks />
       <BlogTeaserStrip />
+      </main>
       <Footer />
     </div>
   );

@@ -165,7 +165,7 @@ export function BlogIndexPage() {
   const rest = ARTICLES.filter((a) => !a.featured);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Blog" description="Practical articles on how websites help businesses scale, what's happening in AI, and how to stay ahead in a fast-moving digital world." path="/blog" />
 
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
@@ -261,7 +261,7 @@ export function BlogIndexPage() {
           </Reveal>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -271,13 +271,13 @@ export function BlogArticlePage({ slug }) {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+      <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
         <SEOHead title="Article Not Found" description="This article could not be found." path="/blog" />
         <div className="text-center">
           <p className="text-slate-400 mb-4">Article not found.</p>
           <a href="/blog" className="text-[#3FC1CB] underline">Back to blog</a>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -309,7 +309,7 @@ export function BlogArticlePage({ slug }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title={article.metaTitle} description={article.metaDescription} path={"/blog/" + article.slug} />
 
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
@@ -407,6 +407,6 @@ export function BlogArticlePage({ slug }) {
 
         </div>
       </div>
-    </div>
+    </main>
   );
 }
