@@ -31,25 +31,21 @@ body {
   50%      { transform: translate(60px,-40px) scale(1.1); border-radius: 40% 60% 70% 30% / 60% 40% 30% 70%; }
 }
 
-/* ── Header: own compositor layer ─────────────────────────────────────────── */
 header {
   transform: translateZ(0);
   will-change: transform;
   contain: layout style;
 }
 
-/* ── Backdrop-blur elements: isolated layers ──────────────────────────────── */
 [class*="backdrop-blur"] {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 
-/* ── Cards: contain hover paint ──────────────────────────────────────────── */
 .group {
   contain: layout style;
 }
 
-/* ── Reduce motion: kills all animations ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
