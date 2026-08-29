@@ -43,9 +43,9 @@ export function H1({ children }) {
     </h1>
   );
 }
-export function H2({ children }) {
+export function H2({ children, className = "" }) {
   return (
-    <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4"
+    <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4 ${className}`}
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {children}
     </h2>
