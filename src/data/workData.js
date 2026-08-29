@@ -112,7 +112,7 @@ export const WORK = [
       "Outcome: a complete concept design demonstrating mobile-first product browsing and cart UX. Payment badges shown are illustrative of what LCN254 can integrate — no live store or transactions are associated with this concept.",
   },
   {
-    slug: "professional-services-concept",
+    slug: "healthcare-concept",
     isConcept: true,
     name: "Meridian Health Partners — Clinic Website",
     industry: "Healthcare",

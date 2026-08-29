@@ -153,7 +153,7 @@ export const INDUSTRIES = [
     ],
     features: ["Service pages", "Case studies", "Team profiles", "Testimonials (only if genuine)", "Contact / lead forms"],
     exampleStructure: ["Home", "Services", "Work / Case Studies", "About / Team", "Contact"],
-    relatedWork: ["professional-services-concept"],
+    relatedWork: [],
     relatedServices: ["business-websites", "website-redesign"],
     cta: "BUILD MY BUSINESS WEBSITE",
     faqs: [

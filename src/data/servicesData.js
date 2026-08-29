@@ -43,7 +43,7 @@ export const SERVICES = [
     ],
     startingPrice: "From KES 15,000",
     priceNote: "Final pricing depends on scope, functionality, content and integrations.",
-    relatedWork: ["restaurant-concept", "professional-services-concept"],
+    relatedWork: ["restaurant-concept", "healthcare-concept"],
     relatedIndustries: ["professional-services", "restaurants"],
     faqs: [
       { q: "How many pages do I get?", a: "Most business websites launch with 4–6 pages (Home, About, Services, Gallery, Contact, etc.). We scope the exact page count with you before starting." },
@@ -179,8 +179,8 @@ export const SERVICES = [
       "Where we don't yet have real before/after client examples publicly shareable, we use clearly labelled concept examples to illustrate the kind of transformation involved.",
     startingPrice: "From KES 20,000",
     priceNote: "Depends on the size of the existing site and how much is being rebuilt versus refreshed.",
-    relatedWork: ["professional-services-concept"],
-    relatedIndustries: ["professional-services"],
+    relatedWork: ["healthcare-concept"],
+    relatedIndustries: ["healthcare"],
     faqs: [
       { q: "Will I lose my Google rankings?", a: "We plan the migration (redirects, URL structure, metadata) specifically to protect existing SEO where possible." },
       { q: "Do you need my current site's files?", a: "Access to your current hosting/CMS helps, but isn't required — we can rebuild from what's publicly visible if needed." },
