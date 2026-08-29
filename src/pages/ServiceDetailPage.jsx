@@ -24,7 +24,7 @@ export default function ServiceDetailPage({ slug }) {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title={service.metaTitle.replace(" | LCN254", "")} description={service.metaDescription} path={`/services/${service.slug}`} />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-4xl">
@@ -162,6 +162,6 @@ export default function ServiceDetailPage({ slug }) {
           </Reveal>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

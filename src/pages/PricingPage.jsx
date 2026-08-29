@@ -49,7 +49,7 @@ function PackageCard({ pkg }) {
 export default function PricingPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Pricing" description="Transparent website packages and ongoing care plans from LCN254 — no surprise invoices." path="/pricing" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-6xl">
@@ -64,6 +64,7 @@ export default function PricingPage() {
             </div>
           </Reveal>
 
+          <Reveal><H2 className="sr-only">Website Packages</H2></Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-20">
             {PACKAGES.map((pkg) => <PackageCard key={pkg.name} pkg={pkg} />)}
           </div>
@@ -87,6 +88,6 @@ export default function PricingPage() {
           <FinalCTA headline="Not sure which package fits?" copy="Tell us about your business and we'll recommend the right starting point." />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

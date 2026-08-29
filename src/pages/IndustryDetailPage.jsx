@@ -23,7 +23,7 @@ export default function IndustryDetailPage({ slug }) {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title={industry.metaTitle.replace(" | LCN254", "")} description={industry.metaDescription} path={`/industries/${industry.slug}`} />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-4xl">
@@ -126,6 +126,6 @@ export default function IndustryDetailPage({ slug }) {
           </Reveal>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import SEOHead from "../components/SEOHead.jsx";
-import { Reveal, Kicker, H1, WorkCard, FinalCTA } from "../components/PhaseFourUI.jsx";
+import { Reveal, Kicker, H1, H2, WorkCard, FinalCTA } from "../components/PhaseFourUI.jsx";
 import { WORK, WORK_FILTERS } from "../data/workData.js";
 
 export default function WorkPage() {
@@ -13,7 +13,7 @@ export default function WorkPage() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead
         title="Our Work — Website Design & Development Portfolio"
         description="Explore website and digital experience concepts designed and built by LCN254, across restaurants, hotels, salons, e-commerce and more."
@@ -56,6 +56,7 @@ export default function WorkPage() {
             </div>
           </Reveal>
 
+          <Reveal><H2 className="sr-only">Featured Work</H2></Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
             {visible.map((item, i) => (
               <Reveal key={item.slug} delay={i * 0.05}>
@@ -70,6 +71,6 @@ export default function WorkPage() {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

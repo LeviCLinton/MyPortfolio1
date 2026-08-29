@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SEOHead from "../components/SEOHead.jsx";
-import { Reveal, Kicker, H1, FinalCTA, T } from "../components/PhaseFourUI.jsx";
+import { Reveal, Kicker, H1, H2, FinalCTA, T } from "../components/PhaseFourUI.jsx";
 
 const STEPS = [
   { n: "01", t: "Discover", d: "We learn about your business, your customers, and what the website actually needs to do." },
@@ -15,7 +15,7 @@ const STEPS = [
 export default function ProcessPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead title="Our Process" description="How LCN254 takes a website from discovery to launch and ongoing growth, in seven clear steps." path="/process" />
       <div className="pt-28 pb-20 px-6 lg:px-12">
         <div className="mx-auto max-w-4xl">
@@ -28,6 +28,7 @@ export default function ProcessPage() {
           </Reveal>
 
           <div className="relative mb-20">
+            <Reveal><H2 className="sr-only">The Seven Steps</H2></Reveal>
             <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10" />
             <div className="space-y-8">
               {STEPS.map((s, i) => (
@@ -49,6 +50,6 @@ export default function ProcessPage() {
           <FinalCTA headline="Ready to start step one?" copy="Tell us about your business and we'll take it from there." />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

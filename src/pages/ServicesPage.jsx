@@ -27,7 +27,7 @@ const FAQS = [
 export default function ServicesPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead
         title="Web Design & Development Services"
         description="Business websites, e-commerce, landing pages, redesigns, custom web solutions and maintenance — built to help your business grow online."
@@ -52,6 +52,7 @@ export default function ServicesPage() {
           </Reveal>
 
           {/* SERVICE GRID */}
+          <Reveal><H2 className="sr-only">Our Services</H2></Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
             {SERVICES.map((s, i) => (
               <Reveal key={s.slug} delay={i * 0.05}>
@@ -108,6 +109,6 @@ export default function ServicesPage() {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import SEOHead from "../components/SEOHead.jsx";
-import { Reveal, Kicker, H1, SummaryCard, FinalCTA } from "../components/PhaseFourUI.jsx";
+import { Reveal, Kicker, H1, H2, SummaryCard, FinalCTA } from "../components/PhaseFourUI.jsx";
 import { INDUSTRIES } from "../data/industriesData.js";
 
 export default function IndustriesPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead
         title="Websites by Industry"
         description="LCN254 designs websites around how your industry actually works — restaurants, hotels, salons, real estate, professional services and healthcare."
@@ -25,6 +25,7 @@ export default function IndustriesPage() {
             </div>
           </Reveal>
 
+          <Reveal><H2 className="sr-only">Industries We Work With</H2></Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
             {INDUSTRIES.map((ind, i) => (
               <Reveal key={ind.slug} delay={i * 0.05}>
@@ -47,6 +48,6 @@ export default function IndustriesPage() {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

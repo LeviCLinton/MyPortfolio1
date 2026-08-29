@@ -14,7 +14,7 @@ export default function CaseStudyPage({ slug }) {
   const more = WORK.filter((w) => w.slug !== item.slug).slice(0, 2);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
+    <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead
         title={`${item.name} — Case Study`}
         description={item.shortDesc}
@@ -127,6 +127,6 @@ export default function CaseStudyPage({ slug }) {
           </Reveal>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
