@@ -121,7 +121,7 @@ async function main() {
   const routes = buildRoutes();
 
   for (const route of routes) {
-    const appHtml = render(route.path);
+    const appHtml = await render(route.path);
     const injected = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
     const withSEO = injectSEO(injected, route);
     writeRouteFile(route.path, withSEO);
@@ -130,8 +130,9 @@ async function main() {
   // 404.html: GitHub Pages serves this for any path with no matching file.
   // Every real route above already has its own generated index.html, so
   // this only catches genuine typos/broken links.
+  const notFoundAppHtml = await render("/__not_found__");
   const notFoundHtml = injectSEO(
-    template.replace('<div id="root"></div>', `<div id="root">${render("/__not_found__")}</div>`),
+    template.replace('<div id="root"></div>', `<div id="root">${notFoundAppHtml}</div>`),
     { path: "/404", title: "Page Not Found | LCN254", description: "The page you're looking for doesn't exist." }
   );
   fs.writeFileSync(path.join(distDir, "404.html"), notFoundHtml);
