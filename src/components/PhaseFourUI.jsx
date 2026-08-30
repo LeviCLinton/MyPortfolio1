@@ -97,27 +97,93 @@ export function SummaryCard({ href, icon, color, title, desc, cta, bullets }) {
   );
 }
 
-/* ── Work / portfolio card — real <a href>, not a JS-only button ────────── */
-export function WorkCard({ item }) {
+/* ── Device mockups — real iframes of the actual demo pages, framed like a
+   browser/phone. This is deliberately not a static screenshot: since every
+   concept project has a genuine, working HTML/CSS/JS demo, showing it live
+   in a chrome frame is both more honest and more impressive than a fake
+   mockup image, and it stays accurate if a demo is ever updated. ────────── */
+export function BrowserFrame({ src, title, height = 480 }) {
   return (
-    <motion.div whileHover={{ y: -3 }} className="group rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors">
-      <div className="h-32 w-full relative flex items-center justify-center" style={{ background: item.heroGradient }}>
+    <div className="rounded-2xl border border-white/10 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-slate-950/70">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-400/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+        </div>
+        <div className="flex-1 mx-3 bg-slate-800/80 rounded-md px-3 py-1 text-[11px] text-slate-400 font-mono truncate">
+          lcn254.site/{src}
+        </div>
+      </div>
+      <iframe
+        src={`/${src}`}
+        title={title}
+        loading="lazy"
+        style={{ width: "100%", height, border: "none", display: "block", background: "#fff" }}
+      />
+    </div>
+  );
+}
+
+export function PhoneFrame({ src, title, height = 480 }) {
+  const innerWidth = 390;
+  return (
+    <div className="mx-auto" style={{ width: 220 }}>
+      <div className="rounded-[28px] border-4 border-slate-800 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40" style={{ height: 440 }}>
+        <div className="relative w-full h-full overflow-hidden">
+          <iframe
+            src={`/${src}`}
+            title={title}
+            loading="lazy"
+            style={{
+              width: innerWidth,
+              height: innerWidth * (height / 390) || 900,
+              border: "none",
+              transform: `scale(${220 / innerWidth})`,
+              transformOrigin: "top left",
+              background: "#fff",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Premium portfolio project card ──────────────────────────────────────
+   Real <a href>, subtle image-area scale on hover, arrow shift, and a
+   "View Case Study" label that appears on hover — kept understated per the
+   Phase 5 design direction (no heavy glassmorphism/gradients/bounce). ───── */
+export function ProjectCard({ item, large = false }) {
+  return (
+    <a href={`/work/${item.slug}`}
+      className={`group relative block overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 transition-colors hover:border-white/25 ${large ? "sm:col-span-2" : ""}`}>
+      <div className={`relative overflow-hidden ${large ? "h-64 sm:h-80" : "h-52"}`}>
+        <div
+          className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          style={{ background: item.heroGradient }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
         {item.isConcept && (
-          <span className="absolute top-3 left-3 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
+          <span className="absolute top-4 left-4 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
             Concept Project
           </span>
         )}
+        <span className="absolute top-4 right-4 font-mono text-[11px] text-white/60">{item.category}</span>
       </div>
-      <div className="p-5">
-        <p className="text-xs font-semibold" style={{ color: T }}>{item.industry}</p>
-        <h3 className="mt-1.5 mb-2 font-bold text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">{item.name}</h3>
-        <p className="text-slate-400 text-sm mb-3 leading-relaxed">{item.shortDesc}</p>
-        <p className="text-xs text-slate-500 mb-4">Key feature: {item.keyFeature}</p>
-        <a href={`/work/${item.slug}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-          View Case Study <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-        </a>
+      <div className="p-6">
+        <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: T }}>{item.category}</p>
+        <h3 className="mt-2 mb-2 text-xl font-bold text-white transition-transform duration-300 group-hover:translate-x-0.5"
+          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          {item.title || item.name}
+        </h3>
+        <p className="text-slate-400 text-sm leading-relaxed mb-4">{item.shortDesc}</p>
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+          View Case Study
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
+        </span>
       </div>
-    </motion.div>
+    </a>
   );
 }
 
