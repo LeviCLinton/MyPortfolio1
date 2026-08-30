@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nova Living — Modern Property Platform (Concept Demo)</title>
+<meta name="description" content="Concept demo template by LCN254 — real estate property listing platform." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1210; --panel:#171b18; --ink:#eef1ec; --ink-dim:#9aa39a;
+    --moss:#8ba888; --clay:#c98a5a; --line:#262b26;
+    --display:'Fraunces',serif; --body:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  .badge{position:fixed;top:14px;right:14px;z-index:99;background:var(--clay);color:#0f1210;font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:100px;letter-spacing:.05em}
+  header{position:sticky;top:0;z-index:40;background:rgba(15,18,16,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,64px)}
+  .logo{font-family:var(--display);font-weight:600;font-size:1.3rem;letter-spacing:.01em}
+  .navlinks{display:none;gap:28px;font-size:.88rem;color:var(--ink-dim)}
+  @media(min-width:800px){.navlinks{display:flex}}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;padding:11px 20px;border-radius:10px;background:var(--clay);color:#0f1210}
+
+  .hero{padding:clamp(50px,8vw,90px) 0 40px}
+  .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--clay)}
+  .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.4rem,5.6vw,3.8rem);line-height:1.08;margin:16px 0 20px;max-width:16ch}
+  .hero p{max-width:52ch;color:var(--ink-dim);margin-bottom:28px}
+
+  .search-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:14px}
+  @media(max-width:760px){.search-card{grid-template-columns:1fr 1fr}}
+  .search-card label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-dim);margin-bottom:8px}
+  .search-card select,.search-card input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:11px 13px;border-radius:8px;font-family:var(--body)}
+  .search-card button{border:none;border-radius:8px;align-self:end}
+
+  .listings{padding:50px 0;border-top:1px solid var(--line)}
+  .listings h2{font-family:var(--display);font-weight:600;font-size:1.8rem;margin-bottom:28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .card-img{aspect-ratio:4/3;position:relative}
+  .card-img.a{background:linear-gradient(150deg,#2c3a2e,#1a221b)}
+  .card-img.b{background:linear-gradient(150deg,#3a2c22,#221a15)}
+  .card-img.c{background:linear-gradient(150deg,#22303a,#151d22)}
+  .price-tag{position:absolute;bottom:12px;left:12px;background:rgba(15,18,16,.85);border:1px solid var(--line);padding:6px 12px;border-radius:100px;font-weight:700;font-size:.85rem}
+  .card-body{padding:18px}
+  .card-body h3{font-family:var(--display);font-weight:600;font-size:1.1rem;margin-bottom:6px}
+  .card-body p{font-size:.85rem;color:var(--ink-dim)}
+  .card-meta{display:flex;gap:14px;margin-top:12px;font-size:.78rem;color:var(--ink-dim)}
+  footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--ink-dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="badge">CONCEPT DEMO — LCN254</div>
+<header>
+  <nav class="nav">
+    <span class="logo">Nova Living</span>
+    <div class="navlinks"><a href="#listings">Listings</a><a href="#agents">Agents</a></div>
+    <a href="#" class="btn">List a Property</a>
+  </nav>
+</header>
+<main>
+  <section class="hero wrap">
+    <span class="eyebrow">Concept Demo</span>
+    <h1>Find a place that actually fits how you live.</h1>
+    <p>A concept property platform built by LCN254 to demonstrate listing search, filtering, and enquiry flow for a real-estate brand. Not a real agency, and no real properties are listed.</p>
+    <div class="search-card">
+      <div><label>Location</label><select><option>Nairobi — Kilimani</option><option>Nairobi — Karen</option><option>Nairobi — Westlands</option></select></div>
+      <div><label>Property Type</label><select><option>Apartment</option><option>Townhouse</option><option>Villa</option></select></div>
+      <div><label>Budget (KSh)</label><input type="text" placeholder="e.g. 15M – 25M"></div>
+      <button class="btn">Search</button>
+    </div>
+  </section>
+
+  <section class="listings wrap" id="listings">
+    <h2>Featured Listings</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-img a"><span class="price-tag">KSh 18.5M</span></div>
+        <div class="card-body">
+          <h3>Two-Bed Apartment, Kilimani</h3>
+          <p>Modern finish, secure compound, rooftop access.</p>
+          <div class="card-meta"><span>2 bed</span><span>2 bath</span><span>110 m²</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img b"><span class="price-tag">KSh 42M</span></div>
+        <div class="card-body">
+          <h3>Four-Bed Townhouse, Karen</h3>
+          <p>Private garden, staff quarters, gated community.</p>
+          <div class="card-meta"><span>4 bed</span><span>3 bath</span><span>280 m²</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img c"><span class="price-tag">KSh 27M</span></div>
+        <div class="card-body">
+          <h3>Three-Bed Villa, Runda</h3>
+          <p>Corner plot, mature garden, borehole water.</p>
+          <div class="card-meta"><span>3 bed</span><span>3 bath</span><span>190 m²</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>Concept demo template · Built by LCN254 · Not a real property listing service</footer>
+</body>
+</html>
