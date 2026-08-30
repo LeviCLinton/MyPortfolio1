@@ -25,7 +25,7 @@ export const INDUSTRIES = [
     ],
     features: ["Digital menu", "Location & hours", "WhatsApp reservations", "Photo gallery", "Mobile ordering (where scoped)", "Social integration"],
     exampleStructure: ["Home", "Menu", "About", "Gallery", "Reservations", "Contact"],
-    relatedWork: ["restaurant-concept"],
+    relatedWork: ["ember"],
     relatedServices: ["business-websites", "landing-pages"],
     cta: "BUILD MY RESTAURANT WEBSITE",
     faqs: [
@@ -57,7 +57,7 @@ export const INDUSTRIES = [
     ],
     features: ["Room showcase", "Amenities list", "Photo gallery", "Booking enquiry form", "Location & directions", "Offers section"],
     exampleStructure: ["Home", "Rooms", "Amenities", "Gallery", "Offers", "Book / Enquire", "Contact"],
-    relatedWork: ["hotel-concept"],
+    relatedWork: ["luma-stay"],
     relatedServices: ["business-websites"],
     cta: "BUILD MY HOTEL WEBSITE",
     faqs: [
@@ -89,7 +89,7 @@ export const INDUSTRIES = [
     ],
     features: ["Services & pricing", "Booking / WhatsApp", "Gallery", "Team profiles", "Location & hours"],
     exampleStructure: ["Home", "Services", "Gallery", "Team", "Book", "Contact"],
-    relatedWork: ["salon-concept"],
+    relatedWork: [],
     relatedServices: ["business-websites"],
     cta: "BUILD MY SALON WEBSITE",
     faqs: [
@@ -121,7 +121,7 @@ export const INDUSTRIES = [
     ],
     features: ["Property listings", "Search & filters", "Agent profiles", "Enquiry forms", "WhatsApp contact", "Location mapping"],
     exampleStructure: ["Home", "Listings", "Property Detail", "Agents", "About", "Contact"],
-    relatedWork: [],
+    relatedWork: ["nova-living"],
     relatedServices: ["business-websites", "custom-web-solutions"],
     cta: "BUILD MY REAL ESTATE WEBSITE",
     faqs: [
@@ -153,8 +153,7 @@ export const INDUSTRIES = [
     ],
     features: ["Service pages", "Case studies", "Team profiles", "Testimonials (only if genuine)", "Contact / lead forms"],
     exampleStructure: ["Home", "Services", "Work / Case Studies", "About / Team", "Contact"],
-    relatedWork: [],
-    relatedServices: ["business-websites", "website-redesign"],
+    relatedWork: ["atlas-consulting"],
     cta: "BUILD MY BUSINESS WEBSITE",
     faqs: [
       { q: "We don't have client testimonials yet — is that a problem?", a: "No — we won't fabricate them. We'll focus the site on what you offer and how you work until you have real ones to add." },
@@ -185,7 +184,7 @@ export const INDUSTRIES = [
     ],
     features: ["Services & departments", "Practitioner info", "Location & hours", "Appointment enquiries", "FAQ section"],
     exampleStructure: ["Home", "Services", "Departments", "About", "Contact / Book"],
-    relatedWork: ["healthcare-concept"],
+    relatedWork: [],
     relatedServices: ["business-websites"],
     cta: "BUILD MY HEALTHCARE WEBSITE",
     faqs: [
