@@ -1,17 +1,26 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BlogIndexPage, BlogArticlePage } from "./Blog.jsx";
 import { RouterProvider, useRouter } from "./router.jsx";
 import SEOHead from "./components/SEOHead.jsx";
-import ServicesPage from "./pages/ServicesPage.jsx";
-import ServiceDetailPage from "./pages/ServiceDetailPage.jsx";
-import WorkPage from "./pages/WorkPage.jsx";
-import CaseStudyPage from "./pages/CaseStudyPage.jsx";
-import IndustriesPage from "./pages/IndustriesPage.jsx";
-import IndustryDetailPage from "./pages/IndustryDetailPage.jsx";
-import PricingPage from "./pages/PricingPage.jsx";
-import ProcessPage from "./pages/ProcessPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+
+// Route-level code splitting: each of these is its own JS chunk, fetched
+// only when a visitor actually navigates to that section. On the server,
+// entry-server.jsx waits for every lazy chunk to resolve (via
+// renderToPipeableStream's onAllReady) before the HTML is captured, so
+// every prerendered page still ships full, real content — crawlers and
+// first-time visitors never see a loading spinner in the static HTML.
+const ServicesPage = lazy(() => import("./pages/ServicesPage.jsx"));
+const ServiceDetailPage = lazy(() => import("./pages/ServiceDetailPage.jsx"));
+const WorkPage = lazy(() => import("./pages/WorkPage.jsx"));
+const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage.jsx"));
+const IndustriesPage = lazy(() => import("./pages/IndustriesPage.jsx"));
+const IndustryDetailPage = lazy(() => import("./pages/IndustryDetailPage.jsx"));
+const PricingPage = lazy(() => import("./pages/PricingPage.jsx"));
+const ProcessPage = lazy(() => import("./pages/ProcessPage.jsx"));
+const BlogIndexPage = lazy(() => import("./Blog.jsx").then((m) => ({ default: m.BlogIndexPage })));
+const BlogArticlePage = lazy(() => import("./Blog.jsx").then((m) => ({ default: m.BlogArticlePage })));
+
 import { SERVICES } from "./data/servicesData.js";
 import { INDUSTRIES } from "./data/industriesData.js";
 import {
@@ -960,32 +969,43 @@ function matchDynamic(pathname, prefix) {
   return pathname.slice(prefix.length + 1);
 }
 
+// Shown only for a brief moment on the client if a lazy route chunk is still
+// fetching (e.g. a fast click before the code has loaded). Prerendered HTML
+// never contains this — the server always waits for full content first.
+function PageFallback() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="h-8 w-8 border-2 border-white/10 border-t-[#1AA3B0] rounded-full animate-spin" />
+    </div>
+  );
+}
+
 function RouteOutlet() {
   const { pathname } = useRouter();
 
   if (matchStatic(pathname, "/")) return <HomePage />;
-  if (matchStatic(pathname, "/services")) return (<><Nav route="/services" /><ServicesPage /><Footer /></>);
-  if (matchStatic(pathname, "/work")) return (<><Nav route="/work" /><WorkPage /><Footer /></>);
-  if (matchStatic(pathname, "/industries")) return (<><Nav route="/industries" /><IndustriesPage /><Footer /></>);
-  if (matchStatic(pathname, "/pricing")) return (<><Nav route="/pricing" /><PricingPage /><Footer /></>);
-  if (matchStatic(pathname, "/process")) return (<><Nav route="/process" /><ProcessPage /><Footer /></>);
+  if (matchStatic(pathname, "/services")) return (<><Nav route="/services" /><Suspense fallback={<PageFallback />}><ServicesPage /></Suspense><Footer /></>);
+  if (matchStatic(pathname, "/work")) return (<><Nav route="/work" /><Suspense fallback={<PageFallback />}><WorkPage /></Suspense><Footer /></>);
+  if (matchStatic(pathname, "/industries")) return (<><Nav route="/industries" /><Suspense fallback={<PageFallback />}><IndustriesPage /></Suspense><Footer /></>);
+  if (matchStatic(pathname, "/pricing")) return (<><Nav route="/pricing" /><Suspense fallback={<PageFallback />}><PricingPage /></Suspense><Footer /></>);
+  if (matchStatic(pathname, "/process")) return (<><Nav route="/process" /><Suspense fallback={<PageFallback />}><ProcessPage /></Suspense><Footer /></>);
   if (matchStatic(pathname, "/about")) return <AboutPage />;
   if (matchStatic(pathname, "/contact")) return <ContactPage />;
   if (matchStatic(pathname, "/faq")) return <FAQPage />;
   if (matchStatic(pathname, "/privacy")) return <PrivacyPage />;
-  if (matchStatic(pathname, "/blog")) return (<><Nav route="/blog" /><BlogIndexPage /><Footer /></>);
+  if (matchStatic(pathname, "/blog")) return (<><Nav route="/blog" /><Suspense fallback={<PageFallback />}><BlogIndexPage /></Suspense><Footer /></>);
 
   const blogSlug = matchDynamic(pathname, "/blog");
-  if (blogSlug) return (<><Nav route="/blog" /><BlogArticlePage slug={blogSlug} /><Footer /></>);
+  if (blogSlug) return (<><Nav route="/blog" /><Suspense fallback={<PageFallback />}><BlogArticlePage slug={blogSlug} /></Suspense><Footer /></>);
 
   const serviceSlug = matchDynamic(pathname, "/services");
-  if (serviceSlug) return (<><Nav route="/services" /><ServiceDetailPage slug={serviceSlug} /><Footer /></>);
+  if (serviceSlug) return (<><Nav route="/services" /><Suspense fallback={<PageFallback />}><ServiceDetailPage slug={serviceSlug} /></Suspense><Footer /></>);
 
   const workSlug = matchDynamic(pathname, "/work");
-  if (workSlug) return (<><Nav route="/work" /><CaseStudyPage slug={workSlug} /><Footer /></>);
+  if (workSlug) return (<><Nav route="/work" /><Suspense fallback={<PageFallback />}><CaseStudyPage slug={workSlug} /></Suspense><Footer /></>);
 
   const industrySlug = matchDynamic(pathname, "/industries");
-  if (industrySlug) return (<><Nav route="/industries" /><IndustryDetailPage slug={industrySlug} /><Footer /></>);
+  if (industrySlug) return (<><Nav route="/industries" /><Suspense fallback={<PageFallback />}><IndustryDetailPage slug={industrySlug} /></Suspense><Footer /></>);
 
   return (<><Nav route={pathname} /><NotFoundPage /><Footer /></>);
 }
