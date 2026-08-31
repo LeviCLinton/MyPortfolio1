@@ -56,7 +56,36 @@ function buildRoutes() {
     routes.push({ path: `/industries/${ind.slug}`, title: ind.metaTitle, description: ind.metaDescription, priority: "0.7" });
   }
   for (const w of WORK) {
-    routes.push({ path: `/work/${w.slug}`, title: `${w.name} — Case Study | LCN254`, description: w.shortDesc, priority: "0.6" });
+    routes.push({
+      path: `/work/${w.slug}`,
+      title: `${w.name} — Case Study | LCN254`,
+      description: w.shortDesc,
+      priority: "0.6",
+      // Structured data for case study pages uses CreativeWork, deliberately
+      // NOT Restaurant/Hotel/LocalBusiness/Store/etc. Those types assert a
+      // real, indexable local business exists at this content — which would
+      // misrepresent a self-initiated concept project as a real, operating
+      // business to search engines. CreativeWork honestly describes what
+      // this page actually is: a design case study LCN254 produced, about
+      // a given industry, with LCN254 (a real organization) as its creator.
+      structuredData: {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": `${w.title || w.name} — ${w.projectType}`,
+        "description": w.shortDesc,
+        "creator": { "@type": "Organization", "name": "LCN254", "url": SITE },
+        "about": w.industry,
+        "genre": "Web Design Case Study",
+        "dateCreated": String(w.year || ""),
+        "url": `${SITE}/work/${w.slug}`,
+        "keywords": [w.category, w.projectType, ...(w.services || [])].filter(Boolean).join(", "),
+        "additionalType": w.isConcept ? "https://schema.org/Thing" : undefined,
+        "disambiguatingDescription": w.isConcept
+          ? "Self-initiated concept project by LCN254 — not commissioned client work, and not a real operating business."
+          : undefined,
+      },
+      googleFontHref: w.googleFontHref,
+    });
   }
   for (const a of BLOG_ARTICLES) {
     routes.push({ path: `/blog/${a.slug}`, title: `${a.title} | LCN254 Blog`, description: a.description, priority: "0.5" });
@@ -85,6 +114,20 @@ function injectSEO(html, { path: routePath, title, description }) {
   out = out.replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${escapeHtml(description)}" />`);
 
   return out;
+}
+
+function injectFontLink(html, href) {
+  if (!href) return html;
+  const link = `<link rel="stylesheet" href="${href}">`;
+  return html.replace("</head>", `${link}\n</head>`);
+}
+
+function injectStructuredData(html, structuredData) {
+  if (!structuredData) return html;
+  // Drop any undefined fields so we never emit "undefined" into the JSON.
+  const clean = JSON.parse(JSON.stringify(structuredData));
+  const script = `<script type="application/ld+json">${JSON.stringify(clean)}</script>`;
+  return html.replace("</head>", `${script}\n</head>`);
 }
 
 function escapeHtml(str = "") {
@@ -124,7 +167,9 @@ async function main() {
     const appHtml = await render(route.path);
     const injected = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
     const withSEO = injectSEO(injected, route);
-    writeRouteFile(route.path, withSEO);
+    const withFont = injectFontLink(withSEO, route.googleFontHref);
+    const withStructuredData = injectStructuredData(withFont, route.structuredData);
+    writeRouteFile(route.path, withStructuredData);
   }
 
   // 404.html: GitHub Pages serves this for any path with no matching file.
