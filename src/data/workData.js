@@ -36,6 +36,9 @@ export const WORK = [
     keyFeature: "Digital menu with WhatsApp reservations",
     demoPath: "demos/restaurant.html",
     heroGradient: "linear-gradient(135deg,#b24c2a25,#6b7a4f18)",
+    accentColor: "#b24c2a",
+    headingFont: "'Fraunces', serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap",
     overview:
       "Ember imagines a wood-fired grill restaurant built around a single open kitchen and a short, considered wine list. The concept was built to show how a restaurant's menu, atmosphere and booking flow can work together on one page, rather than being split across a website, a PDF menu, and a third-party booking widget.",
     challenge:
@@ -77,6 +80,9 @@ export const WORK = [
     keyFeature: "Room showcase with direct booking enquiry",
     demoPath: "demos/boutique-hotel.html",
     heroGradient: "linear-gradient(135deg,#b98b7625,#33473e18)",
+    accentColor: "#b98b76",
+    headingFont: "'Marcellus', serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Marcellus&display=swap",
     overview:
       "Luma Stay is a concept nine-room boutique hotel, built to demonstrate how a small, personal property can present its rooms and encourage guests to book directly rather than defaulting to an OTA that takes a commission on every stay.",
     challenge:
@@ -118,6 +124,9 @@ export const WORK = [
     keyFeature: "Search and filter with instant listing previews",
     demoPath: "demos/nova-living.html",
     heroGradient: "linear-gradient(135deg,#8ba88825,#c98a5a18)",
+    accentColor: "#c98a5a",
+    headingFont: "'Fraunces', serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap",
     overview:
       "Nova Living is a concept property platform built to explore how a real-estate brand can help a buyer narrow down a search quickly — by location, type and budget — without wading through listings that don't fit.",
     challenge:
@@ -159,6 +168,9 @@ export const WORK = [
     keyFeature: "Persistent cart bar with mobile-first product grid",
     demoPath: "demos/ecommerce.html",
     heroGradient: "linear-gradient(135deg,#ff3b5c25,#c6f13525)",
+    accentColor: "#ff3b5c",
+    headingFont: "'Archivo Black', sans-serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap",
     overview:
       "Kora Market is a concept retail brand selling everyday-carry goods, used to demonstrate a fast, mobile-first shopping experience where the cart is always visible and nothing feels lost mid-shop.",
     challenge:
@@ -200,6 +212,9 @@ export const WORK = [
     keyFeature: "Structured services grid with a single, consistent CTA",
     demoPath: "demos/atlas-consulting.html",
     heroGradient: "linear-gradient(135deg,#1e2a4a25,#a9852f18)",
+    accentColor: "#a9852f",
+    headingFont: "'Libre Baskerville', serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap",
     overview:
       "Atlas Consulting is a concept advisory firm built to show how a professional-services brand can establish credibility and present its services clearly, without leaning on the stock-photo handshake cliché that dominates the category.",
     challenge:
@@ -241,6 +256,9 @@ export const WORK = [
     keyFeature: "Single-scroll structure from hero to pricing to CTA",
     demoPath: "demos/pulse.html",
     heroGradient: "linear-gradient(135deg,#7c5cff25,#38e0c018)",
+    accentColor: "#7c5cff",
+    headingFont: "'Sora', sans-serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap",
     overview:
       "Pulse is a concept team-analytics product, used to demonstrate a landing-page structure built specifically for conversion: a clear headline, a short proof section, feature highlights, and pricing, all in a single scroll with no dead ends.",
     challenge:
