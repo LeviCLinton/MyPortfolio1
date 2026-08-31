@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { Plus, ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -35,18 +35,18 @@ export function Icon({ name, className, style }) {
 export function Kicker({ children }) {
   return <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>{children}</span>;
 }
-export function H1({ children }) {
+export function H1({ children, style }) {
   return (
     <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-5"
-      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", ...style }}>
       {children}
     </h1>
   );
 }
-export function H2({ children, className = "" }) {
+export function H2({ children, className = "", style }) {
   return (
     <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4 ${className}`}
-      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", ...style }}>
       {children}
     </h2>
   );
@@ -184,6 +184,60 @@ export function ProjectCard({ item, large = false }) {
         </span>
       </div>
     </a>
+  );
+}
+
+/* ── Clip-path reveal — used once per case study, on the hero mockup only.
+   A restrained "expensive" feel rather than a gimmick; no-ops entirely
+   under prefers-reduced-motion. ─────────────────────────────────────────── */
+export function ImageReveal({ children }) {
+  const prefersReducedMotion = useReducedMotion();
+  if (prefersReducedMotion) return <>{children}</>;
+  return (
+    <motion.div
+      initial={{ clipPath: "inset(0 38% 0 0)", opacity: 0.4 }}
+      whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ── Magnetic CTA — used deliberately, only at the two decisive moments on
+   a case study (open the live demo, start a project), not sitewide. Falls
+   back to a normal static link when the user prefers reduced motion. ───── */
+export function MagneticButton({ href, children, className = "", style, target, rel, strength = 18 }) {
+  const ref = React.useRef(null);
+  const [pos, setPos] = React.useState({ x: 0, y: 0 });
+  const prefersReducedMotion = useReducedMotion();
+
+  const handleMove = (e) => {
+    if (prefersReducedMotion || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const relX = (e.clientX - rect.left - rect.width / 2) / rect.width;
+    const relY = (e.clientY - rect.top - rect.height / 2) / rect.height;
+    setPos({ x: relX * strength, y: relY * strength });
+  };
+  const reset = () => setPos({ x: 0, y: 0 });
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      target={target}
+      rel={rel}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: "spring", stiffness: 200, damping: 14, mass: 0.4 }}
+      whileTap={{ scale: 0.97 }}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.a>
   );
 }
 
