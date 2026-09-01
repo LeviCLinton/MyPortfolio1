@@ -97,12 +97,22 @@ export function SummaryCard({ href, icon, color, title, desc, cta, bullets }) {
   );
 }
 
-/* ── Device mockups — real iframes of the actual demo pages, framed like a
-   browser/phone. This is deliberately not a static screenshot: since every
-   concept project has a genuine, working HTML/CSS/JS demo, showing it live
-   in a chrome frame is both more honest and more impressive than a fake
-   mockup image, and it stays accurate if a demo is ever updated. ────────── */
+/* ── Device mockups — real iframes of the actual site/app. This is
+   deliberately not a static screenshot: showing the real, live thing in a
+   chrome frame is both more honest and more impressive than a mockup
+   image, and it stays accurate if the underlying project is ever updated.
+   `src` may be a root-relative path (e.g. "demos/x.html", served from this
+   site) or a full external URL (e.g. a live product hosted elsewhere) —
+   both are handled the same way, just displayed differently in the fake
+   address bar. ───────────────────────────────────────────────────────── */
+function resolveFrameSrc(src) {
+  const isExternal = /^https?:\/\//.test(src);
+  return { url: isExternal ? src : `/${src}`, isExternal };
+}
+
 export function BrowserFrame({ src, title, height = 480 }) {
+  const { url, isExternal } = resolveFrameSrc(src);
+  const addressLabel = isExternal ? url.replace(/^https?:\/\//, "") : `lcn254.site/${src}`;
   return (
     <div className="rounded-2xl border border-white/10 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40">
       <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-slate-950/70">
@@ -112,11 +122,11 @@ export function BrowserFrame({ src, title, height = 480 }) {
           <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
         </div>
         <div className="flex-1 mx-3 bg-slate-800/80 rounded-md px-3 py-1 text-[11px] text-slate-400 font-mono truncate">
-          lcn254.site/{src}
+          {addressLabel}
         </div>
       </div>
       <iframe
-        src={`/${src}`}
+        src={url}
         title={title}
         loading="lazy"
         style={{ width: "100%", height, border: "none", display: "block", background: "#fff" }}
@@ -126,13 +136,14 @@ export function BrowserFrame({ src, title, height = 480 }) {
 }
 
 export function PhoneFrame({ src, title, height = 480 }) {
+  const { url } = resolveFrameSrc(src);
   const innerWidth = 390;
   return (
     <div className="mx-auto" style={{ width: 220 }}>
       <div className="rounded-[28px] border-4 border-slate-800 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40" style={{ height: 440 }}>
         <div className="relative w-full h-full overflow-hidden">
           <iframe
-            src={`/${src}`}
+            src={url}
             title={title}
             loading="lazy"
             style={{
