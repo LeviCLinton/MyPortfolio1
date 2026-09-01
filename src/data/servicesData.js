@@ -43,7 +43,7 @@ export const SERVICES = [
     ],
     startingPrice: "From KES 15,000",
     priceNote: "Final pricing depends on scope, functionality, content and integrations.",
-    relatedWork: ["ember", "atlas-consulting"],
+    relatedWork: [],
     relatedIndustries: ["professional-services", "restaurants"],
     faqs: [
       { q: "How many pages do I get?", a: "Most business websites launch with 4–6 pages (Home, About, Services, Gallery, Contact, etc.). We scope the exact page count with you before starting." },
@@ -89,7 +89,7 @@ export const SERVICES = [
     ],
     startingPrice: "From KES 75,000+",
     priceNote: "Scope, number of products, and payment integrations affect the final quote.",
-    relatedWork: ["kora-market"],
+    relatedWork: [],
     relatedIndustries: ["restaurants", "salons"],
     faqs: [
       { q: "Can you integrate M-Pesa?", a: "Yes, where it's part of the agreed scope — we implement and test it before launch rather than promising it by default on every project." },
@@ -134,7 +134,7 @@ export const SERVICES = [
     ],
     startingPrice: "From KES 10,000",
     priceNote: "Price depends on page length, copy needs, and any tracking/pixel setup.",
-    relatedWork: ["pulse"],
+    relatedWork: [],
     relatedIndustries: [],
     faqs: [
       { q: "Can you write the copy too?", a: "Yes, copywriting can be included in the scope — tell us the offer and audience and we'll draft it with you." },
@@ -179,7 +179,7 @@ export const SERVICES = [
       "Where we don't yet have real before/after client examples publicly shareable, we use clearly labelled concept examples to illustrate the kind of transformation involved.",
     startingPrice: "From KES 20,000",
     priceNote: "Depends on the size of the existing site and how much is being rebuilt versus refreshed.",
-    relatedWork: ["luma-stay"],
+    relatedWork: [],
     relatedIndustries: ["healthcare"],
     faqs: [
       { q: "Will I lose my Google rankings?", a: "We plan the migration (redirects, URL structure, metadata) specifically to protect existing SEO where possible." },
@@ -222,7 +222,7 @@ export const SERVICES = [
     ],
     startingPrice: "Quoted after scoping",
     priceNote: "Custom projects vary too widely to quote from a fixed starting price — we scope first, then quote.",
-    relatedWork: [],
+    relatedWork: ["debt-tracker"],
     relatedIndustries: ["real-estate", "healthcare"],
     faqs: [
       { q: "What counts as 'custom'?", a: "Anything beyond a content website — booking logic, user accounts, dashboards, or connecting to another system." },
