@@ -69,13 +69,15 @@ export default function WorkPage() {
             </div>
           </Reveal>
 
-          <Reveal>
-            <div className="mb-10 rounded-xl border border-amber-400/25 bg-amber-400/5 px-5 py-3 max-w-2xl">
-              <p className="text-amber-200/80 text-sm">
-                Projects marked <strong className="text-amber-300">Concept Project</strong> are self-directed demonstrations, not commissioned client work. We're upfront about which is which, always — no fabricated clients, results, or testimonials.
-              </p>
-            </div>
-          </Reveal>
+          {WORK.some((w) => w.isConcept) && (
+            <Reveal>
+              <div className="mb-10 rounded-xl border border-amber-400/25 bg-amber-400/5 px-5 py-3 max-w-2xl">
+                <p className="text-amber-200/80 text-sm">
+                  Projects marked <strong className="text-amber-300">Concept Project</strong> are self-directed demonstrations, not commissioned client work. We're upfront about which is which, always — no fabricated clients, results, or testimonials.
+                </p>
+              </div>
+            </Reveal>
+          )}
 
           {/* CATEGORY FILTER — real state change, no full reload; every
               project remains reachable at its own crawlable URL regardless
