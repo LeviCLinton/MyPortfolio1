@@ -106,9 +106,9 @@ export default function CaseStudyPage({ slug }) {
           </Reveal>
           {item.demoPath && (
             <Reveal>
-              <a href={`/${item.demoPath}`} target="_blank" rel="noopener noreferrer"
+              <a href={/^https?:\/\//.test(item.demoPath) ? item.demoPath : `/${item.demoPath}`} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold mb-16" style={{ color: accent }}>
-                <PlayCircle className="h-4 w-4" /> Open Live Demo in a New Tab
+                <PlayCircle className="h-4 w-4" /> {item.isConcept ? "Open Live Demo in a New Tab" : "Visit the Live Site in a New Tab"}
               </a>
             </Reveal>
           )}
@@ -212,7 +212,7 @@ export default function CaseStudyPage({ slug }) {
           <Reveal><section className="mb-16">
             <H2>Visual Showcase</H2>
             <p className="text-slate-400 leading-relaxed mb-8">
-              The frames below load the actual concept build — not a static screenshot — so the responsive behaviour shown is genuine.
+              The frames below load {item.isConcept ? "the actual concept build" : "the real, live site"} — not a static screenshot — so the responsive behaviour shown is genuine.
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-start">
               <div>
