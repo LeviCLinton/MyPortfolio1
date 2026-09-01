@@ -68,22 +68,36 @@ function buildRoutes() {
       // business to search engines. CreativeWork honestly describes what
       // this page actually is: a design case study LCN254 produced, about
       // a given industry, with LCN254 (a real organization) as its creator.
-      structuredData: {
-        "@context": "https://schema.org",
-        "@type": "CreativeWork",
-        "name": `${w.title || w.name} — ${w.projectType}`,
-        "description": w.shortDesc,
-        "creator": { "@type": "Organization", "name": "LCN254", "url": SITE },
-        "about": w.industry,
-        "genre": "Web Design Case Study",
-        "dateCreated": String(w.year || ""),
-        "url": `${SITE}/work/${w.slug}`,
-        "keywords": [w.category, w.projectType, ...(w.services || [])].filter(Boolean).join(", "),
-        "additionalType": w.isConcept ? "https://schema.org/Thing" : undefined,
-        "disambiguatingDescription": w.isConcept
-          ? "Self-initiated concept project by LCN254 — not commissioned client work, and not a real operating business."
-          : undefined,
-      },
+      structuredData:
+        w.schemaType === "SoftwareApplication"
+          ? {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": w.title || w.name,
+              "description": w.shortDesc,
+              "applicationCategory": w.applicationCategory || "WebApplication",
+              "operatingSystem": "Web",
+              "url": w.demoPath,
+              "creator": { "@type": "Organization", "name": "LCN254", "url": SITE },
+              "sameAs": `${SITE}/work/${w.slug}`,
+              "offers": w.isFree ? { "@type": "Offer", "price": "0", "priceCurrency": "USD" } : undefined,
+            }
+          : {
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              "name": `${w.title || w.name} — ${w.projectType}`,
+              "description": w.shortDesc,
+              "creator": { "@type": "Organization", "name": "LCN254", "url": SITE },
+              "about": w.industry,
+              "genre": "Web Design Case Study",
+              "dateCreated": String(w.year || ""),
+              "url": `${SITE}/work/${w.slug}`,
+              "keywords": [w.category, w.projectType, ...(w.services || [])].filter(Boolean).join(", "),
+              "additionalType": w.isConcept ? "https://schema.org/Thing" : undefined,
+              "disambiguatingDescription": w.isConcept
+                ? "Self-initiated concept project by LCN254 — not commissioned client work, and not a real operating business."
+                : undefined,
+            },
       googleFontHref: w.googleFontHref,
     });
   }
