@@ -22,7 +22,7 @@ export const WORK = [
   {
     slug: "debt-tracker",
     isConcept: false,
-    featured: true,
+    featured: false,
     name: "DebtTracker — Personal Debt & Receivable Tracker",
     title: "DebtTracker",
     category: "Web Apps",
@@ -69,7 +69,7 @@ export const WORK = [
   {
     slug: "tableflow",
     isConcept: false,
-    featured: false,
+    featured: true,
     name: "TABLEFLOW — Restaurant Operations Platform",
     title: "TABLEFLOW",
     category: "Restaurants",
