@@ -91,9 +91,9 @@ export function RelatedLinks({ links = [] }) {
   );
 }
 
-export function Icon({ name, className = "h-5 w-5" }) {
+export function Icon({ name, className = "h-5 w-5", ...rest }) {
   const Cmp = LucideIcons[name] || Circle;
-  return <Cmp className={className} />;
+  return <Cmp className={className} {...rest} />;
 }
 
 export function FAQBlock({ items = [] }) {
@@ -265,6 +265,41 @@ export function MagneticButton({ href, children, className = "", style, target, 
       {children}
     </motion.a>
   );
+}
+
+/**
+ * SummaryCard — generic icon + title + description card used for grid
+ * layouts across the Services and Industries overview pages (the service
+ * grid, the "Why work with LCN254" grid, the industries grid, etc).
+ *
+ * Props:
+ *   icon        lucide-react icon name as a string (e.g. "Zap", "Globe"),
+ *               rendered via the shared Icon component above
+ *   title       card heading
+ *   description card body copy
+ *   href        optional — if provided, the whole card becomes a link
+ *   color       optional accent color for the icon chip background/icon
+ *               itself; defaults to the site teal (T)
+ */
+export function SummaryCard({ icon, title, description, href, color = T }) {
+  const content = (
+    <>
+      {icon && (
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: `${color}18` }}>
+          <Icon name={icon} className="h-5 w-5" style={{ color }} />
+        </div>
+      )}
+      <h3 className="font-bold text-white text-lg mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{title}</h3>
+      <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+    </>
+  );
+
+  const className = "rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md transition-colors hover:border-white/20";
+
+  if (href) {
+    return <a href={href} className={`block group ${className}`}>{content}</a>;
+  }
+  return <div className={className}>{content}</div>;
 }
 
 export function ProjectCard({ item, large = false }) {
