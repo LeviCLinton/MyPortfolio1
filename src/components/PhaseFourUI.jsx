@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import * as Icons from "lucide-react";
-import { Plus, ArrowRight, CheckCircle2 } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { ArrowRight, Circle } from "lucide-react";
 
-const T = "#1AA3B0";
-const P = "#F0409A";
-
-export const GLOW = {
-  cyan:    { text:"text-cyan-300",    ring:"hover:border-cyan-400/40",    pill:"bg-cyan-500/10 text-cyan-300 border-cyan-400/30" },
-  indigo:  { text:"text-indigo-300",  ring:"hover:border-indigo-400/40",  pill:"bg-indigo-500/10 text-indigo-300 border-indigo-400/30" },
-  amber:   { text:"text-amber-300",   ring:"hover:border-amber-400/40",   pill:"bg-amber-500/10 text-amber-300 border-amber-400/30" },
-  teal:    { text:"text-[#3FC1CB]",   ring:"hover:border-[#1AA3B0]/40",   pill:"bg-[#1AA3B0]/10 text-[#3FC1CB] border-[#1AA3B0]/30" },
-  pink:    { text:"text-[#F778B6]",   ring:"hover:border-[#F0409A]/40",   pill:"bg-[#F0409A]/10 text-[#F778B6] border-[#F0409A]/30" },
-};
+export const T = "#1AA3B0";
+export const P = "#F0409A";
 
 export function Reveal({ children, delay = 0, className = "" }) {
   return (
@@ -26,15 +18,14 @@ export function Reveal({ children, delay = 0, className = "" }) {
   );
 }
 
-export function Icon({ name, className, style }) {
-  const Cmp = Icons[name] || Icons.Circle;
-  return <Cmp className={className} style={style} />;
+export function Kicker({ children }) {
+  return (
+    <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>
+      {children}
+    </span>
+  );
 }
 
-/* ── Section heading ─────────────────────────────────────────────────── */
-export function Kicker({ children }) {
-  return <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>{children}</span>;
-}
 export function H1({ children, style }) {
   return (
     <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-5"
@@ -52,48 +43,84 @@ export function H2({ children, className = "", style }) {
   );
 }
 
-/* ── Primary/secondary buttons — real anchors, real hrefs ───────────────── */
-export function PrimaryLink({ href, children, className = "" }) {
+export function PrimaryLink({ href, children }) {
   return (
-    <motion.a href={href} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-slate-950 ${className}`}
+    <a href={href}
+      className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold text-slate-950"
       style={{ background: `linear-gradient(135deg,${T},${P})` }}>
-      {children} <ArrowRight className="h-4 w-4" />
-    </motion.a>
-  );
-}
-export function SecondaryLink({ href, children, className = "" }) {
-  return (
-    <motion.a href={href} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors ${className}`}>
       {children}
-    </motion.a>
+    </a>
   );
 }
 
-/* ── Service / Industry summary card (used on overview pages) ───────────── */
-export function SummaryCard({ href, icon, color, title, desc, cta, bullets }) {
-  const c = GLOW[color] || GLOW.teal;
+export function SecondaryLink({ href, children }) {
   return (
-    <motion.div whileHover={{ y: -3 }} className={`group rounded-2xl border border-white/10 bg-slate-900/40 p-6 backdrop-blur-md transition-colors ${c.ring}`}>
-      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "rgba(26,163,176,0.12)" }}>
-        <Icon name={icon} className={`h-5 w-5 ${c.text}`} />
+    <a href={href}
+      className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
+      {children}
+    </a>
+  );
+}
+
+export function FinalCTA({ headline, copy, primaryLabel = "START YOUR PROJECT", primaryHref = "/contact", secondaryLabel = "VIEW OUR WORK", secondaryHref = "/work" }) {
+  return (
+    <Reveal>
+      <div className="text-center rounded-2xl border border-white/5 bg-slate-900/40 p-10">
+        <h2 className="text-2xl font-bold text-white mb-3">{headline}</h2>
+        <p className="text-slate-400 mb-6 max-w-xl mx-auto">{copy}</p>
+        <div className="flex items-center justify-center gap-4 flex-wrap">
+          <PrimaryLink href={primaryHref}>{primaryLabel} <ArrowRight className="h-4 w-4 inline ml-1" /></PrimaryLink>
+          <SecondaryLink href={secondaryHref}>{secondaryLabel}</SecondaryLink>
+        </div>
       </div>
-      <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
-      <p className="text-slate-400 text-sm mb-4 leading-relaxed">{desc}</p>
-      {bullets && (
-        <ul className="mb-5 space-y-1.5">
-          {bullets.slice(0, 4).map((b) => (
-            <li key={b} className="flex items-center gap-2 text-xs text-slate-300">
-              <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 ${c.text}`} />{b}
-            </li>
-          ))}
-        </ul>
-      )}
-      <a href={href} className={`inline-flex items-center gap-1.5 text-sm font-semibold ${c.text}`}>
-        {cta} <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-      </a>
-    </motion.div>
+    </Reveal>
+  );
+}
+
+export function RelatedLinks({ links = [] }) {
+  if (links.length === 0) return null;
+  return (
+    <div className="flex flex-wrap gap-2">
+      {links.map((l) => (
+        <a key={l.href} href={l.href}
+          className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10">
+          {l.label} <ArrowRight className="h-3.5 w-3.5" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function Icon({ name, className = "h-5 w-5" }) {
+  const Cmp = LucideIcons[name] || Circle;
+  return <Cmp className={className} />;
+}
+
+export function FAQBlock({ items = [] }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <div>
+      {items.map((faq, i) => (
+        <div key={i} className="border-b border-white/5">
+          <button onClick={() => setOpen(open === i ? null : i)}
+            className="w-full flex items-center justify-between py-5 text-left gap-4 group">
+            <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors">{faq.q}</span>
+            <motion.span animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }}
+              className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400">
+              +
+            </motion.span>
+          </button>
+          <AnimatePresence initial={false}>
+            {open === i && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
+                <p className="pb-6 text-slate-400 leading-relaxed">{faq.a}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -135,22 +162,47 @@ export function BrowserFrame({ src, title, height = 480 }) {
   );
 }
 
-export function PhoneFrame({ src, title, height = 480 }) {
+/**
+ * PhoneFrame — shows the actual site rendered at a real mobile viewport
+ * (390×844, matching common modern phone screens), scaled down uniformly
+ * to fit a small decorative frame.
+ *
+ * BUG FIX: the previous version computed the iframe's internal height as
+ * `innerWidth * (height / 390)`, which — since innerWidth was always
+ * exactly 390 — algebraically collapses to just `height` again. That
+ * pinned the iframe's internal height to the *desktop* preview height
+ * (usually 420–520px) instead of a real mobile viewport height. A page
+ * rendered at mobile width is almost always taller than at desktop width
+ * once content stacks into a single column, so the iframe was silently
+ * cutting off the bottom of the real mobile layout — showing a squished
+ * fragment with dead space below it rather than a full phone screen.
+ *
+ * Fix: render the iframe at a genuine full mobile viewport (390×844) and
+ * scale the *whole frame* down by one consistent factor, so nothing is
+ * cropped — the visible frame is simply a smaller, complete rendering of
+ * an actual phone screen, at the correct aspect ratio (390:844).
+ */
+export function PhoneFrame({ src, title, frameWidth = 260 }) {
   const { url } = resolveFrameSrc(src);
-  const innerWidth = 390;
+  const viewportWidth = 390;   // real mobile viewport width
+  const viewportHeight = 844;  // real mobile viewport height (iPhone 12–15 class)
+  const scale = frameWidth / viewportWidth;
+  const frameHeight = Math.round(viewportHeight * scale);
+
   return (
-    <div className="mx-auto" style={{ width: 220 }}>
-      <div className="rounded-[28px] border-4 border-slate-800 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40" style={{ height: 440 }}>
+    <div className="mx-auto" style={{ width: frameWidth }}>
+      <div className="rounded-[28px] border-4 border-slate-800 bg-slate-900 overflow-hidden shadow-2xl shadow-black/40"
+        style={{ width: frameWidth, height: frameHeight }}>
         <div className="relative w-full h-full overflow-hidden">
           <iframe
             src={url}
             title={title}
             loading="lazy"
             style={{
-              width: innerWidth,
-              height: innerWidth * (height / 390) || 900,
+              width: viewportWidth,
+              height: viewportHeight,
               border: "none",
-              transform: `scale(${220 / innerWidth})`,
+              transform: `scale(${scale})`,
               transformOrigin: "top left",
               background: "#fff",
             }}
@@ -158,43 +210,6 @@ export function PhoneFrame({ src, title, height = 480 }) {
         </div>
       </div>
     </div>
-  );
-}
-
-/* ── Premium portfolio project card ──────────────────────────────────────
-   Real <a href>, subtle image-area scale on hover, arrow shift, and a
-   "View Case Study" label that appears on hover — kept understated per the
-   Phase 5 design direction (no heavy glassmorphism/gradients/bounce). ───── */
-export function ProjectCard({ item, large = false }) {
-  return (
-    <a href={`/work/${item.slug}`}
-      className={`group relative block overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 transition-colors hover:border-white/25 ${large ? "sm:col-span-2" : ""}`}>
-      <div className={`relative overflow-hidden ${large ? "h-64 sm:h-80" : "h-52"}`}>
-        <div
-          className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-          style={{ background: item.heroGradient }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-        {item.isConcept && (
-          <span className="absolute top-4 left-4 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
-            Concept Project
-          </span>
-        )}
-        <span className="absolute top-4 right-4 font-mono text-[11px] text-white/60">{item.category}</span>
-      </div>
-      <div className="p-6">
-        <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: T }}>{item.category}</p>
-        <h3 className="mt-2 mb-2 text-xl font-bold text-white transition-transform duration-300 group-hover:translate-x-0.5"
-          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-          {item.title || item.name}
-        </h3>
-        <p className="text-slate-400 text-sm leading-relaxed mb-4">{item.shortDesc}</p>
-        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-          View Case Study
-          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
-        </span>
-      </div>
-    </a>
   );
 }
 
@@ -252,88 +267,35 @@ export function MagneticButton({ href, children, className = "", style, target, 
   );
 }
 
-/* ── FAQ accordion ────────────────────────────────────────────────────── */
-export function FAQBlock({ items, title = "Frequently Asked Questions" }) {
-  const [open, setOpen] = useState(null);
+export function ProjectCard({ item, large = false }) {
   return (
-    <div>
-      {title && <H2>{title}</H2>}
-      <div>
-        {items.map((faq, i) => (
-          <div key={i} className="border-b border-white/5">
-            <button onClick={() => setOpen(open === i ? null : i)}
-              className="w-full flex items-center justify-between py-5 text-left gap-4 group">
-              <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors">{faq.q}</span>
-              <motion.div animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }}
-                className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400">
-                <Plus className="h-3.5 w-3.5" />
-              </motion.div>
-            </button>
-            <AnimatePresence initial={false}>
-              {open === i && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-                  <p className="pb-6 text-slate-400 leading-relaxed">{faq.a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
+    <a href={`/work/${item.slug}`}
+      className={`group relative block overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 transition-colors hover:border-white/25 ${large ? "sm:col-span-2" : ""}`}>
+      <div className={`relative overflow-hidden ${large ? "h-64 sm:h-80" : "h-52"}`}>
+        <div
+          className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          style={{ background: item.heroGradient }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+        {item.isConcept && (
+          <span className="absolute top-4 left-4 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
+            Concept Project
+          </span>
+        )}
+        <span className="absolute top-4 right-4 font-mono text-[11px] text-white/60">{item.category}</span>
       </div>
-    </div>
-  );
-}
-
-/* ── 7-step process strip ────────────────────────────────────────────── */
-const PROCESS_STEPS = [
-  ["01", "Discover"], ["02", "Strategize"], ["03", "Design"], ["04", "Build"],
-  ["05", "Test"], ["06", "Launch"], ["07", "Grow"],
-];
-export function ProcessStrip() {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
-      {PROCESS_STEPS.map(([n, label]) => (
-        <div key={n} className="rounded-xl border border-white/5 bg-slate-900/40 p-4 text-center">
-          <div className="font-mono text-xs mb-2" style={{ color: T }}>{n}</div>
-          <div className="text-sm font-semibold text-white">{label}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ── Final CTA band, reused across every Phase 4 page ────────────────── */
-export function FinalCTA({ headline, copy, primaryHref = "/contact", primaryLabel = "START YOUR PROJECT", secondaryHref = "/work", secondaryLabel = "VIEW OUR WORK" }) {
-  return (
-    <Reveal>
-      <div className="text-center rounded-2xl border border-white/5 bg-slate-900/40 p-10">
-        <h2 className="text-2xl font-bold text-white mb-3">{headline}</h2>
-        {copy && <p className="text-slate-400 mb-6 max-w-xl mx-auto">{copy}</p>}
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          <PrimaryLink href={primaryHref}>{primaryLabel}</PrimaryLink>
-          <SecondaryLink href={secondaryHref}>{secondaryLabel}</SecondaryLink>
-        </div>
+      <div className="p-6">
+        <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: T }}>{item.category}</p>
+        <h3 className="mt-2 mb-2 text-xl font-bold text-white transition-transform duration-300 group-hover:translate-x-0.5"
+          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          {item.title || item.name}
+        </h3>
+        <p className="text-slate-400 text-sm leading-relaxed mb-4">{item.shortDesc}</p>
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+          View Case Study
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
+        </span>
       </div>
-    </Reveal>
+    </a>
   );
 }
-
-/* ── Simple breadcrumb / internal link row ───────────────────────────── */
-export function RelatedLinks({ title = "Explore Next", links }) {
-  if (!links?.length) return null;
-  return (
-    <div className="rounded-2xl border border-white/5 bg-slate-900/40 p-6">
-      <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-4">{title}</p>
-      <div className="flex flex-wrap gap-3">
-        {links.map((l) => (
-          <a key={l.href} href={l.href}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200 hover:bg-white/10 hover:text-white transition-colors">
-            {l.label} <ArrowRight className="h-3.5 w-3.5" />
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export { T, P };
