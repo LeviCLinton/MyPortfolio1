@@ -112,6 +112,60 @@ export const WORK = [
     summary:
       "TABLEFLOW demonstrates LCN254 building toward the harder end of \"web development\": not just a marketing site, but an operational platform meant to be used continuously, under real time pressure, by restaurant staff.",
   },
+  {
+    slug: "basepoint",
+    isConcept: false,
+    featured: false,
+    name: "Basepoint — Business Operations Platform",
+    title: "Basepoint",
+    category: "Web Apps",
+    industry: "Point of Sale / Business Operations",
+    projectType: "Web Application (POS Platform)",
+    type: "Product",
+    client: "LCN254 (self-built product)",
+    year: "2026",
+    services: ["Product Design", "UX/UI Design", "Frontend Engineering"],
+    filterTags: ["web-apps"],
+    schemaType: "SoftwareApplication",
+    applicationCategory: "BusinessApplication",
+    // Verification note: only the page's own title ("Basepoint — Business
+    // Operations Platform") and its URL slug ("basepoint-pos-platform")
+    // were confirmed directly. No meta description or feature list was
+    // available to fetch, and unrelated third-party products of the same
+    // name were deliberately excluded from this entry. Copy below stays
+    // strictly within what those two confirmed facts support — it does not
+    // invent a feature list the way TABLEFLOW's could be, since TABLEFLOW's
+    // own description explicitly named its five feature areas and
+    // Basepoint's did not.
+    shortDesc:
+      "A point-of-sale and business operations platform for handling day-to-day transactions and operations in one place.",
+    keyFeature: "Point-of-sale transaction handling",
+    demoPath: "https://leviclinton.github.io/basepoint-pos-platform/",
+    heroGradient: "linear-gradient(135deg,#3b6ea525,#1f293718)",
+    accentColor: "#3b6ea5",
+    headingFont: "'Manrope', sans-serif",
+    googleFontHref: "https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap",
+    overview:
+      "Basepoint is a live point-of-sale and business operations platform. Its own title describes it as a \"Business Operations Platform,\" and its address identifies it specifically as a POS (point-of-sale) platform for businesses handling day-to-day transactions.",
+    challenge:
+      "Point-of-sale systems are one of the least forgiving categories of business software to build: they sit directly in the path of a business taking payment, so reliability and clarity under pressure matter more than in most other tools.",
+    strategy: {
+      intro: "As a point-of-sale and operations platform, the product is built around the core job any POS system has to do reliably:",
+      objectives: [
+        { n: "01", label: "Handle transactions cleanly", detail: "The core point-of-sale flow is the foundation the rest of the platform is built around." },
+        { n: "02", label: "Support day-to-day operations", detail: "The platform is positioned as a business operations tool, not a narrow checkout screen." },
+      ],
+      closing: "Further detail on Basepoint's specific feature set isn't published here — this case study intentionally states only what's been directly confirmed, rather than filling in assumptions.",
+    },
+    designApproach:
+      "As with LCN254's other product work, the interface is built to be usable at the counter or on the floor of a business, not just from a back-office desk.",
+    keyFeatures: ["Point-of-sale transaction handling", "Business operations management"],
+    technology: ["Web application"],
+    outcome:
+      "Basepoint is live and publicly available today. No usage, adoption, or revenue metrics are published here, since none are being tracked or disclosed for this platform.",
+    summary:
+      "Basepoint adds a second point-of-sale/operations product to LCN254's real work, alongside TABLEFLOW — both aimed at the operational side of running a business, not just its public-facing website.",
+  },
 ];
 
 export const getWorkItem = (slug) => WORK.find((w) => w.slug === slug);
@@ -126,7 +180,7 @@ export const getAdjacentWork = (slug) => {
 };
 
 // Categories for portfolio filtering. Kept broad (covering verticals LCN254
-// builds for) even though only "Web Apps" currently has an entry — real
+// builds for) even though only a couple currently have entries — real
 // client work in these categories can be added here as it happens, without
 // needing to touch WorkPage.jsx.
 export const WORK_CATEGORIES = [
