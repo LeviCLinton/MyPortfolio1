@@ -302,6 +302,47 @@ export function SummaryCard({ icon, title, description, href, color = T }) {
   return <div className={className}>{content}</div>;
 }
 
+/**
+ * ProcessStrip — the numbered process steps shown on the Services overview
+ * page and reused on the dedicated Process page.
+ *
+ * Accepts an optional `steps` array of { n, title, description } so callers
+ * can override the copy; if omitted, defaults to LCN254's standard 7-step
+ * process so the component still renders correctly even when called with
+ * no props at all (e.g. `<ProcessStrip />`).
+ */
+const DEFAULT_PROCESS_STEPS = [
+  { n: "01", title: "Discover", description: "Understand the business, the goals, and who the site actually needs to work for." },
+  { n: "02", title: "Strategize", description: "Map out the site structure, content, and conversion path before any design starts." },
+  { n: "03", title: "Design", description: "Design the interface — layout, typography, and visual identity — around that strategy." },
+  { n: "04", title: "Build", description: "Develop the real, working site: responsive, fast, and built on a maintainable codebase." },
+  { n: "05", title: "Test", description: "Check every page across devices, browsers, and real content before anything ships." },
+  { n: "06", title: "Launch", description: "Deploy to production, connect the domain, and confirm everything works live." },
+  { n: "07", title: "Grow", description: "Ongoing updates, maintenance, and improvements after launch — not a one-time handoff." },
+];
+
+export function ProcessStrip({ steps = DEFAULT_PROCESS_STEPS }) {
+  return (
+    <div className="relative">
+      <div className="hidden lg:block absolute top-5 left-[4%] right-[4%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {steps.map((s, i) => (
+          <Reveal key={s.n} delay={i * 0.06}>
+            <div className="relative text-left">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm font-bold mb-5 relative z-10"
+                style={{ background: `linear-gradient(135deg,${T},${P})`, color: "#0f172a" }}>
+                {s.n}
+              </div>
+              <h3 className="font-bold text-white mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.title}</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{s.description}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ProjectCard({ item, large = false }) {
   return (
     <a href={`/work/${item.slug}`}
