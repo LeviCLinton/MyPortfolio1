@@ -100,26 +100,41 @@ export function FAQBlock({ items = [] }) {
   const [open, setOpen] = useState(null);
   return (
     <div>
-      {items.map((faq, i) => (
-        <div key={i} className="border-b border-white/5">
-          <button onClick={() => setOpen(open === i ? null : i)}
-            className="w-full flex items-center justify-between py-5 text-left gap-4 group">
-            <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors">{faq.q}</span>
-            <motion.span animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }}
-              className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400">
-              +
-            </motion.span>
-          </button>
-          <AnimatePresence initial={false}>
-            {open === i && (
-              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-                <p className="pb-6 text-slate-400 leading-relaxed">{faq.a}</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      ))}
+      {items.map((faq, i) => {
+        const isOpen = open === i;
+        return (
+          <div key={i} className="border-b border-white/5">
+            <button onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen}
+              className="w-full flex items-center justify-between py-5 text-left gap-4 group">
+              <span className="font-semibold text-white group-hover:text-[#3FC1CB] transition-colors">{faq.q}</span>
+              <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.2 }}
+                className="shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-slate-400">
+                +
+              </motion.span>
+            </button>
+            {/* BUG FIX: the answer used to be conditionally mounted
+                ({isOpen && <motion.div>...}) via AnimatePresence, which
+                means a collapsed FAQ item's answer text did not exist in
+                the DOM at all — including in the static, prerendered HTML
+                that search engines and AI crawlers actually read. A
+                crawler fetching this page saw every question and zero
+                answers. The answer is now always rendered; only its
+                visual height/opacity animates on open/close, so the text
+                is present and readable in the page source regardless of
+                accordion state. (Content collapsed via CSS height/overflow
+                in an accordion is normal, expected UI and is crawled and
+                indexed normally — this isn't a hidden-text SEO risk.) */}
+            <motion.div
+              initial={false}
+              animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
+              <p className="pb-6 text-slate-400 leading-relaxed">{faq.a}</p>
+            </motion.div>
+          </div>
+        );
+      })}
     </div>
   );
 }
