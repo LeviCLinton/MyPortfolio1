@@ -14,15 +14,10 @@ const ServicesPage = lazy(() => import("./pages/ServicesPage.jsx"));
 const ServiceDetailPage = lazy(() => import("./pages/ServiceDetailPage.jsx"));
 const WorkPage = lazy(() => import("./pages/WorkPage.jsx"));
 const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage.jsx"));
-const IndustriesPage = lazy(() => import("./pages/IndustriesPage.jsx"));
-const IndustryDetailPage = lazy(() => import("./pages/IndustryDetailPage.jsx"));
 const PricingPage = lazy(() => import("./pages/PricingPage.jsx"));
 const ProcessPage = lazy(() => import("./pages/ProcessPage.jsx"));
-const BlogIndexPage = lazy(() => import("./Blog.jsx").then((m) => ({ default: m.BlogIndexPage })));
-const BlogArticlePage = lazy(() => import("./Blog.jsx").then((m) => ({ default: m.BlogArticlePage })));
 
 import { SERVICES } from "./data/servicesData.js";
-import { INDUSTRIES } from "./data/industriesData.js";
 import {
   Stethoscope, Scissors, BedDouble, Home as HomeIcon,
   Truck, ChefHat, ShoppingBag, CheckCircle2, PlayCircle, Rocket,
@@ -81,10 +76,7 @@ function Nav({ route }) {
   const links = [
     { label: "Services",   href: "/services" },
     { label: "Work",       href: "/work" },
-    { label: "Industries", href: "/industries" },
     { label: "Pricing",    href: "/pricing" },
-    { label: "Blog",       href: "/blog" },
-    { label: "About",      href: "/about" },
   ];
 
   const isActive = (href) => route === href || (href !== "/" && route.startsWith(href));
@@ -162,7 +154,7 @@ function Footer() {
   return (
     <footer className="border-t border-white/5 bg-slate-950 px-6 py-10 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8 text-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-8 text-sm">
           <div>
             <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mb-3">Services</p>
             <ul className="space-y-2">
@@ -172,21 +164,11 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mb-3">Industries</p>
-            <ul className="space-y-2">
-              {INDUSTRIES.slice(0, 5).map((i) => (
-                <li key={i.slug}><a href={`/industries/${i.slug}`} className="text-slate-400 hover:text-white transition-colors">{i.name}</a></li>
-              ))}
-            </ul>
-          </div>
-          <div>
             <p className="text-slate-500 font-mono text-xs uppercase tracking-widest mb-3">Company</p>
             <ul className="space-y-2">
               <li><a href="/work" className="text-slate-400 hover:text-white transition-colors">Work</a></li>
               <li><a href="/process" className="text-slate-400 hover:text-white transition-colors">Process</a></li>
               <li><a href="/pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="/about" className="text-slate-400 hover:text-white transition-colors">About</a></li>
-              <li><a href="/blog" className="text-slate-400 hover:text-white transition-colors">Blog</a></li>
             </ul>
           </div>
           <div>
@@ -433,38 +415,6 @@ function ServicesTeaserStrip() {
   );
 }
 
-// ─── Home: Industries teaser ────────────────────────────────────────────────
-function IndustriesTeaserStrip() {
-  return (
-    <section className="px-6 py-20 lg:px-12 border-t border-white/5">
-      <div className="mx-auto max-w-6xl">
-        <Reveal>
-          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>Industries</span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Built around how your business works.
-              </h2>
-            </div>
-            <a href="/industries" className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
-              View all industries <ChevronRight className="h-4 w-4" />
-            </a>
-          </div>
-        </Reveal>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-          {INDUSTRIES.map((ind, i) => (
-            <Reveal key={ind.slug} delay={i * 0.05}>
-              <a href={`/industries/${ind.slug}`} className="group block rounded-xl border border-white/10 bg-slate-900/40 p-4 text-center hover:border-white/20 transition-colors">
-                <span className="text-sm font-semibold text-white">{ind.name}</span>
-              </a>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Home: How it works ───────────────────────────────────────────────────────
 function HowItWorks() {
   const steps = [
@@ -503,49 +453,6 @@ function HowItWorks() {
             <a href="/process" className="text-sm font-semibold" style={{ color: T }}>See the full seven-step process →</a>
           </div>
         </Reveal>
-      </div>
-    </section>
-  );
-}
-
-// ─── Home: Blog teaser ────────────────────────────────────────────────────────
-function BlogTeaserStrip() {
-  const previews = [
-    { slug: "web-architecture-mistakes-costing-revenue", title: "Why Your Website Isn't Converting: 5 Invisible Web Architecture Mistakes", category: "Business Growth", date: "Aug 12, 2026", color: "#F0409A" },
-    { slug: "ai-for-everyone-zuckerberg", title: "The Future Is for Everyone: Zuckerberg's Vision for Personal Superintelligence", category: "AI & Technology", date: "Aug 10, 2026", color: "#1AA3B0" },
-    { slug: "why-your-business-needs-a-website-2026", title: "Why Every Kenyan Business Needs a Website in 2026 — Not a Facebook Page", category: "Business Growth", date: "Aug 5, 2026", color: "#6366f1" },
-  ];
-  return (
-    <section className="px-6 py-20 lg:px-12 border-t border-white/5">
-      <div className="mx-auto max-w-6xl">
-        <Reveal>
-          <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-widest block mb-2" style={{ color: T }}>From the Blog</span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Tech news & business insights.
-              </h2>
-            </div>
-            <a href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors">
-              Read all articles <ChevronRight className="h-4 w-4" />
-            </a>
-          </div>
-        </Reveal>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {previews.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.07}>
-              <a href={`/blog/${p.slug}`}
-                className="group w-full text-left rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md overflow-hidden hover:border-white/20 transition-colors block">
-                <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }} />
-                <div className="p-5">
-                  <span className="text-xs font-semibold" style={{ color: p.color }}>{p.category}</span>
-                  <h3 className="mt-2 font-semibold text-sm text-white group-hover:text-[#3FC1CB] transition-colors leading-snug">{p.title}</h3>
-                  <p className="mt-3 text-xs text-slate-500">{p.date}</p>
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -673,122 +580,6 @@ function ContactPage() {
         <MessageCircle className="h-6 w-6" />
       </a>
 
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
-// ─── About page ───────────────────────────────────────────────────────────────
-function AboutPage() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  const timeline = [
-    { year:"2022", event:"Started building sites for Nairobi restaurants and hotels — freelance, nothing formal." },
-    { year:"2023", event:"Moved into a structured agency model after seeing the same problems across every industry: no online presence, broken booking flows, no payments." },
-    { year:"2024", event:"Built our first repeatable service offerings — industry-specific approaches for SMEs that cut delivery time while maintaining quality." },
-    { year:"2025", event:"Took on larger enterprise, e-commerce, and multi-page platform projects." },
-    { year:"2026", event:"LCN254 today — a focused agency doing one thing well: fast, reliable websites for growing businesses." },
-  ];
-  return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <SEOHead title="About LCN254" description="LCN254 is a Nairobi-based web agency building fast, functional websites for businesses of every size, in Kenya and internationally." path="/about" />
-      <Nav route="/about" />
-      <main>
-      <div className="pt-28 pb-20 px-6 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <Reveal>
-            <div className="mb-16">
-              <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>About LCN254</span>
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Modern, high-performance websites for{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">growing businesses.</span>
-              </h1>
-              <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                LCN254 is a Nairobi-based web design and development agency. We build fast, functional websites for businesses in Kenya and internationally — from a first-time entrepreneur launching a landing page to an established company needing a full digital platform.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16 p-6 rounded-2xl border border-white/5 bg-slate-900/40">
-              {[["3–5","Days average"],["SME→Enterprise","Scale we serve"],["254","Kenya dial code"]].map(([v,l]) => (
-                <div key={l} className="text-center">
-                  <div className="text-3xl font-black mb-1 bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{v}</div>
-                  <div className="text-slate-500 text-xs font-mono uppercase tracking-wider">{l}</div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 mb-16">
-            <Reveal>
-              <h2 className="text-2xl font-bold text-white mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>The name is the mission.</h2>
-              <div className="space-y-4 text-slate-400 leading-relaxed">
-                <p><span className="text-white font-semibold">LCN254</span> — Local Commerce Network, dial code 254. The name says what we're here to do: help businesses compete online, starting from Kenya and working with clients worldwide.</p>
-                <p>We started serving small businesses because that's where the gap was biggest. Today we work with SMEs, corporates, and service businesses of every size — the tools and standards are the same, the scope just grows.</p>
-                <p>We're a small team. You talk directly to the person building your site — no account managers, no handoffs.</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="relative">
-                <div className="absolute left-3.5 top-0 bottom-0 w-px bg-white/10" />
-                <div className="space-y-7 relative">
-                  {timeline.map((t, i) => (
-                    <div key={t.year} className="flex gap-5 items-start">
-                      <div className="relative shrink-0">
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold relative z-10"
-                          style={i === timeline.length-1
-                            ? { background: `linear-gradient(135deg,${T},${P})`, color: "#0f172a" }
-                            : { background: "#1e293b", color: "#64748b", border: "1px solid rgba(255,255,255,0.1)" }} />
-                      </div>
-                      <div>
-                        <div className="font-mono text-xs mb-1" style={{ color: T }}>{t.year}</div>
-                        <p className="text-slate-400 text-sm leading-relaxed">{t.event}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal>
-            <h2 className="text-2xl font-bold text-white mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>What we actually believe.</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-14">
-              {[
-                { icon:"⚡", t:"Speed is a feature",    d:"Slow sites lose customers, especially on mobile data." },
-                { icon:"📍", t:"Built for how you work",  d:"M-Pesa, local pricing, and international client needs — we build for real business conditions." },
-                { icon:"🔒", t:"No lock-in",             d:"You own everything we build. No proprietary CMS, no monthly platform fees." },
-                { icon:"🎯", t:"Honest scoping",         d:"We quote what the work actually costs. No surprise invoices halfway through." },
-              ].map((v) => (
-                <motion.div key={v.t} whileHover={{ y: -3 }} className="rounded-2xl border border-white/5 bg-slate-900/40 p-6 backdrop-blur-md">
-                  <div className="text-2xl mb-3">{v.icon}</div>
-                  <h3 className="font-semibold text-white mb-2">{v.t}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{v.d}</p>
-                </motion.div>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal>
-            <div className="text-center rounded-2xl border border-white/5 bg-slate-900/40 p-10">
-              <h2 className="text-2xl font-bold text-white mb-3">Ready to build something?</h2>
-              <p className="text-slate-400 mb-6">Browse our services, pick what fits, and get in touch.</p>
-              <div className="flex items-center justify-center gap-4 flex-wrap">
-                <motion.a whileHover={{ scale: 1.02 }} href="/services"
-                  className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-950"
-                  style={{ background: `linear-gradient(135deg,${T},${P})` }}>
-                  Browse Services <ArrowRight className="h-4 w-4" />
-                </motion.a>
-                <motion.a whileHover={{ scale: 1.02 }} href="/contact"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
-                  Get in Touch
-                </motion.a>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
       </main>
       <Footer />
     </div>
@@ -949,9 +740,7 @@ function HomePage() {
       <CinematicHero />
       <ValueStrip />
       <ServicesTeaserStrip />
-      <IndustriesTeaserStrip />
       <HowItWorks />
-      <BlogTeaserStrip />
       </main>
       <Footer />
     </div>
@@ -986,26 +775,17 @@ function RouteOutlet() {
   if (matchStatic(pathname, "/")) return <HomePage />;
   if (matchStatic(pathname, "/services")) return (<><Nav route="/services" /><Suspense fallback={<PageFallback />}><ServicesPage /></Suspense><Footer /></>);
   if (matchStatic(pathname, "/work")) return (<><Nav route="/work" /><Suspense fallback={<PageFallback />}><WorkPage /></Suspense><Footer /></>);
-  if (matchStatic(pathname, "/industries")) return (<><Nav route="/industries" /><Suspense fallback={<PageFallback />}><IndustriesPage /></Suspense><Footer /></>);
   if (matchStatic(pathname, "/pricing")) return (<><Nav route="/pricing" /><Suspense fallback={<PageFallback />}><PricingPage /></Suspense><Footer /></>);
   if (matchStatic(pathname, "/process")) return (<><Nav route="/process" /><Suspense fallback={<PageFallback />}><ProcessPage /></Suspense><Footer /></>);
-  if (matchStatic(pathname, "/about")) return <AboutPage />;
   if (matchStatic(pathname, "/contact")) return <ContactPage />;
   if (matchStatic(pathname, "/faq")) return <FAQPage />;
   if (matchStatic(pathname, "/privacy")) return <PrivacyPage />;
-  if (matchStatic(pathname, "/blog")) return (<><Nav route="/blog" /><Suspense fallback={<PageFallback />}><BlogIndexPage /></Suspense><Footer /></>);
-
-  const blogSlug = matchDynamic(pathname, "/blog");
-  if (blogSlug) return (<><Nav route="/blog" /><Suspense fallback={<PageFallback />}><BlogArticlePage slug={blogSlug} /></Suspense><Footer /></>);
 
   const serviceSlug = matchDynamic(pathname, "/services");
   if (serviceSlug) return (<><Nav route="/services" /><Suspense fallback={<PageFallback />}><ServiceDetailPage slug={serviceSlug} /></Suspense><Footer /></>);
 
   const workSlug = matchDynamic(pathname, "/work");
   if (workSlug) return (<><Nav route="/work" /><Suspense fallback={<PageFallback />}><CaseStudyPage slug={workSlug} /></Suspense><Footer /></>);
-
-  const industrySlug = matchDynamic(pathname, "/industries");
-  if (industrySlug) return (<><Nav route="/industries" /><Suspense fallback={<PageFallback />}><IndustryDetailPage slug={industrySlug} /></Suspense><Footer /></>);
 
   return (<><Nav route={pathname} /><NotFoundPage /><Footer /></>);
 }
