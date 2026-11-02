@@ -62,11 +62,6 @@ export default function CaseStudyPage({ slug }) {
   const accent = item.accentColor || T;
   const displayFont = item.headingFont || "'Plus Jakarta Sans', sans-serif";
 
-  const relatedIndustrySlug = {
-    "Restaurants": "restaurants", "Hospitality": "hotels", "Real Estate": "real-estate",
-    "Professional Services": "professional-services", "E-commerce": null, "Landing Pages": null, "Other": null,
-  }[item.category];
-
   return (
     <main className="min-h-screen bg-slate-950 text-white font-sans antialiased">
       <SEOHead
@@ -245,7 +240,6 @@ export default function CaseStudyPage({ slug }) {
 
           <Reveal><section className="mb-16">
             <RelatedLinks links={[
-              ...(relatedIndustrySlug ? [{ href: `/industries/${relatedIndustrySlug}`, label: `${item.category} industry page` }] : []),
               { href: "/services", label: "Browse services" },
               { href: "/work", label: "All work" },
             ]} />
