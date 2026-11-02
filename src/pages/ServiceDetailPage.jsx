@@ -3,7 +3,6 @@ import SEOHead from "../components/SEOHead.jsx";
 import { Reveal, Kicker, H1, H2, PrimaryLink, Icon, FAQBlock, FinalCTA, RelatedLinks, ProcessStrip, T } from "../components/PhaseFourUI.jsx";
 import { getService, SERVICES } from "../data/servicesData.js";
 import { getWorkItem } from "../data/workData.js";
-import { getIndustry } from "../data/industriesData.js";
 import { CheckCircle2 } from "lucide-react";
 import NotFoundPage from "./NotFoundPage.jsx";
 
@@ -14,10 +13,8 @@ export default function ServiceDetailPage({ slug }) {
   if (!service) return <NotFoundPage />;
 
   const relatedWorkItems = (service.relatedWork || []).map(getWorkItem).filter(Boolean);
-  const relatedIndustryItems = (service.relatedIndustries || []).map(getIndustry).filter(Boolean);
 
   const relatedLinks = [
-    ...relatedIndustryItems.map((ind) => ({ href: `/industries/${ind.slug}`, label: `For ${ind.name}` })),
     ...relatedWorkItems.map((w) => ({ href: `/work/${w.slug}`, label: `Case study: ${w.name}` })),
     { href: "/pricing", label: "See full pricing" },
     { href: "/contact", label: "Get in touch" },
