@@ -3,6 +3,7 @@
  * Cloudflare Worker
  *
  * Handles:
+ *   POST /intake           — Project intake questionnaire → email to LCN254 inbox (Resend)
  *   POST /generate         — AI document generation (Gemini) after payment verified
  *   POST /mpesa/stkpush    — Initiate M-Pesa STK Push
  *   POST /mpesa/callback   — Safaricom payment confirmation webhook
@@ -18,6 +19,7 @@
  *   MPESA_CALLBACK_URL       (https://lcn254-api-proxy.levnyan2018.workers.dev/mpesa/callback)
  *   STRIPE_SECRET_KEY        (sk_live_... or sk_test_...)
  *   STRIPE_WEBHOOK_SECRET    (whsec_...)
+ *   RESEND_API_KEY           (re_... — used by POST /intake to send the enquiry email)
  *   ALLOWED_ORIGIN           (https://lcn254.site)
  *
  * KV namespace binding: PAYMENTS (stores payment status, bind in wrangler.toml)
@@ -59,6 +61,10 @@ export default {
 
       if (request.method === "POST" && url.pathname === "/stripe/verify") {
         return cors(await handleStripeVerify(request, env), 200, allowedOrigin);
+      }
+
+      if (request.method === "POST" && url.pathname === "/intake") {
+        return cors(await handleIntake(request, env), 200, allowedOrigin);
       }
 
       if (request.method === "POST" && url.pathname === "/generate") {
@@ -297,6 +303,130 @@ async function handleGenerate(request, env) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// PROJECT INTAKE (questionnaire on /contact → email to the LCN254 inbox)
+//
+// Validates the submission server-side (never trust the browser), then sends it
+// as a plain-text email through Resend. Nothing is stored: the email in the
+// inbox is the only record (this is what the Privacy Policy says).
+//
+// Config:  secret  RESEND_API_KEY
+//          vars    INTAKE_TO   (default contact@lcn254.site)
+//                  INTAKE_FROM (default "LCN254 Website <intake@lcn254.site>";
+//                               the domain must be verified in Resend)
+// ─────────────────────────────────────────────────────────────────────────────
+const INTAKE_LIMITS = {
+  name: 120, email: 254, phone: 40, organisation: 160, contactPref: 30,
+  service: 80, serviceName: 120, projectType: 80, scope: 4000, size: 60, existingSite: 300,
+  budget: 60, timeline: 80, deadline: 20,
+  platform: 120, domain: 60, hosting: 60, content: 60, techNotes: 2000,
+};
+const INTAKE_LIST_LIMITS = { goals: 12, integrations: 20 };
+
+// Strip CR/LF (header injection) and control chars from single-line values.
+function oneLine(v, max) {
+  return String(v ?? "").replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, max);
+}
+// Multi-line text: keep newlines, drop other control chars.
+function multiLine(v, max) {
+  return String(v ?? "").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "").trim().slice(0, max);
+}
+
+function parseIntake(raw) {
+  const d = {};
+  const multi = new Set(["scope", "techNotes"]);
+  for (const [k, max] of Object.entries(INTAKE_LIMITS)) {
+    d[k] = multi.has(k) ? multiLine(raw?.[k], max) : oneLine(raw?.[k], max);
+  }
+  for (const [k, max] of Object.entries(INTAKE_LIST_LIMITS)) {
+    d[k] = Array.isArray(raw?.[k]) ? raw[k].slice(0, max).map((x) => oneLine(x, 80)).filter(Boolean) : [];
+  }
+  d.consent = raw?.consent === true;
+  return d;
+}
+
+function validateIntake(d) {
+  const errors = [];
+  if (!d.name) errors.push("name");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) errors.push("email");
+  if (!d.service) errors.push("service");
+  if (d.scope.length < 30) errors.push("scope");
+  if (!d.budget) errors.push("budget");
+  if (!d.timeline) errors.push("timeline");
+  if (!d.consent) errors.push("consent");
+  return errors;
+}
+
+function buildIntakeEmail(d, meta = {}) {
+  const row = (label, v) => `${label}: ${Array.isArray(v) ? (v.join(", ") || "-") : (v || "-")}`;
+  const text = [
+    "NEW PROJECT ENQUIRY — lcn254.site",
+    "",
+    "ABOUT",
+    row("Name", d.name), row("Email", d.email), row("Phone / WhatsApp", d.phone),
+    row("Organisation", d.organisation), row("Preferred contact", d.contactPref),
+    "",
+    "PROJECT",
+    row("Service", d.serviceName || d.service), row("Project type", d.projectType),
+    row("Goals", d.goals), row("Expected size", d.size), row("Existing site", d.existingSite),
+    "Scope:", d.scope,
+    "",
+    "BUDGET & TIMELINE",
+    row("Budget", d.budget), row("Target launch", d.timeline), row("Hard deadline", d.deadline),
+    "",
+    "TECH REQUIREMENTS",
+    row("Platform", d.platform), row("Integrations", d.integrations),
+    row("Domain", d.domain), row("Hosting", d.hosting), row("Content", d.content),
+    "Other notes:", d.techNotes || "-",
+    "",
+    "CONSENT",
+    `Consent to process given on form: yes (${meta.receivedAt || new Date().toISOString()})`,
+  ].join("\n");
+  return {
+    subject: `New project enquiry — ${d.name} — ${d.serviceName || d.service}`.slice(0, 200),
+    text,
+  };
+}
+
+async function handleIntake(request, env) {
+  let raw;
+  try { raw = await request.json(); } catch { return json({ error: "Invalid request body" }, 400); }
+
+  // Honeypot: a real visitor never fills this hidden field. Pretend success so
+  // bots get no signal, but send nothing.
+  if (typeof raw?.website === "string" && raw.website.trim() !== "") {
+    return json({ success: true });
+  }
+
+  const d = parseIntake(raw);
+  const bad = validateIntake(d);
+  if (bad.length) return json({ error: `Missing or invalid: ${bad.join(", ")}` }, 400);
+
+  if (!env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not set");
+    return json({ error: "Enquiry service is not configured yet" }, 503);
+  }
+
+  const { subject, text } = buildIntakeEmail(d, { receivedAt: new Date().toISOString() });
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: env.INTAKE_FROM || "LCN254 Website <intake@lcn254.site>",
+      to: [env.INTAKE_TO || "contact@lcn254.site"],
+      reply_to: d.email,
+      subject,
+      text,
+    }),
+  });
+
+  if (!res.ok) {
+    console.error("Resend error:", res.status, (await res.text()).slice(0, 300));
+    return json({ error: "Could not deliver your enquiry. Please try again or email us directly." }, 502);
+  }
+  return json({ success: true });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
 async function getMpesaToken(env) {
@@ -330,5 +460,8 @@ function cors(response, status, allowedOrigin) {
   const res = response instanceof Response ? response : new Response(response.body, response);
   const newHeaders = new Headers(res.headers);
   Object.entries(headers).forEach(([k, v]) => newHeaders.set(k, v));
-  return new Response(res.body, { status: res.status, headers: newHeaders });
+  // json() defaults to 200, so callers pass the real status separately for
+  // errors (e.g. cors(json({error}), 403, origin)). Honour it; otherwise the
+  // client sees HTTP 200 for a 403/404/500 and treats the failure as success.
+  return new Response(res.body, { status: status !== 200 ? status : res.status, headers: newHeaders });
 }
