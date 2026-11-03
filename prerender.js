@@ -31,9 +31,10 @@ function buildRoutes() {
     { path: "/work", title: "Our Work — Website Design & Development Portfolio | LCN254", description: "Explore website and digital experience concepts designed and built by LCN254.", priority: "0.8" },
     { path: "/pricing", title: "Pricing | LCN254", description: "Transparent website package and care plan pricing from LCN254.", priority: "0.7" },
     { path: "/process", title: "Our Process | LCN254", description: "How LCN254 takes a website from discovery to launch and ongoing growth, in seven clear steps.", priority: "0.6" },
-    { path: "/contact", title: "Contact LCN254", description: "Tell LCN254 about your business, get a quote or ask a question, we usually reply within a few hours.", priority: "0.7" },
+    { path: "/contact", title: "Start a Project | LCN254", description: "Start a project with LCN254: share your scope, budget, timeline and tech requirements and get a realistic proposal, usually within a few hours.", priority: "0.7" },
     { path: "/faq", title: "Frequently Asked Questions | LCN254", description: "Common questions about working with LCN254, timelines, pricing, hosting, and payments.", priority: "0.5" },
-    { path: "/privacy", title: "Privacy Policy | LCN254", description: "LCN254's privacy policy covering data collection, use, and your rights.", priority: "0.3" },
+    { path: "/privacy", title: "Privacy Policy | LCN254", description: "How LCN254 collects, uses and protects personal data under Kenya's Data Protection Act, 2019, and how to exercise your rights or contact the ODPC.", priority: "0.4" },
+    { path: "/terms", title: "Terms of Service | LCN254", description: "The terms that apply to using lcn254.site, submitting a project enquiry, and working with LCN254: scope, payment, ownership, liability and governing law.", priority: "0.4" },
   ];
 
   for (const s of SERVICES) {
