@@ -16,6 +16,9 @@ const WorkPage = lazy(() => import("./pages/WorkPage.jsx"));
 const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage.jsx"));
 const PricingPage = lazy(() => import("./pages/PricingPage.jsx"));
 const ProcessPage = lazy(() => import("./pages/ProcessPage.jsx"));
+const PrivacyPage = lazy(() => import("./pages/LegalPages.jsx").then((m) => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import("./pages/LegalPages.jsx").then((m) => ({ default: m.TermsPage })));
+const IntakeForm = lazy(() => import("./components/IntakeForm.jsx"));
 
 import { SERVICES } from "./data/servicesData.js";
 import {
@@ -177,6 +180,7 @@ function Footer() {
               <li><a href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</a></li>
               <li><a href="/faq" className="text-slate-400 hover:text-white transition-colors">FAQ</a></li>
               <li><a href="/privacy" className="text-slate-400 hover:text-white transition-colors">Privacy</a></li>
+              <li><a href="/terms" className="text-slate-400 hover:text-white transition-colors">Terms</a></li>
             </ul>
           </div>
         </div>
@@ -460,12 +464,8 @@ function HowItWorks() {
 
 // ─── Contact page ─────────────────────────────────────────────────────────────
 function ContactPage() {
-  const [form, setForm] = useState({ name:"", email:"", phone:"", business:"", message:"" });
-  const [sent, setSent] = useState(false);
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const setF = (k, v) => setForm((f) => ({ ...f, [k]: v }));
-  const inputCls = "w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-[#1AA3B0] focus:outline-none transition-colors placeholder-slate-500";
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
@@ -478,8 +478,8 @@ function ContactPage() {
             <div className="mb-12">
               <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Let's Talk</span>
               <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Tell us about your{" "}
-                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">business</span>.
+                Start your{" "}
+                <span className="bg-gradient-to-r from-[#1AA3B0] to-[#F0409A] bg-clip-text text-transparent">project</span>.
               </h1>
               <p className="text-slate-400 max-w-xl">Pick a service, request a custom build, or just ask a question — we usually reply within a few hours.</p>
             </div>
@@ -487,52 +487,7 @@ function ContactPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             <Reveal className="lg:col-span-3">
-              <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6 sm:p-8 backdrop-blur-md">
-                {sent ? (
-                  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center py-12 text-center">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style={{ background: `${T}18` }}>
-                      <CheckCircle2 className="h-7 w-7" style={{ color: T }} />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Message sent!</h3>
-                    <p className="text-slate-400">Thanks {form.name || ""}. We'll be in touch at {form.email} shortly.</p>
-                  </motion.div>
-                ) : (
-                  <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Name</label>
-                        <input className={inputCls} placeholder="Jane Wanjiru" value={form.name} onChange={(e) => setF("name", e.target.value)} required />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Email</label>
-                        <input type="email" className={inputCls} placeholder="jane@business.co.ke" value={form.email} onChange={(e) => setF("email", e.target.value)} required />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Phone</label>
-                        <input type="tel" className={inputCls} placeholder="+254 700 000 000" value={form.phone} onChange={(e) => setF("phone", e.target.value)} />
-                      </div>
-                      <div>
-                        <label htmlFor="contact-business-select" className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Service interested in</label>
-                        <select id="contact-business-select" className={inputCls} value={form.business} onChange={(e) => setF("business", e.target.value)}>
-                          <option className="bg-slate-900" value="">Select one</option>
-                          {SERVICES.map((s) => <option key={s.slug} className="bg-slate-900" value={s.slug}>{s.name}</option>)}
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Message</label>
-                      <textarea className={inputCls} rows={4} placeholder="Tell us what you're building and any deadlines we should know about." value={form.message} onChange={(e) => setF("message", e.target.value)} required style={{ resize: "vertical" }} />
-                    </div>
-                    <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit"
-                      className="w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-slate-950"
-                      style={{ background: `linear-gradient(135deg,${T},${P})` }}>
-                      Send Message <Send className="h-4 w-4" />
-                    </motion.button>
-                  </form>
-                )}
-              </div>
+              <Suspense fallback={<PageFallback />}><IntakeForm /></Suspense>
             </Reveal>
 
             <Reveal delay={0.1} className="lg:col-span-2 flex flex-col gap-4">
@@ -645,53 +600,6 @@ function FAQPage() {
   );
 }
 
-// ─── Privacy page ─────────────────────────────────────────────────────────────
-function PrivacyPage() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  const sections = [
-    { t:"1. Who We Are",           b:`LCN254 is a web design and development agency based in Nairobi, Kenya, serving clients in Kenya and internationally. Our website is lcn254.site — reach us at contact@lcn254.site.` },
-    { t:"2. Information We Collect",b:`We collect your name, email, phone, and service of interest through our contact form.` },
-    { t:"3. How We Use Your Information",b:`We use contact form submissions to respond to inquiries and quote requests only. We do not sell your data to any third party.` },
-    { t:"4. Payments",             b:`Where payment integrations are part of a project (e.g. M-Pesa, card processors), we do not store card details or M-Pesa PINs.` },
-    { t:"5. Cookies & Analytics",  b:`We do not use tracking cookies or analytics platforms that identify individual users.` },
-    { t:"6. Data Storage & Security",b:`Contact form submissions go to contact@lcn254.site via Zoho Mail.` },
-    { t:"7. Third-Party Services", b:`We use Google Fonts (CDN) and Framer Motion (bundled) in our own site.` },
-    { t:"8. Your Rights (Kenya Data Protection Act 2019)",b:`You have the right to access, correct, or request deletion of personal data. Email contact@lcn254.site with subject "Data Request" — we respond within 14 days.` },
-    { t:"9. Children's Privacy",   b:`Our services are not directed at children under 18.` },
-    { t:"10. Contact",             b:`Questions about this policy? Email contact@lcn254.site or write to: LCN254, Nairobi, Kenya.` },
-  ];
-  return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans antialiased">
-      <SEOHead title="Privacy Policy" description="LCN254's privacy policy covering data collection, use, and your rights." path="/privacy" />
-      <Nav route="/privacy" />
-      <main>
-      <div className="pt-28 pb-20 px-6 lg:px-12">
-        <div className="mx-auto max-w-3xl">
-          <Reveal>
-            <div className="mb-10">
-              <span className="font-mono text-xs uppercase tracking-widest block mb-3" style={{ color: T }}>Legal</span>
-              <h1 className="text-4xl font-bold text-white mb-2">Privacy Policy</h1>
-              <p className="text-slate-500 text-sm">Last updated: {new Date().toLocaleDateString("en-KE",{year:"numeric",month:"long",day:"numeric"})}</p>
-            </div>
-          </Reveal>
-          <div className="space-y-8">
-            {sections.map((s,i) => (
-              <Reveal key={s.t} delay={i * 0.04}>
-                <div>
-                  <h2 className="text-base font-semibold text-white mb-2">{s.t}</h2>
-                  <p className="text-slate-400 leading-relaxed text-sm">{s.b}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
 // ─── Welcome Splash ──────────────────────────────────────────────────────────
 function WelcomeSplash({ onDone }) {
   const [phase, setPhase] = useState("in");
@@ -779,7 +687,8 @@ function RouteOutlet() {
   if (matchStatic(pathname, "/process")) return (<><Nav route="/process" /><Suspense fallback={<PageFallback />}><ProcessPage /></Suspense><Footer /></>);
   if (matchStatic(pathname, "/contact")) return <ContactPage />;
   if (matchStatic(pathname, "/faq")) return <FAQPage />;
-  if (matchStatic(pathname, "/privacy")) return <PrivacyPage />;
+  if (matchStatic(pathname, "/privacy")) return (<><Nav route="/privacy" /><Suspense fallback={<PageFallback />}><PrivacyPage /></Suspense><Footer /></>);
+  if (matchStatic(pathname, "/terms")) return (<><Nav route="/terms" /><Suspense fallback={<PageFallback />}><TermsPage /></Suspense><Footer /></>);
 
   const serviceSlug = matchDynamic(pathname, "/services");
   if (serviceSlug) return (<><Nav route="/services" /><Suspense fallback={<PageFallback />}><ServiceDetailPage slug={serviceSlug} /></Suspense><Footer /></>);
